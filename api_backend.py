@@ -45,9 +45,6 @@ def read_root():
         "supported_models": ["graphsage", "gcn", "gat"]
     }
 
-# --- STRIPE ÖDƏNİŞ ENDPOINT-İ ---
-# --- STRIPE ÖDƏNİŞ ENDPOINT-İ ---
-# --- STRIPE ÖDƏNİŞ ENDPOINT-İ ---
 @app.post("/api/v1/create-checkout-session")
 def create_checkout_session(data: CheckoutRequest):
     try:
@@ -76,7 +73,7 @@ def create_checkout_session(data: CheckoutRequest):
         print(f"[ERROR] Stripe Checkout Session creation failed: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
 
-# --- ÖDƏNİŞ TƏSDİQİ VƏ Lisenziya Açarı ÜÇÜN ---
+
 @app.post("/api/v1/verify-payment")
 def verify_payment(session_id: str):
     try:
@@ -89,7 +86,7 @@ def verify_payment(session_id: str):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-# --- GNN ANALİZ ENDPOINT-İ ---
+
 @app.post("/api/v1/analyze")
 def analyze_network_security(payload: SecurityCheckRequest):
     try:
@@ -103,13 +100,21 @@ def analyze_network_security(payload: SecurityCheckRequest):
             data.test_mask = torch.zeros(data.num_nodes, dtype=torch.bool)
             data.test_mask[indices[train_size:]] = True
 
-        m_key = payload.model_type.lower()
-        if m_key == 'graphsage':
-            m_key = 'sage'
-        if m_key == 'gat' and not payload.api_key.startswith("PRO-GRAPHGUARD-"):
-            raise HTTPException(
-                status_code=403, 
-                detail="Advanced GAT model requires a Pro Plan API Key! Please upgrade via the pricing panel."
+            m_key = payload.model_type.lower()
+            if m_key == 'graphsage':
+                m_key = 'sage'
+            elif m_key == 'rgcn':
+                m_key = 'rgcn'  # Və ya RGCN üçün xüsusi açar
+            elif m_key == 'gin':
+                m_key = 'gin'  # GIN modeli üçün
+
+            if 'gat' in m_key and not payload.api_key.startswith('PRO-GRAPHGUARD-'):
+                raise HTTPException(
+                    status_code=403,
+                    detail=(
+                        'Advanced GAT model requires a Pro Plan API Key! Please upgrade via'
+                        ' the pricing panel.'
+                    ),
             )
 
         model = IoTGNN(data.num_features, 64, 2, m_key)
@@ -132,9 +137,22 @@ def analyze_network_security(payload: SecurityCheckRequest):
             acc_clean = float((pred_clean[data.test_mask] == data.y[data.test_mask]).sum()) / float(data.test_mask.sum())
 
         p_rate = payload.perturbation_rate
-        if "struct" in payload.attack_type.lower():
+        p_rate = payload.perturbation_rate
+        attack_lower = payload.attack_type.lower()
+
+        if "struct" in attack_lower:
             test_edge_index, _ = dropout_edge(data.edge_index, p=p_rate)
             x_eval = data.x
+        elif "node_injection" in attack_lower:
+            test_edge_index = data.edge_index
+            x_eval = data.x * (1.0 - p_rate * 0.5)
+        elif "gradient" in attack_lower:
+            test_edge_index = data.edge_index
+            x_eval = data.x + (torch.randn_like(data.x) * p_rate * 1.2)
+        elif "masking" in attack_lower:
+            test_edge_index = data.edge_index
+            x_eval = data.x.clone()
+            x_eval[:, :2] = 0
         else:
             test_edge_index = data.edge_index
             x_eval = data.x + (torch.randn_like(data.x) * p_rate)
