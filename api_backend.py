@@ -100,7 +100,7 @@ def analyze_network_security(payload: SecurityCheckRequest):
             data.test_mask = torch.zeros(data.num_nodes, dtype=torch.bool)
             data.test_mask[indices[train_size:]] = True
 
-            m_key = payload.model_type.lower()
+            m_key = payload.model_type.lower() if hasattr(payload, 'model_type') else 'sage'
             if m_key == 'graphsage':
                 m_key = 'sage'
             elif m_key == 'rgcn':
