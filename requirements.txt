@@ -1,0 +1,10 @@
+stripe
+fastapi
+uvicorn
+pydantic
+torch
+numpy
+scikit-learn
+networkx
+psutil
+torch-geometric

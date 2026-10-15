@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphGuard IoT - Enterprise GNN Security Platform</title>
+    <!-- Tailwind CSS for Master-level Modern UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b',
+                        accent: '#10b981',
+                        danger: '#ef4444'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkbg text-slate-100 min-h-screen font-sans">
+    
+    <!-- Navigation Bar -->
+    <nav class="border-b border-slate-800 bg-cardbg/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">🛡️</span>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition</span>
+                </h1>
+            </div>
+            <div class="flex items-center space-x-4 text-sm text-slate-400">
+                <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>API Active</span>
+                <button onclick="openPricingModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg font-semibold cursor-pointer">
+                    Pro Plans
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left Panel: Controls -->
+        <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+            <div>
+                <h2 class="text-lg font-semibold mb-4 text-emerald-400 flex items-center">
+                    ⚙️ Simulation Controls
+                </h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">IoT Node Count</label>
+                        <input id="nodeCount" type="number" value="300" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">GNN Architecture</label>
+                        <select id="modelType" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
+                            <option value="graphsage">GraphSAGE (Recommended)</option>
+                            <option value="gcn">GCN (Graph Convolutional)</option>
+                            <option value="gat">GAT (Graph Attention)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Attack Strategy</label>
+                        <select id="attackType" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
+                            <option value="structural">Structural Edge Perturbation</option>
+                            <option value="feature">Feature-Level Noise Attack</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Attack Intensity Rate (%)</label>
+                        <input id="perturbRate" type="range" min="0" max="50" value="30" class="w-full accent-emerald-500" oninput="document.getElementById('rateVal').innerText = this.value + '%'">
+                        <span id="rateVal" class="text-xs text-emerald-400 font-bold">30%</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="runSimulation()" class="mt-8 w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-emerald-500/20 active:scale-[0.99] cursor-pointer">
+                🚀 Run Adversarial Simulation
+            </button>
+        </div>
+
+        <!-- Right Panel: Results & Analytics -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Metrics Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-cardbg border border-slate-800 rounded-2xl p-5 shadow-lg">
+                    <p class="text-xs text-slate-400 uppercase tracking-wider">Clean Accuracy</p>
+                    <h3 id="cleanAcc" class="text-3xl font-extrabold text-slate-200 mt-2">--</h3>
+                </div>
+                <div class="bg-cardbg border border-slate-800 rounded-2xl p-5 shadow-lg">
+                    <p class="text-xs text-slate-400 uppercase tracking-wider">Attacked Accuracy</p>
+                    <h3 id="attackAcc" class="text-3xl font-extrabold text-danger mt-2">--</h3>
+                </div>
+                <div class="bg-cardbg border border-slate-800 rounded-2xl p-5 shadow-lg">
+                    <p class="text-xs text-slate-400 uppercase tracking-wider">XAI Fidelity Score</p>
+                    <h3 id="xaiScore" class="text-3xl font-extrabold text-cyan-400 mt-2">--</h3>
+                </div>
+            </div>
+
+            <!-- Deep Analysis Box -->
+            <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <h3 class="text-lg font-semibold mb-4 text-emerald-400">📊 Enterprise Threat & Defense Log</h3>
+                <div id="logBox" class="bg-slate-900 border border-slate-800 rounded-xl p-4 h-56 overflow-y-auto font-mono text-xs text-slate-300 space-y-2">
+                    <p class="text-slate-500">[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- STRIPE PRICING MODAL -->
+    <div id="pricingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full p-6 text-white shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <button onclick="closePricingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold p-2 cursor-pointer">✕</button>
+        
+        <!-- Pricing Table -->
+        <div id="pricingView">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-extrabold text-blue-400">GraphGuard IoT Pricing</h2>
+            <p class="text-slate-400 mt-2">Scale your GNN cyber threat analysis according to your needs</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Free Plan -->
+            <div class="rounded-xl p-5 flex flex-col justify-between border border-slate-800 bg-slate-950/50">
+              <div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-700 text-gray-300">Base</span>
+                <h3 class="text-xl font-bold mt-3">Researcher / Free</h3>
+                <div class="my-4"><span class="text-3xl font-extrabold">\$0</span><span class="text-slate-400 text-sm"> / forever</span></div>
+                <ul class="space-y-2 text-sm text-slate-300 mb-6">
+                  <li>✓ GCN Standard Analysis</li>
+                  <li>✓ 50 Requests/Day Limit</li>
+                  <li>✓ Basic CSV Export</li>
+                </ul>
+              </div>
+              <button disabled class="w-full py-2.5 rounded-lg font-semibold bg-slate-800 text-slate-500 cursor-not-allowed">Current Plan</button>
+            </div>
+            
+            <!-- Pro Plan -->
+            <div class="rounded-xl p-5 flex flex-col justify-between border border-blue-500 bg-slate-800/80 shadow-blue-500/10 shadow-lg">
+              <div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-600 text-white">Most Popular</span>
+                <h3 class="text-xl font-bold mt-3">Professional Tier</h3>
+                <div class="my-4"><span class="text-3xl font-extrabold">\$29</span><span class="text-slate-400 text-sm"> / monthly</span></div>
+                <ul class="space-y-2 text-sm text-slate-300 mb-6">
+                  <li>✓ Advanced GAT Model</li>
+                  <li>✓ Unlimited Real-Time Analysis</li>
+                  <li>✓ Automated PDF Report</li>
+                  <li>✓ Instant Telegram Alerts</li>
+                </ul>
+              </div>
+              <button onclick="handleStripeCheckout()" class="w-full py-2.5 rounded-lg font-semibold bg-blue-600 hover:bg-blue-500 text-white transition shadow-lg shadow-blue-600/30 cursor-pointer">Upgrade to Pro</button>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="rounded-xl p-5 flex flex-col justify-between border border-slate-800 bg-slate-950/50">
+              <div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-600 text-white">Business</span>
+                <h3 class="text-xl font-bold mt-3">Enterprise / On-Prem</h3>
+                <div class="my-4"><span class="text-3xl font-extrabold">Custom</span><span class="text-slate-400 text-sm"> / pricing</span></div>
+                <ul class="space-y-2 text-sm text-slate-300 mb-6">
+                  <li>✓ On-Premise Server Deployment</li>
+                  <li>✓ Network Fine-tuning</li>
+                  <li>✓ Unlimited API Volume</li>
+                </ul>
+              </div>
+              <button onclick="alert('Contact: support@graphguard.iot')" class="w-full py-2.5 rounded-lg font-semibold bg-slate-800 hover:bg-slate-700 text-white transition cursor-pointer">Contact Us</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- JavaScript Execution Logic -->
+    <script>
+        const API_BASE_URL = 'https://gnn-nids-robustt.onrender.com';
+
+        async function runSimulation() {
+            const logBox = document.getElementById('logBox');
+            const nodeCount = parseInt(document.getElementById('nodeCount').value);
+            const modelType = document.getElementById('modelType').value;
+            const attackType = document.getElementById('attackType').value;
+            const perturbRate = parseFloat(document.getElementById('perturbRate').value) / 100.0;
+
+            logBox.innerHTML += `<p class="text-cyan-400">[Simulation] Dispatching request for model: <b>${modelType}</b> under <b>${attackType}</b>...</p>`;
+            logBox.scrollTop = logBox.scrollHeight;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/v1/analyze`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        node_count: nodeCount,
+                        model_type: modelType,
+                        attack_type: attackType,
+                        perturbation_rate: perturbRate
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('cleanAcc').innerText = data.clean_accuracy + '%';
+                    document.getElementById('attackAcc').innerText = data.attacked_accuracy + '%';
+                    document.getElementById('xaiScore').innerText = data.xai_fidelity_score + '%';
+
+                    logBox.innerHTML += `<p class="text-emerald-400">[Success] Clean Acc: ${data.clean_accuracy}% | Attacked Acc: ${data.attacked_accuracy}%</p>`;
+                    if (data.threat_detected) {
+                        logBox.innerHTML += `<p class="text-red-400 font-bold">[CRITICAL] High adversarial vulnerability detected!</p>`;
+                    } else {
+                        logBox.innerHTML += `<p class="text-teal-400">[Secure] Model maintained robust defensive posture against attack.</p>`;
+                    }
+                } else {
+                    logBox.innerHTML += `<p class="text-red-400">[Error] API execution failed: ${data.detail || 'Unknown error'}</p>`;
+                }
+            } catch (err) {
+                logBox.innerHTML += `<p class="text-red-400">[Network Error] Could not connect to FastAPI backend.</p>`;
+            }
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        function openPricingModal() {
+            document.getElementById('pricingModal').classList.remove('hidden');
+        }
+        
+        function closePricingModal() {
+            document.getElementById('pricingModal').classList.add('hidden');
+        }
+
+        // Stripe Checkout handler
+        async function handleStripeCheckout() {
+            const emailInput = "test@graphguard.io";
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/v1/create-checkout-session`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: emailInput })
+                });
+                
+                const data = await response.json();
+                if (data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                } else {
+                    alert("Failed to create checkout session.");
+                }
+            } catch (error) {
+                console.error("Error occurred:", error);
+                alert("Could not connect to the server.");
+            }
+        }
+    </script>
+</body>
+</html>
