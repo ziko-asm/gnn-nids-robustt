@@ -104,9 +104,9 @@ def analyze_network_security(payload: SecurityCheckRequest):
             if m_key == 'graphsage':
                 m_key = 'sage'
             elif m_key == 'rgcn':
-                m_key = 'rgcn'  # Və ya RGCN üçün xüsusi açar
+                m_key = 'gcn'  # Və ya RGCN üçün xüsusi açar
             elif m_key == 'gin':
-                m_key = 'gin'  # GIN modeli üçün
+                m_key = 'sage'  # GIN modeli üçün
 
             if 'gat' in m_key and not payload.api_key.startswith('PRO-GRAPHGUARD-'):
                 raise HTTPException(
