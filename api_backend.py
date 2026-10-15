@@ -120,7 +120,7 @@ def analyze_network_security(payload: SecurityCheckRequest):
                     ),
             )
 
-        model = IoTGNN(data.num_features, 64, 2, m_key)
+        model = IoTGNN(in_channels=data.num_features, hidden_channels=64, out_channels=2, model_type=m_key)
         
         optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
         criterion = torch.nn.CrossEntropyLoss()
