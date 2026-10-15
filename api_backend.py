@@ -100,24 +100,25 @@ def analyze_network_security(payload: SecurityCheckRequest):
             data.test_mask = torch.zeros(data.num_nodes, dtype=torch.bool)
             data.test_mask[indices[train_size:]] = True
 
-            m_key = "sage"
-            if hasattr(payload, "model_type") and payload.model_type:
-                m_key = payload.model_type.lower()
+        # m_key yoxlamasını if-dən çıxardıq ki, həmişə işləsin
+        m_key = "sage"
+        if hasattr(payload, "model_type") and payload.model_type:
+            m_key = payload.model_type.lower()
 
-            if m_key == 'graphsage':
-                m_key = 'sage'
-            elif m_key == 'rgcn':
-                m_key = 'gcn'
-            elif m_key == 'gin':
-                m_key = 'sage'
+        if m_key == 'graphsage':
+            m_key = 'sage'
+        elif m_key == 'rgcn':
+            m_key = 'gcn'
+        elif m_key == 'gin':
+            m_key = 'sage'
 
-            if 'gat' in m_key and not payload.api_key.startswith('PRO-GRAPHGUARD-'):
-                raise HTTPException(
-                    status_code=403,
-                    detail=(
-                        'Advanced GAT model requires a Pro Plan API Key! Please upgrade via'
-                        ' the pricing panel.'
-                    ),
+        if 'gat' in m_key and not payload.api_key.startswith('PRO-GRAPHGUARD-'):
+            raise HTTPException(
+                status_code=403,
+                detail=(
+                    'Advanced GAT model requires a Pro Plan API Key! Please upgrade via'
+                    ' the pricing panel.'
+                ),
             )
 
         model = IoTGNN(in_channels=data.num_features, hidden_channels=64, out_channels=2, model_type=m_key)
