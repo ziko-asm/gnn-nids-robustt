@@ -29,7 +29,7 @@
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">🛡️</span>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition</span>
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v1.3</span>
                 </h1>
             </div>
             <div class="flex items-center space-x-4 text-sm text-slate-400">
@@ -83,7 +83,7 @@
                         <select id="modelType" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
                             <option value="graphsage">GraphSAGE (Recommended)</option>
                             <option value="gcn">GCN (Graph Convolutional)</option>
-                            <option value="gat">GAT (Graph Attention)</option>
+                            <option value="gat">GAT (Graph Attention - Pro)</option>
                             <option value="rgcn">RGCN (Relational-GCN)</option>
                             <option value="gin">GIN (Graph Isomorphism)</option>
                         </select>
@@ -104,6 +104,11 @@
                         <label class="block text-sm text-slate-400 mb-1">Attack Intensity Rate (%)</label>
                         <input id="perturbRate" type="range" min="0" max="50" value="30" class="w-full accent-emerald-500" oninput="document.getElementById('rateVal').innerText = this.value + '%'">
                         <span id="rateVal" class="text-xs text-emerald-400 font-bold">30%</span>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Pro License Key (Optional)</label>
+                        <input id="apiKeyInput" type="text" placeholder="PRO-GRAPHGUARD-XXXX" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
                     </div>
                 </div>
             </div>
@@ -138,13 +143,36 @@
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold text-emerald-400">📊 Enterprise Threat & Defense Log</h3>
                         <button id="pdfBtn" onclick="exportPDFReport()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 cursor-not-allowed transition">
-                            📄 Export Report (PDF)
+                            📄 Export Audit Report (PDF)
                         </button>
                     </div>
-                    <div id="logBox" class="bg-slate-900 border border-slate-800 rounded-xl p-4 h-56 overflow-y-auto font-mono text-xs text-slate-300 space-y-2">
+                    <div id="logBox" class="bg-slate-900 border border-slate-800 rounded-xl p-4 h-44 overflow-y-auto font-mono text-xs text-slate-300 space-y-2">
                         <p class="text-slate-500">[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...</p>
                     </div>
                 </div>
+            </div>
+
+            <!-- NEW: Auto-Remediation CLI Playbook & ISO/NIST Compliance Panel -->
+            <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-cyan-400 flex items-center gap-2">
+                            ⚡ Auto-Remediation Playbook & Compliance Audit
+                        </h3>
+                        <p id="complianceBadge" class="text-xs text-slate-400 mt-1">
+                            Regulatory Status: <span class="text-slate-500 font-semibold">Awaiting simulation telemetry...</span>
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button id="copyPatchBtn" onclick="copyRemediationScript()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-not-allowed transition">
+                            📋 Copy CLI Patch
+                        </button>
+                        <button id="downloadPatchBtn" onclick="downloadRemediationScript()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-not-allowed transition">
+                            💾 Download .sh
+                        </button>
+                    </div>
+                </div>
+                <pre id="remediationBox" class="bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-x-auto leading-relaxed"># Run an adversarial simulation to synthesize automated Cisco IOS & Linux iptables defense patches...</pre>
             </div>
 
         </div>
@@ -187,8 +215,8 @@
                 <ul class="space-y-2 text-sm text-slate-300 mb-6">
                   <li>✓ Advanced GAT & GIN Models</li>
                   <li>✓ Custom CSV/JSON Upload</li>
-                  <li>✓ Automated PDF Report Export</li>
-                  <li>✓ Instant Telegram Alerts</li>
+                  <li>✓ ISO 27001 & NIST PDF Audit</li>
+                  <li>✓ Automated Cisco/Firewall Patches</li>
                 </ul>
               </div>
               <button onclick="handleStripeCheckout()" class="w-full py-2.5 rounded-lg font-semibold bg-blue-600 hover:bg-blue-500 text-white transition shadow-lg shadow-blue-600/30 cursor-pointer">Upgrade to Pro</button>
@@ -262,6 +290,7 @@
             const modelType = document.getElementById('modelType').value;
             const attackType = document.getElementById('attackType').value;
             const perturbRate = parseFloat(document.getElementById('perturbRate').value) / 100.0;
+            const apiKey = document.getElementById('apiKeyInput').value.trim();
 
             if (activeDataMode === 'custom' && !uploadedFileRawData) {
                 alert("Please upload a CSV or JSON topology file first!");
@@ -276,6 +305,7 @@
                 model_type: modelType,
                 attack_type: attackType,
                 perturbation_rate: perturbRate,
+                api_key: apiKey,
                 is_custom: activeDataMode === 'custom',
                 custom_file_data: activeDataMode === 'custom' ? uploadedFileRawData : null
             };
@@ -296,16 +326,43 @@
                     document.getElementById('xaiScore').innerText = data.xai_fidelity_score + '%';
 
                     logBox.innerHTML += `<p class="text-emerald-400">[Success] Clean Acc: ${data.clean_accuracy}% | Attacked Acc: ${data.attacked_accuracy}%</p>`;
+                    if (data.remediation_advice) {
+                        logBox.innerHTML += `<p class="text-amber-300">[AI Remediation] ${data.remediation_advice}</p>`;
+                    }
+
                     if (data.threat_detected) {
-                        logBox.innerHTML += `<p class="text-red-400 font-bold">[CRITICAL] High adversarial vulnerability detected!</p>`;
+                        logBox.innerHTML += `<p class="text-red-400 font-bold">[CRITICAL] High adversarial vulnerability detected! Auto-Remediation script generated.</p>`;
                     } else {
                         logBox.innerHTML += `<p class="text-teal-400">[Secure] Model maintained robust defensive posture against attack.</p>`;
                     }
 
-                    // Enable PDF Export button
+                    // Update Compliance Badge & Remediation Script Box
+                    const compBadge = document.getElementById('complianceBadge');
+                    const remBox = document.getElementById('remediationBox');
+                    const compText = data.compliance_status || "COMPLIANT (ISO/IEC 27001:2022 & NIST SP 800-53)";
+                    
+                    if (data.threat_detected) {
+                        compBadge.innerHTML = `Regulatory Status: <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30 font-bold">${compText}</span>`;
+                        remBox.className = "bg-slate-950 border border-red-900/60 rounded-xl p-4 font-mono text-xs text-amber-300 overflow-x-auto leading-relaxed";
+                    } else {
+                        compBadge.innerHTML = `Regulatory Status: <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold">${compText}</span>`;
+                        remBox.className = "bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-x-auto leading-relaxed";
+                    }
+
+                    remBox.innerText = data.remediation_script || "# Optimal network state verified. No emergency patch required.";
+
+                    // Enable Action Buttons
                     const pdfBtn = document.getElementById('pdfBtn');
                     pdfBtn.disabled = false;
                     pdfBtn.className = "bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 cursor-pointer transition shadow-md shadow-emerald-600/30";
+
+                    const copyBtn = document.getElementById('copyPatchBtn');
+                    copyBtn.disabled = false;
+                    copyBtn.className = "bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition";
+
+                    const dlBtn = document.getElementById('downloadPatchBtn');
+                    dlBtn.disabled = false;
+                    dlBtn.className = "bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition";
                 } else {
                     logBox.innerHTML += `<p class="text-red-400">[Error] API execution failed: ${data.detail || 'Unknown error'}</p>`;
                 }
@@ -315,11 +372,32 @@
             logBox.scrollTop = logBox.scrollHeight;
         }
 
+        function copyRemediationScript() {
+            if (!lastSimulationResults || !lastSimulationResults.remediation_script) return;
+            navigator.clipboard.writeText(lastSimulationResults.remediation_script);
+            const copyBtn = document.getElementById('copyPatchBtn');
+            const oldText = copyBtn.innerText;
+            copyBtn.innerText = "✅ Copied!";
+            setTimeout(() => { copyBtn.innerText = oldText; }, 2000);
+        }
+
+        function downloadRemediationScript() {
+            if (!lastSimulationResults || !lastSimulationResults.remediation_script) return;
+            const blob = new Blob([lastSimulationResults.remediation_script], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `graphguard_remediation_patch_${Date.now()}.sh`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
         async function exportPDFReport() {
             if (!lastSimulationResults) return;
             
             const logBox = document.getElementById('logBox');
-            logBox.innerHTML += `<p class="text-cyan-400">[Report] Requesting automated PDF report generation...</p>`;
+            logBox.innerHTML += `<p class="text-cyan-400">[Report] Requesting automated ISO/NIST Compliance PDF report...</p>`;
             logBox.scrollTop = logBox.scrollHeight;
 
             try {
@@ -334,11 +412,11 @@
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `GraphGuard_Threat_Report_${Date.now()}.pdf`;
+                    a.download = `GraphGuard_Enterprise_Audit_${Date.now()}.pdf`;
                     document.body.appendChild(a);
                     a.click();
                     a.remove();
-                    logBox.innerHTML += `<p class="text-emerald-400">[Downloaded] Threat Report PDF generated successfully!</p>`;
+                    logBox.innerHTML += `<p class="text-emerald-400">[Downloaded] Enterprise Compliance & Playbook PDF generated successfully!</p>`;
                 } else {
                     logBox.innerHTML += `<p class="text-red-400">[Error] PDF generation endpoint not ready on backend.</p>`;
                 }
