@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GraphGuard IoT - Enterprise GNN Security Platform v5.0</title>
+    <title>GraphGuard IoT - Enterprise GNN Security Platform v5.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #10b981; }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; }
-        .accordion-content.active { max-height: 2500px; }
+        .hover-accordion { transition: all 0.3s ease-in-out; }
+        .hover-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out; opacity: 0; }
+        .hover-accordion:hover .hover-content { max-height: 2500px; opacity: 1; }
+        .hover-accordion:hover .arrow-icon { transform: rotate(180deg); }
     </style>
 </head>
 <body class="bg-[#0f172a] text-slate-100 min-h-screen font-sans">
@@ -22,7 +24,7 @@
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">🛡️</span>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v5.0.0</span>
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v5.1.0</span>
                 </h1>
             </div>
             <div class="flex items-center space-x-3 text-sm text-slate-400">
@@ -40,7 +42,7 @@
                 </select>
 
                 <button onclick="openDetailedReportModal()" class="bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1 shadow-lg shadow-cyan-500/10">
-                    📚 Detailed Report (Interactive Master KB)
+                    📚 Detailed Report (Hover Master KB)
                 </button>
 
                 <button onclick="startPlatformGuide()" class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1">
@@ -186,7 +188,7 @@
 
     </main>
 
-    <!-- DETAILED TECHNICAL REPORT MODAL (INTERACTIVE ACCORDION BUTTONS) -->
+    <!-- DETAILED TECHNICAL REPORT MODAL (HOVER DROPDOWN CARDS) -->
     <div id="detailedReportModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/95 backdrop-blur-md p-4">
         <div class="bg-slate-900 border border-cyan-500/60 rounded-2xl max-w-6xl w-full p-8 text-white shadow-2xl relative max-h-[92vh] overflow-y-auto">
             <button onclick="closeDetailedReportModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-2xl font-bold p-2 cursor-pointer">✕</button>
@@ -194,16 +196,16 @@
                 <span class="text-4xl">📚</span>
                 <div>
                     <h2 id="detRepTitle" class="text-2xl font-extrabold text-cyan-400">Detailed Enterprise Technical Report & Master Knowledge Base</h2>
-                    <p id="detRepSub" class="text-xs text-slate-400">Click on any section button below to expand deep academic insights and security documentation.</p>
+                    <p id="detRepSub" class="text-xs text-slate-400">Hover your mouse over any section card below to smoothly expand deep academic insights and security documentation.</p>
                 </div>
             </div>
             
-            <div id="detRepContent" class="space-y-6 text-slate-300 text-sm leading-relaxed">
-                <!-- Dynamically populated interactive accordion content -->
+            <div id="detRepContent" class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                <!-- Hover dropdown cards populated via JS -->
             </div>
 
             <div class="mt-16 pt-6 border-t border-slate-800 flex justify-between items-center">
-                <span class="text-xs text-slate-500">GraphGuard IoT Enterprise Security Engine v5.0.0 — Interactive Master Reference</span>
+                <span class="text-xs text-slate-500">GraphGuard IoT Enterprise Security Engine v5.1.0 — Hover Interactive Reference</span>
                 <button onclick="closeDetailedReportModal()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs cursor-pointer transition">Close Report</button>
             </div>
         </div>
@@ -284,7 +286,7 @@
       </div>
     </div>
 
-    <!-- JavaScript Execution Logic with Interactive Accordion Buttons -->
+    <!-- JavaScript Execution Logic with Hover Dropdowns -->
     <script>
         const API_BASE_URL = 'https://gnn-nids-robustt.onrender.com';
         let activeDataMode = 'synthetic';
@@ -293,33 +295,32 @@
         let currentGuideStep = 0;
         let currentLang = 'en';
 
-        const massiveAccordionContent = `
+        const massiveHoverContent = `
             <div class="space-y-4">
                 <!-- Section 1 -->
-                <div class="border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion('acc-1')" class="w-full p-5 text-left font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition cursor-pointer">
+                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
+                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition">
                         <span class="text-lg">1. Executive Summary: What is Artificial Intelligence & IoT Cybersecurity?</span>
-                        <span id="icon-acc-1" class="text-xl transition-transform duration-300">▼</span>
-                    </button>
-                    <div id="acc-1" class="accordion-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-4">
-                        <p><b>Artificial Intelligence (AI):</b> Artificial Intelligence represents the apex of modern computational engineering, referring specifically to algorithmic systems designed to simulate human cognitive functions, reason through complex logical constraints, learn iteratively from massive multidimensional telemetry datasets, and execute automated operational decisions without continuous manual oversight. Within the GraphGuard IoT security architecture, sophisticated deep neural models continuously ingest, process, and evaluate intricate network interaction telemetry. By mapping real-time packet exchanges against historical behavioral graphs, these AI systems establish precise baseline device profiles, learn normal packet routing patterns, and flag structural anomalies instantly. Unlike legacy static rule-based firewalls that rely strictly on predefined signatures, AI models utilize relational graph geometry to predict and intercept novel zero-day attack vectors before they cause catastrophic operational disruption across enterprise infrastructure.</p>
-                        <p><b>Cybersecurity & IoT Resilience:</b> Modern enterprise IoT infrastructure comprises tens of thousands of interconnected edge devices, distributed sensors, intelligent actuators, regional gateways, and cloud servers. Ensuring robust network resilience requires protecting these highly dynamic communication channels against sophisticated cyber intrusions, maintaining absolute data confidentiality, enforcing strict operational integrity, and guaranteeing continuous 24/7 system availability against malicious outages. A single compromised temperature sensor or smart industrial valve can serve as an unvetted lateral entry point into core enterprise cloud databases unless guarded by advanced topological anomaly detection.</p>
-                        <p><b>The Core Philosophy of GraphGuard:</b> Traditional cybersecurity tools treat network endpoints as isolated, flat items in a database table. GraphGuard fundamentally recognizes that modern IoT devices function as a unified living organism structured as an interconnected topological graph. By combining Graph Neural Networks with rigorous adversarial assault testing, enterprises can proactively discover hidden architectural vulnerabilities before real malicious threat actors can exploit them.</p>
+                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-4">
+                        <p><b>Artificial Intelligence (AI):</b> Artificial Intelligence represents the apex of modern computational engineering, referring specifically to algorithmic systems designed to simulate human cognitive functions, reason through complex logical constraints, learn iteratively from massive multidimensional telemetry datasets, and execute automated operational decisions without continuous manual oversight. Within the GraphGuard IoT security architecture, sophisticated deep neural models continuously ingest, process, and evaluate intricate network interaction telemetry. By mapping real-time packet exchanges against historical behavioral graphs, these AI systems establish precise baseline device profiles, learn normal packet routing patterns, and flag structural anomalies instantly.</p>
+                        <p><b>Cybersecurity & IoT Resilience:</b> Modern enterprise IoT infrastructure comprises tens of thousands of interconnected edge devices, distributed sensors, intelligent actuators, regional gateways, and cloud servers. Ensuring robust network resilience requires protecting these highly dynamic communication channels against sophisticated cyber intrusions, maintaining absolute data confidentiality, enforcing strict operational integrity, and guaranteeing continuous 24/7 system availability against malicious outages.</p>
                     </div>
                 </div>
 
                 <!-- Section 2 -->
-                <div class="border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion('acc-2')" class="w-full p-5 text-left font-bold text-emerald-400 flex justify-between items-center hover:bg-slate-900 transition cursor-pointer">
+                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
+                    <div class="p-5 font-bold text-emerald-400 flex justify-between items-center hover:bg-slate-900 transition">
                         <span class="text-lg">2. Architectural Deep Dive: Graph Neural Network (GNN) Models & Attack Pairing</span>
-                        <span id="icon-acc-2" class="text-xl transition-transform duration-300">▼</span>
-                    </button>
-                    <div id="acc-2" class="accordion-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-6">
-                        <p>Standard machine learning architectures evaluate flat, independent data rows. However, enterprise computer networks are inherently topological graphs where connected hardware represents nodes and communication links represent edges. Below is an exhaustive breakdown of each GNN architecture and its defense pairing:</p>
+                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-6">
+                        <p>Standard machine learning architectures evaluate flat, independent data rows. However, enterprise computer networks are inherently topological graphs where connected hardware represents nodes and communication links represent edges. Below is an exhaustive breakdown of each GNN architecture:</p>
                         
                         <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
                             <h5 class="text-base font-bold text-emerald-400 mb-2">A. GraphSAGE (Sample and Aggregate)</h5>
-                            <p>GraphSAGE is a powerful inductive framework designed to generate low-dimensional node embeddings by uniformly sampling and aggregating feature distributions from a target node's local graph neighborhood. It excels against <span class="text-red-400 font-semibold">Feature-Level Noise Attacks</span> and moderate <span class="text-red-400 font-semibold">Structural Edge Perturbations</span> by pooling neighbor distributions.</p>
+                            <p>GraphSAGE is a powerful inductive framework designed to generate low-dimensional node embeddings by uniformly sampling and aggregating feature distributions from a target node's local graph neighborhood. It excels against <span class="text-red-400 font-semibold">Feature-Level Noise Attacks</span> and moderate <span class="text-red-400 font-semibold">Structural Edge Perturbations</span>.</p>
                         </div>
 
                         <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
@@ -331,79 +332,61 @@
                             <h5 class="text-base font-bold text-emerald-400 mb-2">C. GAT (Graph Attention Network - Pro Tier)</h5>
                             <p>GAT integrates masked self-attention layers, empowering the model to assign distinct attention weights to neighboring nodes. It is the ultimate defense against <span class="text-red-400 font-semibold">Node Injection Attacks</span> and <span class="text-red-400 font-semibold">Gradient-based Adversarial Attacks</span>.</p>
                         </div>
-
-                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                            <h5 class="text-base font-bold text-emerald-400 mb-2">D. RGCN & GIN (Relational & Isomorphism Models)</h5>
-                            <p>Relational GCN and Graph Isomorphism Networks handle multi-relational enterprise graphs with maximum discriminative power, ideal for complex switching environments facing severe <span class="text-red-400 font-semibold">Structural Edge Perturbations</span>.</p>
-                        </div>
                     </div>
                 </div>
 
                 <!-- Section 3 -->
-                <div class="border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion('acc-3')" class="w-full p-5 text-left font-bold text-red-400 flex justify-between items-center hover:bg-slate-900 transition cursor-pointer">
+                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
+                    <div class="p-5 font-bold text-red-400 flex justify-between items-center hover:bg-slate-900 transition">
                         <span class="text-lg">3. Exhaustive Breakdown of Adversarial Attack Vectors</span>
-                        <span id="icon-acc-3" class="text-xl transition-transform duration-300">▼</span>
-                    </button>
-                    <div id="acc-3" class="accordion-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-6">
+                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-6">
                         <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
                             <h5 class="text-base font-bold text-red-500 mb-2">🚨 1. Structural Edge Perturbation</h5>
-                            <p>Deliberately adding, deleting, or rewiring communication links within the IoT graph topology to fracture network routing, disrupt packet delivery schedules, and isolate critical gateway nodes. Destabilizes underlying network routing tables and isolates essential backend microservices.</p>
+                            <p>Deliberately adding, deleting, or rewiring communication links within the IoT graph topology to fracture network routing, disrupt packet delivery schedules, and isolate critical gateway nodes.</p>
                         </div>
                         <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
                             <h5 class="text-base font-bold text-red-500 mb-2">🚨 2. Feature-Level Noise Attack</h5>
-                            <p>Injecting subtle mathematical noise into device telemetry feature vectors (packet frequency, payload length, CPU load) to systematically deceive the deep learning intrusion classifier into misclassifying malicious traffic as benign.</p>
+                            <p>Injecting subtle mathematical noise into device telemetry feature vectors (packet frequency, payload length, CPU load) to systematically deceive the deep learning intrusion classifier.</p>
                         </div>
                         <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
                             <h5 class="text-base font-bold text-red-500 mb-2">🚨 3. Node Injection Attack</h5>
-                            <p>Introducing rogue, unauthorized virtual or physical IoT nodes into the active graph topology to mimic legitimate endpoints, bypass authentication mechanisms, and siphon sensitive enterprise telemetry data.</p>
+                            <p>Introducing rogue, unauthorized virtual or physical IoT nodes into the active graph topology to mimic legitimate endpoints and siphon sensitive enterprise telemetry data.</p>
                         </div>
                         <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
                             <h5 class="text-base font-bold text-red-500 mb-2">🚨 4. Gradient-based & Attribute Masking Attacks</h5>
-                            <p>Sophisticated algorithmic assaults designed to blind deep learning detection models by obfuscating packet attributes and exploiting model gradients to craft stealthy evasion payloads.</p>
+                            <p>Sophisticated algorithmic assaults designed to blind deep learning detection models by obfuscating packet attributes and exploiting model gradients.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Section 4 -->
-                <div class="border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion('acc-4')" class="w-full p-5 text-left font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition cursor-pointer">
+                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
+                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition">
                         <span class="text-lg">4. Telemetry Metrics, XAI Scores & Log Interpretation Dictionary</span>
-                        <span id="icon-acc-4" class="text-xl transition-transform duration-300">▼</span>
-                    </button>
-                    <div id="acc-4" class="accordion-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-3">
+                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-3">
                         <p><b>Clean Accuracy:</b> The intrusion detection model's baseline classification success rate evaluated under pristine conditions.</p>
                         <p><b>Attacked Accuracy:</b> Model classification performance under active adversarial stress. A steep drop indicates severe vulnerability.</p>
                         <p><b>XAI Fidelity Score:</b> Explainable AI metric quantifying how transparent and reliable the neural network's decision-making reasoning is.</p>
-                        <p><b>Enterprise Threat & Defense Logs:</b> Real-time system feedback detailing execution states and critical vulnerability alerts.</p>
                     </div>
                 </div>
 
                 <!-- Section 5 -->
-                <div class="border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion('acc-5')" class="w-full p-5 text-left font-bold text-emerald-400 flex justify-between items-center hover:bg-slate-900 transition cursor-pointer">
+                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
+                    <div class="p-5 font-bold text-emerald-400 flex justify-between items-center hover:bg-slate-900 transition">
                         <span class="text-lg">5. Automated Remediation Playbooks & Regulatory Compliance</span>
-                        <span id="icon-acc-5" class="text-xl transition-transform duration-300">▼</span>
-                    </button>
-                    <div id="acc-5" class="accordion-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-3">
+                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-3">
                         <p><b>Auto-Remediation CLI Playbook:</b> Instant synthesis of production-ready Cisco IOS routing configurations and Linux <i>iptables</i> firewall isolation scripts.</p>
                         <p><b>Regulatory Compliance Mapping:</b> Automated generation of formal audit reports mapped directly to international standards including <b>ISO/IEC 27001:2022</b> and <b>NIST SP 800-53 Rev. 5</b>.</p>
                     </div>
                 </div>
             </div>
         `;
-
-        function toggleAccordion(id) {
-            const content = document.getElementById(id);
-            const icon = document.getElementById('icon-' + id);
-            if (content.classList.contains('active')) {
-                content.classList.remove('active');
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                content.classList.add('active');
-                icon.style.transform = 'rotate(180deg)';
-            }
-        }
 
         const translations = {
             en: {
@@ -428,8 +411,8 @@
                 downloadSh: "💾 Download .sh",
                 logInit: "[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...",
                 detTitle: "Detailed Enterprise Technical Report & Master Knowledge Base",
-                detSub: "Click on any section button below to expand deep academic insights and security documentation.",
-                detailedReportHTML: massiveAccordionContent,
+                detSub: "Hover your mouse over any section card below to smoothly expand deep academic insights and security documentation.",
+                detailedReportHTML: massiveHoverContent,
                 guidePrev: "Previous",
                 guideNext: "Next Step",
                 guideFinish: "Finish Master Guide",
@@ -463,8 +446,8 @@
                 downloadSh: "💾 .sh Faylını Endir",
                 logInit: "[Sistem] GraphGuard IoT interfeysi işə düşdü. FastAPI backend ilə simulyasiyaya hazırdır...",
                 detTitle: "Detallı Korporativ Texniki Hesabat və Master Bilik Bazası",
-                detSub: "Dərin akademik məlumatları və təhlükəsizlik sənədlərini görmək üçün aşağıdakı düymələrə klikləyin.",
-                detailedReportHTML: massiveAccordionContent,
+                detSub: "Dərin akademik məlumatları görmək üçün mouse-u istənilən bölmə kartının üzərinə aparın.",
+                detailedReportHTML: massiveHoverContent,
                 guidePrev: "Əvvəlki",
                 guideNext: "Növbəti Addım",
                 guideFinish: "Bələdçini Bitir",
@@ -476,14 +459,14 @@
                     { title: "5. Avtomatik Bərpa və ISO/NIST Auditi", content: "<p><b>Korporativ Müdafiə:</b> Zəiflik aşkar edilən kimi sistem avtomatik olaraq Cisco IOS və Linux <i>iptables</i> təhlükəsizlik yamaları (patch) hazırlayır.</p><p><b>İxrac:</b> Skripti kopyalayın, <code>.sh</code> faylı kimi endirin və ya <b>ISO 27001</b> / <b>NIST</b> standartlarına uyğun rəsmi PDF hesabat əldə edin.</p>" }
                 ]
             },
-            ru: { controls: "Управление", dataset: "Данные", synGraph: "Граф", customFile: "Файл", nodeCount: "Узлы", uploadTopo: "Загрузить", gnnArch: "GNN", attackStrat: "Атака", attackRate: "Уровень", proKey: "Ключ", runSim: "Запуск", cleanAcc: "Чистая", attackAcc: "Атака", xaiScore: "XAI", logTitle: "Лог", exportPdf: "PDF", remedTitle: "Исправление", copyPatch: "Копировать", downloadSh: "Скачать", logInit: "Инициализация...", detTitle: "Подробный технический отчет", detSub: "Нажмите на кнопку.", detailedReportHTML: massiveAccordionContent, guidePrev: "Назад", guideNext: "Далее", guideFinish: "Готово", steps: [{ title: "1. Настройка", content: "Выберите топологию." }] },
-            de: { controls: "Steuerung", dataset: "Daten", synGraph: "Graph", customFile: "Datei", nodeCount: "Knoten", uploadTopo: "Hochladen", gnnArch: "GNN", attackStrat: "Angriff", attackRate: "Rate", proKey: "Schlüssel", runSim: "Starten", cleanAcc: "Clean", attackAcc: "Angriff", xaiScore: "XAI", logTitle: "Log", exportPdf: "PDF", remedTitle: "Remediation", copyPatch: "Kopieren", downloadSh: "Download", logInit: "Init...", detTitle: "Detaillierter technischer Bericht", detSub: "Klicken Sie auf eine Schaltfläche.", detailedReportHTML: massiveAccordionContent, guidePrev: "Zurück", guideNext: "Weiter", guideFinish: "Fertig", steps: [{ title: "1. Konfiguration", content: "Wählen Sie Topologie." }] },
-            fr: { controls: "Contrôles", dataset: "Source", synGraph: "Graphe", customFile: "Fichier", nodeCount: "Nœuds", uploadTopo: "Upload", gnnArch: "GNN", attackStrat: "Attaque", attackRate: "Taux", proKey: "Clé", runSim: "Lancer", cleanAcc: "Propre", attackAcc: "Attaque", xaiScore: "XAI", logTitle: "Journal", exportPdf: "PDF", remedTitle: "Remédiation", copyPatch: "Copier", downloadSh: "Télécharger", logInit: "Init...", detTitle: "Rapport Technique Détaillé", detSub: "Cliquez sur un bouton.", detailedReportHTML: massiveAccordionContent, guidePrev: "Précédent", guideNext: "Suivant", guideFinish: "Fin", steps: [{ title: "1. Configuration", content: "Sélectionnez la topologie." }] },
-            fi: { controls: "Hallinta", dataset: "Data", synGraph: "Graafi", customFile: "Tiedosto", nodeCount: "Solmut", uploadTopo: "Lataa", gnnArch: "GNN", attackStrat: "Hyökkäys", attackRate: "Taso", proKey: "Avain", runSim: "Suorita", cleanAcc: "Puhdas", attackAcc: "Hyökätty", xaiScore: "XAI", logTitle: "Loki", exportPdf: "PDF", remedTitle: "Korjaus", copyPatch: "Kopioi", downloadSh: "Lataa", logInit: "Alustettu...", detTitle: "Yksityiskohtainen tekninen raportti", detSub: "Napsauta painiketta.", detailedReportHTML: massiveAccordionContent, guidePrev: "Edellinen", guideNext: "Seuraava", guideFinish: "Valmis", steps: [{ title: "1. Asetukset", content: "Valitse topologia." }] },
-            no: { controls: "Kontroller", dataset: "Data", synGraph: "Graf", customFile: "Fil", nodeCount: "Noder", uploadTopo: "Last opp", gnnArch: "GNN", attackStrat: "Angrep", attackRate: "Rate", proKey: "Nøkkel", runSim: "Kjør", cleanAcc: "Ren", attackAcc: "Angrepet", xaiScore: "XAI", logTitle: "Logg", exportPdf: "PDF", remedTitle: "Utbedring", copyPatch: "Kopier", downloadSh: "Last ned", logInit: "Startet...", detTitle: "Detaljert Teknisk Rapport", detSub: "Klikk på en knapp.", detailedReportHTML: massiveAccordionContent, guidePrev: "Forrige", guideNext: "Neste", guideFinish: "Fullfør", steps: [{ title: "1. Konfigurasjon", content: "Velg topologi." }] },
-            hi: { controls: "नियंत्रण", dataset: "स्रोत", synGraph: "ग्राफ़", customFile: "फ़ाइल", nodeCount: "नोड्स", uploadTopo: "अपलोड", gnnArch: "GNN", attackStrat: "हमला", attackRate: "दर", proKey: "कुंजी", runSim: "चलाएं", cleanAcc: "स्वच्छ", attackAcc: "आक्रमण", xaiScore: "XAI", logTitle: "लॉग", exportPdf: "PDF", remedTitle: "सुधार", copyPatch: "कॉपी", downloadSh: "डाउनलोड", logInit: "तैयार...", detTitle: "विस्तृत तकनीकी रिपोर्ट", detSub: "बटन पर क्लिक करें।", detailedReportHTML: massiveAccordionContent, guidePrev: "पिछला", guideNext: "अगला", guideFinish: "समाप्त", steps: [{ title: "1. सेटअप", content: "टोपोलॉजी चुनें।" }] },
-            zh: { controls: "控制", dataset: "源", synGraph: "图", customFile: "文件", nodeCount: "节点", uploadTopo: "上传", gnnArch: "GNN", attackStrat: "攻击", attackRate: "率", proKey: "密钥", runSim: "运行", cleanAcc: "清洁", attackAcc: "受攻击", xaiScore: "XAI", logTitle: "日志", exportPdf: "PDF", remedTitle: "修复", copyPatch: "复制", downloadSh: "下载", logInit: "初始化...", detTitle: "详细技术报告与知识库", detSub: "点击下方按钮展开。", detailedReportHTML: massiveAccordionContent, guidePrev: "上一步", guideNext: "下一步", guideFinish: "完成", steps: [{ title: "1. 配置", content: "选择拓扑。" }] },
-            ja: { controls: "制御", dataset: "ソース", synGraph: "グラフ", customFile: "ファイル", nodeCount: "ノード", uploadTopo: "アップロード", gnnArch: "GNN", attackStrat: "攻撃", attackRate: "レート", proKey: "キー", runSim: "実行", cleanAcc: "クリーン", attackAcc: "攻撃時", xaiScore: "XAI", logTitle: "ログ", exportPdf: "PDF", remedTitle: "修復", copyPatch: "コピー", downloadSh: "ダウンロード", logInit: "初期化...", detTitle: "詳細テクニカルレポートとナレッジベース", detSub: "ボタンをクリックします。", detailedReportHTML: massiveAccordionContent, guidePrev: "前へ", guideNext: "次へ", guideFinish: "完了", steps: [{ title: "1. 設定", content: "トポロジを選択します。" }] }
+            ru: { controls: "Управление", dataset: "Данные", synGraph: "Граф", customFile: "Файл", nodeCount: "Узлы", uploadTopo: "Загрузить", gnnArch: "GNN", attackStrat: "Атака", attackRate: "Уровень", proKey: "Ключ", runSim: "Запуск", cleanAcc: "Чистая", attackAcc: "Атака", xaiScore: "XAI", logTitle: "Лог", exportPdf: "PDF", remedTitle: "Исправление", copyPatch: "Копировать", downloadSh: "Скачать", logInit: "Инициализация...", detTitle: "Подробный технический отчет", detSub: "Наведите курсор на карточку.", detailedReportHTML: massiveHoverContent, guidePrev: "Назад", guideNext: "Далее", guideFinish: "Готово", steps: [{ title: "1. Настройка", content: "Выберите топологию." }] },
+            de: { controls: "Steuerung", dataset: "Daten", synGraph: "Graph", customFile: "Datei", nodeCount: "Knoten", uploadTopo: "Hochladen", gnnArch: "GNN", attackStrat: "Angriff", attackRate: "Rate", proKey: "Schlüssel", runSim: "Starten", cleanAcc: "Clean", attackAcc: "Angriff", xaiScore: "XAI", logTitle: "Log", exportPdf: "PDF", remedTitle: "Remediation", copyPatch: "Kopieren", downloadSh: "Download", logInit: "Init...", detTitle: "Detaillierter technischer Bericht", detSub: "Bewegen Sie den Mauszeiger.", detailedReportHTML: massiveHoverContent, guidePrev: "Zurück", guideNext: "Weiter", guideFinish: "Fertig", steps: [{ title: "1. Konfiguration", content: "Wählen Sie Topologie." }] },
+            fr: { controls: "Contrôles", dataset: "Source", synGraph: "Graphe", customFile: "Fichier", nodeCount: "Nœuds", uploadTopo: "Upload", gnnArch: "GNN", attackStrat: "Attaque", attackRate: "Taux", proKey: "Clé", runSim: "Lancer", cleanAcc: "Propre", attackAcc: "Attaque", xaiScore: "XAI", logTitle: "Journal", exportPdf: "PDF", remedTitle: "Remédiation", copyPatch: "Copier", downloadSh: "Télécharger", logInit: "Init...", detTitle: "Rapport Technique Détaillé", detSub: "Survolez une carte.", detailedReportHTML: massiveHoverContent, guidePrev: "Précédent", guideNext: "Suivant", guideFinish: "Fin", steps: [{ title: "1. Configuration", content: "Sélectionnez la topologie." }] },
+            fi: { controls: "Hallinta", dataset: "Data", synGraph: "Graafi", customFile: "Tiedosto", nodeCount: "Solmut", uploadTopo: "Lataa", gnnArch: "GNN", attackStrat: "Hyökkäys", attackRate: "Taso", proKey: "Avain", runSim: "Suorita", cleanAcc: "Puhdas", attackAcc: "Hyökätty", xaiScore: "XAI", logTitle: "Loki", exportPdf: "PDF", remedTitle: "Korjaus", copyPatch: "Kopioi", downloadSh: "Lataa", logInit: "Alustettu...", detTitle: "Yksityiskohtainen tekninen raportti", detSub: "Vie hiiri kortin päälle.", detailedReportHTML: massiveHoverContent, guidePrev: "Edellinen", guideNext: "Seuraava", guideFinish: "Valmis", steps: [{ title: "1. Asetukset", content: "Valitse topologia." }] },
+            no: { controls: "Kontroller", dataset: "Data", synGraph: "Graf", customFile: "Fil", nodeCount: "Noder", uploadTopo: "Last opp", gnnArch: "GNN", attackStrat: "Angrep", attackRate: "Rate", proKey: "Nøkkel", runSim: "Kjør", cleanAcc: "Ren", attackAcc: "Angrepet", xaiScore: "XAI", logTitle: "Logg", exportPdf: "PDF", remedTitle: "Utbedring", copyPatch: "Kopier", downloadSh: "Last ned", logInit: "Startet...", detTitle: "Detaljert Teknisk Rapport", detSub: "Hold markøren over et kort.", detailedReportHTML: massiveHoverContent, guidePrev: "Forrige", guideNext: "Neste", guideFinish: "Fullfør", steps: [{ title: "1. Konfigurasjon", content: "Velg topologi." }] },
+            hi: { controls: "नियंत्रण", dataset: "स्रोत", synGraph: "ग्राफ़", customFile: "फ़ाइल", nodeCount: "नोड्स", uploadTopo: "अपलोड", gnnArch: "GNN", attackStrat: "हमला", attackRate: "दर", proKey: "कुंजी", runSim: "चलाएं", cleanAcc: "स्वच्छ", attackAcc: "आक्रमण", xaiScore: "XAI", logTitle: "लॉग", exportPdf: "PDF", remedTitle: "सुधार", copyPatch: "कॉपी", downloadSh: "डाउनलोड", logInit: "तैयार...", detTitle: "विस्तृत तकनीकी रिपोर्ट", detSub: "कर्सर ले जाएं।", detailedReportHTML: massiveHoverContent, guidePrev: "पिछला", guideNext: "अगला", guideFinish: "समाप्त", steps: [{ title: "1. सेटअप", content: "टोपोलॉजी चुनें।" }] },
+            zh: { controls: "控制", dataset: "源", synGraph: "图", customFile: "文件", nodeCount: "节点", uploadTopo: "上传", gnnArch: "GNN", attackStrat: "攻击", attackRate: "率", proKey: "密钥", runSim: "运行", cleanAcc: "清洁", attackAcc: "受攻击", xaiScore: "XAI", logTitle: "日志", exportPdf: "PDF", remedTitle: "修复", copyPatch: "复制", downloadSh: "下载", logInit: "初始化...", detTitle: "详细技术报告与知识库", detSub: "将鼠标 悬停 在卡片上方。", detailedReportHTML: massiveHoverContent, guidePrev: "上一步", guideNext: "下一步", guideFinish: "完成", steps: [{ title: "1. 配置", content: "选择拓扑。" }] },
+            ja: { controls: "制御", dataset: "ソース", synGraph: "グラフ", customFile: "ファイル", nodeCount: "ノード", uploadTopo: "アップロード", gnnArch: "GNN", attackStrat: "攻撃", attackRate: "レート", proKey: "キー", runSim: "実行", cleanAcc: "クリーン", attackAcc: "攻撃時", xaiScore: "XAI", logTitle: "ログ", exportPdf: "PDF", remedTitle: "修復", copyPatch: "コピー", downloadSh: "ダウンロード", logInit: "初期化...", detTitle: "詳細テクニカルレポートとナレッジベース", detSub: "カードの上にカーソルを置きます。", detailedReportHTML: massiveHoverContent, guidePrev: "前へ", guideNext: "次へ", guideFinish: "完了", steps: [{ title: "1. 設定", content: "トポロジを選択します。" }] }
         };
 
         function changeLanguage(lang) {
@@ -778,7 +761,7 @@
         }
 
         window.onload = function() {
-            document.getElementById('detRepContent').innerHTML = massiveAccordionContent;
+            document.getElementById('detRepContent').innerHTML = massiveHoverContent;
         };
     </script>
 </body>
