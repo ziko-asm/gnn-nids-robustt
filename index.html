@@ -29,7 +29,7 @@
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">🛡️</span>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v1.4</span>
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v1.4.1</span>
                 </h1>
             </div>
             <div class="flex items-center space-x-4 text-sm text-slate-400">
@@ -253,7 +253,7 @@
               <div>
                 <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-600 text-white">Most Popular</span>
                 <h3 class="text-xl font-bold mt-3">Professional Tier</h3>
-                <div class="my-4"><span class="text-3xl font-extrabold">\$29</span><span class="text-slate-400 text-sm"> / monthly</span></div>
+                <div class="my-4"><span class="text-3xl font-extrabold">$29</span><span class="text-slate-400 text-sm"> / monthly</span></div>
                 <ul class="space-y-2 text-sm text-slate-300 mb-6">
                   <li>✓ Advanced GAT & GIN Models</li>
                   <li>✓ Custom CSV/JSON Upload</li>
@@ -282,7 +282,7 @@
       </div>
     </div>
 
-    <!-- JavaScript Execution Logic & Localization -->
+    <!-- JavaScript Execution Logic & Multi-Language Guide -->
     <script>
         const API_BASE_URL = 'https://gnn-nids-robustt.onrender.com';
         let activeDataMode = 'synthetic';
@@ -291,7 +291,7 @@
         let currentGuideStep = 0;
         let currentLang = 'en';
 
-        // Translations Dictionary (10 Languages)
+        // Translations Dictionary (10 Languages including Platform Guide)
         const translations = {
             en: {
                 controls: "⚙️ Simulation Controls",
@@ -313,7 +313,17 @@
                 remedTitle: "⚡ Auto-Remediation Playbook & Compliance Audit",
                 copyPatch: "📋 Copy CLI Patch",
                 downloadSh: "💾 Download .sh",
-                logInit: "[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend..."
+                logInit: "[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...",
+                guidePrev: "Previous",
+                guideNext: "Next Step",
+                guideFinish: "Finish Guide",
+                steps: [
+                    { title: "1. Dataset & Topology Configuration", content: "Choose between a generated Synthetic IoT Network graph or upload your own enterprise CSV/JSON network edge and feature topology files." },
+                    { title: "2. GNN Architecture Selection", content: "Select state-of-the-art Graph Neural Networks including GraphSAGE, GCN, GAT, RGCN, or GIN models to inspect IoT intrusion detection capabilities." },
+                    { title: "3. Adversarial Simulation", content: "Configure adversarial attack types (Structural, Node Injection, Feature Noise, Gradient, Masking) and set intensity rates, then click 'Run Adversarial Simulation'." },
+                    { title: "4. Live Telemetry & Metrics", content: "Evaluate Clean Accuracy vs. Attacked Accuracy degradation and XAI fidelity scores instantly on enterprise metric cards and threat logs." },
+                    { title: "5. Auto-Remediation & ISO/NIST Audit", content: "Instantly review automated Cisco IOS & Linux iptables security patches, check ISO 27001 / NIST compliance status, and download formal PDF audit reports." }
+                ]
             },
             az: {
                 controls: "⚙️ Simulyasiya İdarəetməsi",
@@ -335,7 +345,17 @@
                 remedTitle: "⚡ Avtomatik Bərpa Skripti və Uyğunluq Auditi",
                 copyPatch: "📋 CLI Yamasını Kopyala",
                 downloadSh: "💾 .sh Faylını Endir",
-                logInit: "[Sistem] GraphGuard IoT interfeysi işə düşdü. FastAPI backend ilə simulyasiyaya hazırdır..."
+                logInit: "[Sistem] GraphGuard IoT interfeysi işə düşdü. FastAPI backend ilə simulyasiyaya hazırdır...",
+                guidePrev: "Əvvəlki",
+                guideNext: "Növbəti Addım",
+                guideFinish: "Bələdçini Bitir",
+                steps: [
+                    { title: "1. Məlumat və Topologiya Konfiqurasiyası", content: "Sintetik IoT şəbəkə qrafı yaradın və ya öz korporativ CSV/JSON fayllarınızı topologiya olaraq yükləyin." },
+                    { title: "2. GNN Arxitekturasının Seçilməsi", content: "IoT təhlükələrini aşkar etmək üçün GraphSAGE, GCN, GAT, RGCN və ya GIN modellərindən birini seçin." },
+                    { title: "3. Adversarial Simulyasiya", content: "Hücum növünü seçin (Struktur, Qovşaq İnyeksiya, Səs-küy və s.), intensivliyi təyin edin və simulyasiyanı işə salın." },
+                    { title: "4. Canlı Metrikalar və Analiz", content: "Təmiz dəqiqlik ilə hücuma məruz qalmış dəqiqlik fərqini, həmçinin XAI uyğunluq hesabını dərhal izləyin." },
+                    { title: "5. Avtomatik Bərpa və ISO/NIST Auditi", content: "Cisco IOS / Linux iptables bərpa yamalarını nəzərdən keçirin, ISO 27001 uyğunluğunu yoxlayın və rəsmi PDF hesabat endirin." }
+                ]
             },
             ru: {
                 controls: "⚙️ Управление симуляцией",
@@ -357,7 +377,17 @@
                 remedTitle: "⚡ Авто-исправление и аудит соответствия",
                 copyPatch: "📋 Копировать патч CLI",
                 downloadSh: "💾 Скачать .sh",
-                logInit: "[Система] Интерфейс инициализирован. Готов к симуляции..."
+                logInit: "[Система] Интерфейс инициализирован. Готов к симуляции...",
+                guidePrev: "Назад",
+                guideNext: "Далее",
+                guideFinish: "Завершить",
+                steps: [
+                    { title: "1. Конфигурация данных и топологии", content: "Выберите синтетический граф IoT сети или загрузите собственные CSV/JSON файлы топологии." },
+                    { title: "2. Выбор архитектуры GNN", content: "Выберите передовые модели GraphSAGE, GCN, GAT, RGCN или GIN для обнаружения вторжений в IoT." },
+                    { title: "3. Adversarial Симуляция", content: "Настройте типы атак и степень интенсивности, затем запустите симуляцию." },
+                    { title: "4. Динамическая телеметрия", content: "Оценивайте падение точности и баллы XAI в реальном времени на карточках метрик." },
+                    { title: "5. Авто-восстановление и ISO/NIST Аудит", content: "Просматривайте патчи для Cisco/Linux, проверяйте статус ISO 27001 и скачивайте PDF отчет." }
+                ]
             },
             de: {
                 controls: "⚙️ Simulationssteuerung",
@@ -379,7 +409,17 @@
                 remedTitle: "⚡ Auto-Remediation Playbook & Compliance Audit",
                 copyPatch: "📋 CLI-Patch kopieren",
                 downloadSh: "💾 .sh Herunterladen",
-                logInit: "[System] GraphGuard IoT Frontend initialisiert..."
+                logInit: "[System] GraphGuard IoT Frontend initialisiert...",
+                guidePrev: "Zurück",
+                guideNext: "Weiter",
+                guideFinish: "Fertig",
+                steps: [
+                    { title: "1. Daten- und Topologiekonfiguration", content: "Wählen Sie einen synthetischen IoT-Graphen oder laden Sie eigene CSV/JSON-Dateien hoch." },
+                    { title: "2. GNN-Architekturauswahl", content: "Wählen Sie GraphSAGE, GCN, GAT, RGCN oder GIN Modelle zur Erkennung von Bedrohungen." },
+                    { title: "3. Adversarial Simulation", content: "Konfigurieren Sie Angriffsarten und Intensität und starten Sie die Simulation." },
+                    { title: "4. Live Telemetrie & Metriken", content: "Überwachen Sie Genauigkeitseinbußen und XAI-Scores in Echtzeit." },
+                    { title: "5. Auto-Remediation & ISO/NIST Audit", content: "Überprüfen Sie Cisco/Linux Patches, ISO 27001 Konformität und laden Sie PDF-Berichte herunter." }
+                ]
             },
             fr: {
                 controls: "⚙️ Contrôles de Simulation",
@@ -401,7 +441,17 @@
                 remedTitle: "⚡ Guide de Correction et Audit de Conformité",
                 copyPatch: "📋 Copier le Patch CLI",
                 downloadSh: "💾 Télécharger .sh",
-                logInit: "[Système] Interface GraphGuard initialisée..."
+                logInit: "[Système] Interface GraphGuard initialisée...",
+                guidePrev: "Précédent",
+                guideNext: "Suivant",
+                guideFinish: "Terminer",
+                steps: [
+                    { title: "1. Configuration de la Topologie", content: "Choisissez un graphe IoT synthétique ou téléchargez vos fichiers CSV/JSON." },
+                    { title: "2. Sélection de l'Architecture GNN", content: "Sélectionnez GraphSAGE, GCN, GAT, RGCN ou GIN pour analyser les menaces." },
+                    { title: "3. Simulation Adversariale", content: "Configurez les types d'attaque et lancez la simulation." },
+                    { title: "4. Télémétrie en Direct", content: "Évaluez la dégradation de la précision et les scores XAI instantanément." },
+                    { title: "5. Correction Auto & Audit ISO/NIST", content: "Examinez les correctifs Cisco/Linux, vérifiez la conformité ISO et téléchargez le PDF." }
+                ]
             },
             fi: {
                 controls: "⚙️ Simulaation Hallinta",
@@ -423,7 +473,17 @@
                 remedTitle: "⚡ Automaattinen Korjaus ja Vaatimustenmukaisuus",
                 copyPatch: "📋 Kopioi CLI Patch",
                 downloadSh: "💾 Lataa .sh",
-                logInit: "[Järjestelmä] GraphGuard IoT alustettu..."
+                logInit: "[Järjestelmä] GraphGuard IoT alustettu...",
+                guidePrev: "Edellinen",
+                guideNext: "Seuraava",
+                guideFinish: "Valmis",
+                steps: [
+                    { title: "1. Datan ja Topologian Asetukset", content: "Valitse synteettinen IoT-verkko tai lataa omat CSV/JSON-tiedostosi." },
+                    { title: "2. GNN Arkkitehtuurin Valinta", content: "Valitse GraphSAGE, GCN, GAT, RGCN tai GIN mallit havaitsemiseen." },
+                    { title: "3. Hyökkäyssimulaatio", content: "Määritä hyökkäystyypit ja suorita simulaatio." },
+                    { title: "4. Reaaliaikaiset Mittarit", content: "Arvioi tarkkuuden heikkenemistä ja XAI-pisteitä reaaliajassa." },
+                    { title: "5. Automaattinen Korjaus & ISO/NIST", content: "Tarkastele Cisco/Linux korjauksia ja lataa PDF-raportti." }
+                ]
             },
             no: {
                 controls: "⚙️ Simuleringskontroller",
@@ -445,7 +505,17 @@
                 remedTitle: "⚡ Auto-Utbedring og Samsvarsrevisjon",
                 copyPatch: "📋 Kopier CLI Patch",
                 downloadSh: "💾 Last ned .sh",
-                logInit: "[System] GraphGuard IoT initialisert..."
+                logInit: "[System] GraphGuard IoT initialisert...",
+                guidePrev: "Forrige",
+                guideNext: "Neste",
+                guideFinish: "Fullfør",
+                steps: [
+                    { title: "1. Konfigurasjon av Topologi", content: "Velg en syntetisk IoT-graf eller last opp dine egne CSV/JSON-filer." },
+                    { title: "2. Valg av GNN Arkitektur", content: "Velg GraphSAGE, GCN, GAT, RGCN eller GIN for deteksjon." },
+                    { title: "3. Adversarial Simulering", content: "Konfigurer angrepstyper og kjør simuleringen." },
+                    { title: "4. Live Telemetri", content: "Evaluer nøyaktighet og XAI-poengsummer umiddelbart." },
+                    { title: "5. Auto-Utbedring & ISO/NIST", content: "Gjennomgå Cisco/Linux patcher og last ned PDF-rapport." }
+                ]
             },
             hi: {
                 controls: "⚙️ सिमुलेशन नियंत्रण",
@@ -467,7 +537,17 @@
                 remedTitle: "⚡ ऑटो-रेमेडिएशन और अनुपालन ऑडिट",
                 copyPatch: "📋 CLI पैच कॉपी करें",
                 downloadSh: "💾 .sh डाउनलोड करें",
-                logInit: "[सिस्टम] GraphGuard IoT तैयार है..."
+                logInit: "[सिस्टम] GraphGuard IoT तैयार है...",
+                guidePrev: "पिछला",
+                guideNext: "अगला",
+                guideFinish: "समाप्त",
+                steps: [
+                    { title: "1. डेटासेट कॉन्फ़िगरेशन", content: "सिंथेटिक IoT नेटवर्क चुनें या अपनी CSV/JSON फ़ाइलें अपलोड करें।" },
+                    { title: "2. GNN आर्किटेक्चर", content: "GraphSAGE, GCN, GAT, RGCN या GIN मॉडल चुनें।" },
+                    { title: "3. सिमुलेशन", content: "हमले के प्रकार और तीव्रता सेट करें।" },
+                    { title: "4. लाइव मेट्रिक्स", content: "सटीकता और XAI स्कोर का मूल्यांकन करें।" },
+                    { title: "5. ऑटो-रेमेडिएशन और ISO/NIST", content: "Cisco/Linux पैच की समीक्षा करें और PDF रिपोर्ट डाउनलोड करें।" }
+                ]
             },
             zh: {
                 controls: "⚙️ 仿真控制",
@@ -489,7 +569,17 @@
                 remedTitle: "⚡ 自动修复与合规审计",
                 copyPatch: "📋 复制 CLI 补丁",
                 downloadSh: "💾 下载 .sh",
-                logInit: "[系统] GraphGuard IoT 初始化完成..."
+                logInit: "[系统] GraphGuard IoT 初始化完成...",
+                guidePrev: "上一步",
+                guideNext: "下一步",
+                guideFinish: "完成",
+                steps: [
+                    { title: "1. 数据集与拓扑配置", content: "选择合成 IoT 网络图或上传您自己的企业 CSV/JSON 拓扑文件。" },
+                    { title: "2. GNN 架构选择", content: "选择 GraphSAGE、GCN、GAT、RGCN 或 GIN 模型进行入侵检测。" },
+                    { title: "3. 对抗仿真", content: "配置攻击类型和强度率，然后运行仿真。" },
+                    { title: "4. 实时遥测与指标", content: "即时评估准确率下降和 XAI 保真度评分。" },
+                    { title: "5. 自动修复与 ISO/NIST 审计", content: "审查 Cisco/Linux 安全补丁，检查 ISO 27001 状态并下载 PDF 报告。" }
+                ]
             },
             ja: {
                 controls: "⚙️ シミュレーション制御",
@@ -511,32 +601,19 @@
                 remedTitle: "⚡ 自動修復プレイブック & コンプライアンス監査",
                 copyPatch: "📋 CLIパッチをコピー",
                 downloadSh: "💾 .shをダウンロード",
-                logInit: "[システム] GraphGuard IoTフロントエンドが初期化されました..."
+                logInit: "[システム] GraphGuard IoTフロントエンドが初期化されました...",
+                guidePrev: "前へ",
+                guideNext: "次へ",
+                guideFinish: "完了",
+                steps: [
+                    { title: "1. データセットとトポロジ設定", content: "合成IoTネットワークグラフを選択するか、CSV/JSONファイルをアップロードします。" },
+                    { title: "2. GNNアーキテクチャの選択", content: "GraphSAGE、GCN、GAT、RGCN、GINモデルを選択します。" },
+                    { title: "3. 敵対的シミュレーション", content: "攻撃タイプと強度を設定し、シミュレーションを実行します。" },
+                    { title: "4. ライブテレメトリとメトリクス", content: "精度の低下とXAIスコアをリアルタイムで評価します。" },
+                    { title: "5. 自動修復 & ISO/NIST監査", content: "Cisco/Linuxパッチを確認し、ISO 27001準拠ステータスとPDFレポートを取得します。" }
+                ]
             }
         };
-
-        const guideSteps = [
-            {
-                title: "1. Dataset & Topology Configuration",
-                content: "Choose between a generated Synthetic IoT Network graph or upload your own enterprise CSV/JSON network edge and feature topology files."
-            },
-            {
-                title: "2. GNN Architecture Selection",
-                content: "Select state-of-the-art Graph Neural Networks including GraphSAGE, GCN, GAT, RGCN, or GIN models to inspect IoT intrusion detection capabilities."
-            },
-            {
-                title: "3. Adversarial Simulation",
-                content: "Configure adversarial attack types (Structural, Node Injection, Feature Noise, Gradient, Masking) and set intensity rates, then click 'Run Adversarial Simulation'."
-            },
-            {
-                title: "4. Live Telemetry & Metrics",
-                content: "Evaluate Clean Accuracy vs. Attacked Accuracy degradation and XAI fidelity scores instantly on enterprise metric cards and threat logs."
-            },
-            {
-                title: "5. Auto-Remediation & ISO/NIST Audit",
-                content: "Instantly review automated Cisco IOS & Linux iptables security patches, check ISO 27001 / NIST compliance status, and download formal PDF audit reports."
-            }
-        ];
 
         function changeLanguage(lang) {
             currentLang = lang;
@@ -562,6 +639,9 @@
             document.getElementById('copyPatchBtn').innerText = t.copyPatch;
             document.getElementById('downloadPatchBtn').innerText = t.downloadSh;
             document.getElementById('txtLogInit').innerText = t.logInit;
+
+            // Update Guide Modal if open
+            updateGuideModal();
         }
 
         function startPlatformGuide() {
@@ -575,18 +655,23 @@
         }
 
         function updateGuideModal() {
-            const step = guideSteps[currentGuideStep];
+            const t = translations[currentLang] || translations.en;
+            const steps = t.steps;
+            const step = steps[currentGuideStep] || steps[0];
+
             document.getElementById('guideStepTitle').innerText = step.title;
-            document.getElementById('guideStepCounter').innerText = `Step ${currentGuideStep + 1} of ${guideSteps.length}`;
+            document.getElementById('guideStepCounter').innerText = `Step ${currentGuideStep + 1} of ${steps.length}`;
             document.getElementById('guideStepContent').innerText = step.content;
 
+            document.getElementById('guidePrevBtn').innerText = t.guidePrev;
             document.getElementById('guidePrevBtn').disabled = currentGuideStep === 0;
-            document.getElementById('guideNextBtn').innerText = currentGuideStep === guideSteps.length - 1 ? "Finish Guide" : "Next Step";
+            
+            document.getElementById('guideNextBtn').innerText = currentGuideStep === steps.length - 1 ? t.guideFinish : t.guideNext;
 
             // Update dots
             const dotsContainer = document.getElementById('guideDots');
             dotsContainer.innerHTML = '';
-            for (let i = 0; i < guideSteps.length; i++) {
+            for (let i = 0; i < steps.length; i++) {
                 const dot = document.createElement('span');
                 dot.className = `w-2.5 h-2.5 rounded-full ${i === currentGuideStep ? 'bg-emerald-500' : 'bg-slate-700'}`;
                 dotsContainer.appendChild(dot);
@@ -594,7 +679,8 @@
         }
 
         function nextGuideStep() {
-            if (currentGuideStep < guideSteps.length - 1) {
+            const t = translations[currentLang] || translations.en;
+            if (currentGuideStep < t.steps.length - 1) {
                 currentGuideStep++;
                 updateGuideModal();
             } else {
