@@ -29,10 +29,10 @@
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">🛡️</span>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v1.5.0</span>
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v1.6.0</span>
                 </h1>
             </div>
-            <div class="flex items-center space-x-4 text-sm text-slate-400">
+            <div class="flex items-center space-x-3 text-sm text-slate-400">
                 <!-- Multi-Language Selector -->
                 <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-emerald-500 cursor-pointer">
                     <option value="en">🇬🇧 English</option>
@@ -46,6 +46,11 @@
                     <option value="zh">🇨🇳 中文</option>
                     <option value="ja">🇯🇵 日本語</option>
                 </select>
+
+                <!-- Detailed Report Button -->
+                <button onclick="openDetailedReportModal()" class="bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1">
+                    📚 Detailed Report
+                </button>
 
                 <button onclick="startPlatformGuide()" class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1">
                     📖 Platform Guide
@@ -196,7 +201,29 @@
 
     </main>
 
-    <!-- COMPREHENSIVE PLATFORM GUIDE OVERLAY MODAL -->
+    <!-- DETAILED REPORT MASTER KNOWLEDGE BASE MODAL -->
+    <div id="detailedReportModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
+        <div class="bg-slate-900 border border-cyan-500/50 rounded-2xl max-w-5xl w-full p-8 text-white shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            <button onclick="closeDetailedReportModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-2xl font-bold p-2 cursor-pointer">✕</button>
+            <div class="flex items-center space-x-3 mb-6 border-b border-slate-800 pb-4">
+                <span class="text-4xl">📚</span>
+                <div>
+                    <h2 id="detRepTitle" class="text-2xl font-extrabold text-cyan-400">Detailed Enterprise Technical Report & Knowledge Base</h2>
+                    <p id="detRepSub" class="text-xs text-slate-400">Comprehensive reference guide covering AI, GNN models, attack vectors, metrics, and compliance standards.</p>
+                </div>
+            </div>
+            
+            <div id="detRepContent" class="space-y-8 text-slate-300 text-sm leading-relaxed">
+                <!-- Content will be dynamically populated in 10 languages -->
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-800 flex justify-end">
+                <button onclick="closeDetailedReportModal()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs cursor-pointer transition">Close Report</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PLATFORM GUIDE OVERLAY MODAL -->
     <div id="guideModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
         <div class="bg-slate-900 border border-emerald-500/40 rounded-2xl max-w-3xl w-full p-6 text-white shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closePlatformGuide()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold p-2 cursor-pointer">✕</button>
@@ -207,12 +234,9 @@
                     <p id="guideStepCounter" class="text-xs text-slate-400">Step 1 of 5</p>
                 </div>
             </div>
-            <div id="guideStepContent" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-300 mb-6 leading-relaxed space-y-3">
-                <!-- Dynamically populated deep guide content -->
-            </div>
+            <div id="guideStepContent" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-300 mb-6 leading-relaxed space-y-3"></div>
             <div class="flex justify-between items-center">
                 <button id="guidePrevBtn" onclick="prevGuideStep()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer transition disabled:opacity-50" disabled>Previous</button>
-                <!-- Interactive Clickable Dots -->
                 <div class="flex space-x-2" id="guideDots"></div>
                 <button id="guideNextBtn" onclick="nextGuideStep()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-5 py-2 rounded-xl text-xs font-bold cursor-pointer transition">Next Step</button>
             </div>
@@ -229,7 +253,6 @@
             <p class="text-slate-400 mt-2">Scale your GNN cyber threat analysis according to your needs</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Free Plan -->
             <div class="rounded-xl p-5 flex flex-col justify-between border border-slate-800 bg-slate-950/50">
               <div>
                 <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-700 text-gray-300">Base</span>
@@ -243,7 +266,6 @@
               </div>
               <button disabled class="w-full py-2.5 rounded-lg font-semibold bg-slate-800 text-slate-500 cursor-not-allowed">Current Plan</button>
             </div>
-            <!-- Pro Plan -->
             <div class="rounded-xl p-5 flex flex-col justify-between border border-blue-500 bg-slate-800/80 shadow-blue-500/10 shadow-lg">
               <div>
                 <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-600 text-white">Most Popular</span>
@@ -258,7 +280,6 @@
               </div>
               <button onclick="handleStripeCheckout()" class="w-full py-2.5 rounded-lg font-semibold bg-blue-600 hover:bg-blue-500 text-white transition shadow-lg shadow-blue-600/30 cursor-pointer">Upgrade to Pro</button>
             </div>
-            <!-- Enterprise Plan -->
             <div class="rounded-xl p-5 flex flex-col justify-between border border-slate-800 bg-slate-950/50">
               <div>
                 <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-600 text-white">Business</span>
@@ -277,7 +298,7 @@
       </div>
     </div>
 
-    <!-- JavaScript Execution Logic & Deep 10-Language Guide -->
+    <!-- JavaScript Execution Logic & Detailed Report Translations -->
     <script>
         const API_BASE_URL = 'https://gnn-nids-robustt.onrender.com';
         let activeDataMode = 'synthetic';
@@ -311,27 +332,48 @@
                 guidePrev: "Previous",
                 guideNext: "Next Step",
                 guideFinish: "Finish Master Guide",
+                detTitle: "Detailed Enterprise Technical Report & Knowledge Base",
+                detSub: "Comprehensive reference guide covering AI, GNN models, attack vectors, metrics, and compliance standards.",
+                detailedReportHTML: `
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">1. Fundamental Concepts: What is AI & Cybersecurity?</h3>
+                        <p><b>Artificial Intelligence (AI):</b> Systems designed to mimic human intelligence, learn from data, and make automated decisions. In GraphGuard, AI inspects complex network interactions to spot anomalies.</p>
+                        <p><b>Cybersecurity & IoT Resilience:</b> Protecting interconnected IoT devices (sensors, gateways, servers) from malicious intrusions, ensuring confidentiality, integrity, and continuous availability.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">2. Deep Dive into GNN Model Architectures</h3>
+                        <p><b>Graph Neural Networks (GNN):</b> Unlike standard AI that looks at flat tables, GNNs analyze graph structures (nodes and edges).<br>
+                        • <b>GraphSAGE:</b> Samples and aggregates neighbor features. Highly scalable and recommended for large IoT topologies.<br>
+                        • <b>GCN (Graph Convolutional Network):</b> Applies spectral convolutional filters across graph neighborhoods.<br>
+                        • <b>GAT (Graph Attention Network):</b> Uses self-attention weights to prioritize critical IoT links (Pro tier).<br>
+                        • <b>RGCN & GIN:</b> Specialized relational and isomorphism models for advanced structural analysis.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">3. Adversarial Attack Vectors Explained</h3>
+                        <p><b>Structural Edge Perturbation:</b> Deliberately adding or removing communication links to break network routing.<br>
+                        <b>Feature-Level Noise:</b> Injecting mathematical noise into device telemetry to fool the AI.<br>
+                        <b>Node Injection:</b> Introducing rogue, unauthorized IoT devices into the network graph.<br>
+                        <b>Gradient Attacks & Attribute Masking:</b> Sophisticated attempts to blind the detection model.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">4. Telemetry Metrics & Log Interpretation</h3>
+                        <p><b>Clean Accuracy:</b> The model's baseline intrusion detection success rate.<br>
+                        <b>Attacked Accuracy:</b> Performance under adversarial stress. A steep drop indicates vulnerability.<br>
+                        <b>XAI Fidelity Score:</b> Explanable AI metric showing how reliable the model's reasoning is.<br>
+                        <b>Threat Logs:</b> Real-time system feedback indicating whether network posture is secure or critical.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">5. Automated Remediation & Compliance Standards</h3>
+                        <p><b>Auto-Remediation:</b> Immediate generation of Cisco IOS and Linux <i>iptables</i> firewall patches.<br>
+                        <b>ISO 27001 & NIST SP 800-53:</b> International regulatory standards mapped automatically into audit PDF reports to ensure corporate compliance and avoid legal fines.</p>
+                    </section>
+                `,
                 steps: [
-                    { 
-                        title: "1. Dataset & Network Topology Source", 
-                        content: "<p><b>What is this?</b> Graph Neural Networks analyze IoT systems represented as graphs (nodes = IoT devices, edges = communication links).</p><p><b>How to use:</b> Select <i>Synthetic Graph</i> to automatically generate simulated IoT networks (specify node count from 50 to 1000). Alternatively, choose <i>Custom File</i> to upload your enterprise CSV or JSON network edge/feature lists.</p>" 
-                    },
-                    { 
-                        title: "2. GNN Architecture Selection", 
-                        content: "<p><b>What is this?</b> Different neural network models inspect graph topologies for anomalies and intrusions.</p><p><b>Options:</b> <i>GraphSAGE</i> (fast & balanced), <i>GCN</i> (standard convolutional), <i>GAT</i> (attention-based, Pro tier), <i>RGCN</i> (relational), and <i>GIN</i> (isomorphism).</p>" 
-                    },
-                    { 
-                        title: "3. Adversarial Attack Simulation", 
-                        content: "<p><b>What is this?</b> To test your network resilience, GraphGuard simulates various AI attacks (e.g., Structural Edge Perturbation, Node Injection, Feature Noise, Gradient Attacks).</p><p><b>How to use:</b> Select attack strategy and adjust the intensity slider (0% to 50%), then click <i>Run Adversarial Simulation</i>.</p>" 
-                    },
-                    { 
-                        title: "4. Telemetry & XAI Fidelity Score", 
-                        content: "<p><b>Metrics Explained:</b><br>• <i>Clean Accuracy:</i> Model detection rate under normal conditions.<br>• <i>Attacked Accuracy:</i> Detection rate under adversarial stress.<br>• <i>XAI Fidelity:</i> Measures how trustworthy and explainable the AI decision is.</p>" 
-                    },
-                    { 
-                        title: "5. Auto-Remediation & ISO/NIST Audit", 
-                        content: "<p><b>Enterprise Defense:</b> When vulnerabilities are detected, the system automatically synthesizes emergency Cisco IOS and Linux <i>iptables</i> security patches.</p><p><b>Export:</b> Click <i>Copy CLI Patch</i>, download the <code>.sh</code> script, or export a formal PDF audit report mapped to <b>ISO 27001</b> and <b>NIST SP 800-53</b> standards.</p>" 
-                    }
+                    { title: "1. Dataset & Network Topology Source", content: "<p><b>What is this?</b> Graph Neural Networks analyze IoT systems represented as graphs (nodes = IoT devices, edges = communication links).</p><p><b>How to use:</b> Select <i>Synthetic Graph</i> to automatically generate simulated IoT networks (specify node count from 50 to 1000). Alternatively, choose <i>Custom File</i> to upload your enterprise CSV or JSON network edge and feature topology files.</p>" },
+                    { title: "2. GNN Architecture Selection", content: "<p><b>What is this?</b> Different neural network models inspect graph topologies for anomalies and intrusions.</p><p><b>Options:</b> <i>GraphSAGE</i> (fast & balanced), <i>GCN</i> (standard convolutional), <i>GAT</i> (attention-based, Pro tier), <i>RGCN</i> (relational), and <i>GIN</i> (isomorphism).</p>" },
+                    { title: "3. Adversarial Attack Simulation", content: "<p><b>What is this?</b> To test your network resilience, GraphGuard simulates various AI attacks (e.g., Structural Edge Perturbation, Node Injection, Feature Noise, Gradient Attacks).</p><p><b>How to use:</b> Select attack strategy and adjust the intensity slider (0% to 50%), then click <i>Run Adversarial Simulation</i>.</p>" },
+                    { title: "4. Telemetry & XAI Fidelity Score", content: "<p><b>Metrics Explained:</b><br>• <i>Clean Accuracy:</i> Model detection rate under normal conditions.<br>• <i>Attacked Accuracy:</i> Detection rate under adversarial stress.<br>• <i>XAI Fidelity:</i> Measures how trustworthy and explainable the AI decision is.</p>" },
+                    { title: "5. Auto-Remediation & ISO/NIST Audit", content: "<p><b>Enterprise Defense:</b> When vulnerabilities are detected, the system automatically synthesizes emergency Cisco IOS and Linux <i>iptables</i> security patches.</p><p><b>Export:</b> Click <i>Copy CLI Patch</i>, download the <code>.sh</code> script, or export a formal PDF audit report mapped to <b>ISO 27001</b> and <b>NIST SP 800-53</b> standards.</p>" }
                 ]
             },
             az: {
@@ -358,27 +400,48 @@
                 guidePrev: "Əvvəlki",
                 guideNext: "Növbəti Addım",
                 guideFinish: "Bələdçini Bitir",
+                detTitle: "Detallı Korporativ Texniki Hesabat və Bilik Bazası",
+                detSub: "Süni intellekt, GNN modelləri, hücum vektorları, metrikalar və uyğunluq standartlarını əhatə edən ətraflı bələdçi.",
+                detailedReportHTML: `
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">1. Əsas Anlayışlar: Süni İntellekt və Kibertəhlükəsizlik nədir?</h3>
+                        <p><b>Süni İntellekt (AI):</b> İnsan zəkasını təqlid edən, məlumatlardan öyrənən və avtomatik qərarlar qəbul edən sistemlərdir. GraphGuard-da süni intellekt anomaliyaları aşkar etmək üçün şəbəkə əlaqələrini təhlil edir.</p>
+                        <p><b>Kibertəhlükəsizlik və IoT Dayanıqlılığı:</b> Birbirinə bağlı IoT cihazlarını (sensorlar, şlüzlər, serverlər) zərərli hücumlardan qorumaq, məlumatların məxfiliyini və təhlükəsizliyini təmin etməkdir.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">2. GNN Model Arxitekturalarının Dərin İzahı</h3>
+                        <p><b>Qraf Neyron Şəbəkələri (GNN):</b> Düz cədvəllərdən fərqli olaraq, GNN-lər qrafik strukturları (qovşaqlar və əlaqələr) təhlil edir.<br>
+                        • <b>GraphSAGE:</b> Qonşu qovşaqların xüsusiyyətlərini toplayır. Böyük IoT şəbəkələri üçün ən uyğun modeldir.<br>
+                        • <b>GCN:</b> Qraf məhəllələri üzərində konvolyusion filtrlər tətbiq edir.<br>
+                        • <b>GAT:</b> Əhəmiyyətli IoT əlaqələrini prioritetləşdirmək üçün diqqət mexanizmindən istifadə edir (Pro tier).<br>
+                        • <b>RGCN və GIN:</b> İnkişaf etmiş struktur analizi üçün xüsusi modellər.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">3. Adversarial Hücum Vektorları</h3>
+                        <p><b>Struktur Hücumları (Edge Perturbation):</b> Şəbəkə marşrutunu pozmaq üçün əlaqələrin qəsdən əlavə edilməsi və ya silinməsi.<br>
+                        <b>Xüsusiyyət Səs-küyü (Feature Noise):</b> Süni intellekti yanıltmaq üçün cihaz məlumatlarına riyazi səslərin qatılması.<br>
+                        <b>Qovşaq İnyeksiyası (Node Injection):</b> Şəbəkəyə saxta, icazəsiz IoT cihazlarının daxil edilməsi.<br>
+                        <b>Qradient Hücumları və Atribut Maskalama:</b> Aşkarlama modelini korlamaq üçün mürəkkəb cəhdlər.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">4. Metrikalar və Jurnalın İzahı</h3>
+                        <p><b>Clean Accuracy:</b> Normal şəraitdə modelin hücumları aşkarlama dəqiqliyi.<br>
+                        <b>Attacked Accuracy:</b> Hücum zamanı modelin performansı.<br>
+                        <b>XAI Fidelity Score:</b> Süni intellektin qərarlarının nə dərəcədə şəffaf və etibarlı olduğunu göstərən skorumuz.<br>
+                        <b>Threat Logs:</b> Şəbəkənin təhlükəsiz və ya kritik vəziyyətdə olduğunu göstərən real vaxt bildirişləri.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">5. Avtomatik Bərpa və Uyğunluq Standartları (ISO / NIST)</h3>
+                        <p><b>Auto-Remediation:</b> Zəiflik aşkar edilən kimi dərhal Cisco IOS və Linux <i>iptables</i> təhlükəsizlik yamalarının hazırlanması.<br>
+                        <b>ISO 27001 və NIST SP 800-53:</b> Şirkətin qanuni audit yoxlamalarından üzüağ çıxması üçün PDF hesabatına əlavə olunan beynəlxalq standartlar.</p>
+                    </section>
+                `,
                 steps: [
-                    { 
-                        title: "1. Məlumat və Şəbəkə Topologiyası", 
-                        content: "<p><b>Bu nədir?</b> Qraf Neyron Şəbəkələri (GNN) IoT cihazlarını qrafik strukturlar şəklində təhlil edir (qovşaqlar = IoT qurğuları, əlaqələr = rabitə xətləri).</p><p><b>Necə istifadə etməli:</b> <i>Sintetik Qraf</i> seçərək avtomatik şəbəkə yaradın (50-1000 arası qovşaq) və ya <i>Xüsusi Fayl</i> seçərək öz korporativ CSV/JSON topologiya sənədlərinizi yükləyin.</p>" 
-                    },
-                    { 
-                        title: "2. GNN Arxitekturasının Seçilməsi", 
-                        content: "<p><b>Bu nədir?</b> Şəbəkə daxilində anomaliyaları aşkar etmək üçün müxtəlif süni intellekt modellərindən istifadə olunur.</p><p><b>Seçimlər:</b> <i>GraphSAGE</i> (sürətli və balanslı), <i>GCN</i> (standart), <i>GAT</i> (diqqət mexanizmli - Pro), <i>RGCN</i> və <i>GIN</i>.</p>" 
-                    },
-                    { 
-                        title: "3. Adversarial Hücum Simulyasiyası", 
-                        content: "<p><b>Bu nədir?</b> Şəbəkənizin dayanıqlılığını yoxlamaq üçün müxtəlif süni intellekt hücumları (Struktur, Qovşaq İnyeksiyası, Səs-küy) simulyasiya edilir.</p><p><b>Necə istifadə etməli:</b> Hücum növünü seçin, intensivlik sürgüsünü tənzimləyin və <i>Run Adversarial Simulation</i> düyməsinə basın.</p>" 
-                    },
-                    { 
-                        title: "4. Metrikalar və XAI Uyğunluq Hesabı", 
-                        content: "<p><b>Göstəricilərin İzahı:</b><br>• <i>Clean Accuracy:</i> Normal şəraitdə aşkarlama dəqiqliyi.<br>• <i>Attacked Accuracy:</i> Hücum zamanı modelin dəqiqliyi.<br>• <i>XAI Fidelity:</i> Süni intellekt qərarlarının nə qədər etibarlı və şəffaf olduğunu göstərir.</p>" 
-                    },
-                    { 
-                        title: "5. Avtomatik Bərpa və ISO/NIST Auditi", 
-                        content: "<p><b>Korporativ Müdafiə:</b> Zəiflik aşkar edilən kimi sistem avtomatik olaraq Cisco IOS və Linux <i>iptables</i> təhlükəsizlik yamaları (patch) hazırlayır.</p><p><b>İxrac:</b> Skripti kopyalayın, <code>.sh</code> faylı kimi endirin və ya <b>ISO 27001</b> / <b>NIST</b> standartlarına uyğun rəsmi PDF audit hesabatı əldə edin.</p>" 
-                    }
+                    { title: "1. Məlumat və Şəbəkə Topologiyası", content: "<p><b>Bu nədir?</b> Qraf Neyron Şəbəkələri (GNN) IoT cihazlarını qrafik strukturlar şəklində təhlil edir (qovşaqlar = IoT qurğuları, əlaqələr = rabitə xətləri).</p><p><b>Necə istifadə etməli:</b> <i>Sintetik Qraf</i> seçərək avtomatik şəbəkə yaradın (50-1000 arası qovşaq) və ya <i>Xüsusi Fayl</i> seçərək öz korporativ CSV/JSON topologiya sənədlərinizi yükləyin.</p>" },
+                    { title: "2. GNN Arxitekturasının Seçilməsi", content: "<p><b>Bu nədir?</b> Şəbəkə daxilində anomaliyaları aşkar etmək üçün müxtəlif süni intellekt modellərindən istifadə olunur.</p><p><b>Seçimlər:</b> <i>GraphSAGE</i> (sürətli və balanslı), <i>GCN</i> (standart), <i>GAT</i> (diqqət mexanizmli - Pro), <i>RGCN</i> və <i>GIN</i>.</p>" },
+                    { title: "3. Adversarial Hücum Simulyasiyası", content: "<p><b>Bu nədir?</b> Şəbəkənizin dayanıqlılığını yoxlamaq üçün müxtəlif süni intellekt hücumları (Struktur, Qovşaq İnyeksiyası, Səs-küy) simulyasiya edilir.</p><p><b>Necə istifadə etməli:</b> Hücum növünü seçin, intensivlik sürgüsünü tənzimləyin və <i>Run Adversarial Simulation</i> düyməsinə basın.</p>" },
+                    { title: "4. Metrikalar və XAI Uyğunluq Hesabı", content: "<p><b>Göstəricilərin İzahı:</b><br>• <i>Clean Accuracy:</i> Normal şəraitdə aşkarlama dəqiqliyi.<br>• <i>Attacked Accuracy:</i> Hücum zamanı modelin dəqiqliyi.<br>• <i>XAI Fidelity:</i> Süni intellekt qərarlarının nə qədər etibarlı və şəffaf olduğunu göstərir.</p>" },
+                    { title: "5. Avtomatik Bərpa və ISO/NIST Auditi", content: "<p><b>Korporativ Müdafiə:</b> Zəiflik aşkar edilən kimi sistem avtomatik olaraq Cisco IOS və Linux <i>iptables</i> təhlükəsizlik yamaları (patch) hazırlayır.</p><p><b>İxrac:</b> Skripti kopyalayın, <code>.sh</code> faylı kimi endirin və ya <b>ISO 27001</b> / <b>NIST</b> standartlarına uyğun rəsmi PDF audit hesabatı əldə edin.</p>" }
                 ]
             },
             ru: {
@@ -405,27 +468,37 @@
                 guidePrev: "Назад",
                 guideNext: "Далее",
                 guideFinish: "Завершить гид",
+                detTitle: "Подробный технический отчет и база знаний",
+                detSub: "Полное справочное руководство по ИИ, моделям GNN, векторам атак, метрикам и стандартам соответствия.",
+                detailedReportHTML: `
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">1. Базовые концепции: Что такое ИИ и кибербезопасность?</h3>
+                        <p><b>Искусственный интеллект (ИИ):</b> Системы, имитирующие разум человека для автоматического принятия решений.</p>
+                        <p><b>Кибербезопасность IoT:</b> Защита связанных устройств от вредоносных атак и вторжений.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">2. Архитектуры моделей GNN</h3>
+                        <p><b>Графовые нейросети:</b> Анализируют графы связей.<br>• <b>GraphSAGE:</b> Масштабируемая модель.<br>• <b>GCN:</b> Сверточная сеть.<br>• <b>GAT:</b> Сеть с механизмом внимания.<br>• <b>RGCN и GIN:</b> Специализированные модели.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">3. Векторы атак</h3>
+                        <p>Включают в себя структурные возмущения, внедрение узлов и шумовые атаки на характеристики.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">4. Метрики и логи</h3>
+                        <p>Оценка точности, коэффициента XAI и статуса угроз в реальном времени.</p>
+                    </section>
+                    <section class="space-y-3">
+                        <h3 class="text-lg font-bold text-cyan-400">5. Авто-восстановление и стандарты ISO/NIST</h3>
+                        <p>Генерация патчей для Cisco/Linux и соответствие стандартам ISO 27001 и NIST.</p>
+                    </section>
+                `,
                 steps: [
-                    { 
-                        title: "1. Источник данных и топологии", 
-                        content: "<p><b>Что это?</b> Графовые нейросети анализируют IoT системы в виде графов (узлы = устройства, связи = каналы связи).</p><p><b>Как использовать:</b> Выберите <i>Synthetic Graph</i> для генерации сети или <i>Custom File</i> для загрузки ваших CSV/JSON файлов.</p>" 
-                    },
-                    { 
-                        title: "2. Выбор архитектуры GNN", 
-                        content: "<p><b>Что это?</b> Различные модели ИИ для обнаружения аномалий и вторжений.</p><p><b>Варианты:</b> <i>GraphSAGE</i>, <i>GCN</i>, <i>GAT</i> (Pro), <i>RGCN</i> и <i>GIN</i>.</p>" 
-                    },
-                    { 
-                        title: "3. Симуляция атак", 
-                        content: "<p><b>Что это?</b> Проверка устойчивости сети с помощью симуляции искусственных атак.</p><p><b>Как использовать:</b> Выберите тип атаки, настройте интенсивность и нажмите <i>Run Adversarial Simulation</i>.</p>" 
-                    },
-                    { 
-                        title: "4. Телеметрия и XAI", 
-                        content: "<p><b>Метрики:</b><br>• <i>Clean Accuracy:</i> Точность в норме.<br>• <i>Attacked Accuracy:</i> Точность при атаке.<br>• <i>XAI Fidelity:</i> Оценка объяснимости решений ИИ.</p>" 
-                    },
-                    { 
-                        title: "5. Авто-восстановление и ISO/NIST", 
-                        content: "<p><b>Защита:</b> При обнаружении угроз система генерирует патчи для Cisco IOS и Linux <i>iptables</i>.</p><p><b>Экспорт:</b> Копируйте скрипты или скачивайте PDF отчеты по стандартам <b>ISO 27001</b> и <b>NIST</b>.</p>" 
-                    }
+                    { title: "1. Источник данных и топологии", content: "<p>Выбор синтетического графа или загрузка файлов CSV/JSON.</p>" },
+                    { title: "2. Выбор архитектуры GNN", content: "<p>Выбор моделей GraphSAGE, GCN, GAT, RGCN или GIN.</p>" },
+                    { title: "3. Симуляция атак", content: "<p>Настройка стратегии атак и запуск симуляции.</p>" },
+                    { title: "4. Телеметрия", content: "<p>Оценка точности и метрик XAI.</p>" },
+                    { title: "5. Авто-восстановление", content: "<p>Генерация патчей и PDF отчетов ISO/NIST.</p>" }
                 ]
             },
             de: {
@@ -451,207 +524,46 @@
                 logInit: "[System] GraphGuard IoT Frontend initialisiert...",
                 guidePrev: "Zurück",
                 guideNext: "Weiter",
-                guideFinish: "Leitfaden beenden",
-                steps: [
-                    { title: "1. Daten- und Topologiequelle", content: "<p><b>Was ist das?</b> GNNs analysieren IoT-Systeme als Graphen.</p><p><b>Verwendung:</b> Wählen Sie <i>Synthetic Graph</i> oder laden Sie eigene CSV/JSON-Dateien hoch.</p>" },
-                    { title: "2. GNN-Architekturauswahl", content: "<p><b>Modelle:</b> GraphSAGE, GCN, GAT (Pro), RGCN und GIN.</p>" },
-                    { title: "3. Angriffssimulation", content: "<p><b>Verwendung:</b> Wählen Sie die Angriffsstrategie und starten Sie die Simulation.</p>" },
-                    { title: "4. Telemetrie & XAI", content: "<p><b>Metriken:</b> Überwachen Sie Genauigkeit und XAI-Scores in Echtzeit.</p>" },
-                    { title: "5. Auto-Remediation & ISO/NIST", content: "<p><b>Sicherheit:</b> Erstellen Sie Cisco/Linux Patches und ISO 27001 PDF-Berichte.</p>" }
-                ]
+                guideFinish: "Fertig",
+                detTitle: "Detaillierter technischer Enterprise-Bericht",
+                detSub: "Umfassender Leitfaden zu KI, GNN-Modellen, Angriffen und Compliance.",
+                detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. Grundlagen</h3><p>Einführung in KI und IoT-Sicherheit.</p></section>`,
+                steps: [{ title: "1. Konfiguration", content: "Topologie auswählen." }]
             },
             fr: {
-                controls: "⚙️ Contrôles de Simulation",
-                dataset: "Source de Données",
-                synGraph: "Graphe Synthétique",
-                customFile: "Fichier Personnalisé",
-                nodeCount: "Nombre de Nœuds IoT",
-                uploadTopo: "Télécharger la Topologie",
-                gnnArch: "Architecture GNN",
-                attackStrat: "Stratégie d'Attaque",
-                attackRate: "Taux d'Intensité (%)",
-                proKey: "Clé Pro (Optionnel)",
-                runSim: "🚀 Lancer la Simulation",
-                cleanAcc: "Précision Propre",
-                attackAcc: "Précision Attaquée",
-                xaiScore: "Score de Fidélité XAI",
-                logTitle: "📊 Journal des Menaces et Défenses",
-                exportPdf: "📄 Exporter le Rapport (PDF)",
-                remedTitle: "⚡ Guide de Correction et Audit de Conformité",
-                copyPatch: "📋 Copier le Patch CLI",
-                downloadSh: "💾 Télécharger .sh",
-                logInit: "[Système] Interface GraphGuard initialisée...",
+                controls: "⚙️ Contrôles",
+                dataset: "Source",
+                synGraph: "Graphe",
+                customFile: "Fichier",
+                nodeCount: "Nœuds",
+                uploadTopo: "Upload",
+                gnnArch: "GNN",
+                attackStrat: "Attaque",
+                attackRate: "Taux",
+                proKey: "Clé Pro",
+                runSim: "Lancer",
+                cleanAcc: "Clean",
+                attackAcc: "Attaque",
+                xaiScore: "XAI",
+                logTitle: "Journal",
+                exportPdf: "PDF",
+                remedTitle: "Remédiation",
+                copyPatch: "Copier",
+                downloadSh: "Télécharger",
+                logInit: "Init...",
                 guidePrev: "Précédent",
                 guideNext: "Suivant",
-                guideFinish: "Terminer le Guide",
-                steps: [
-                    { title: "1. Source de Données et Topologie", content: "<p><b>Qu'est-ce que c'est?</b> Analyse des réseaux IoT via les GNN.</p><p><b>Utilisation:</b> Graphe synthétique ou fichiers CSV/JSON personnalisés.</p>" },
-                    { title: "2. Architecture GNN", content: "<p><b>Modèles:</b> GraphSAGE, GCN, GAT, RGCN et GIN.</p>" },
-                    { title: "3. Simulation d'Attaque", content: "<p><b>Utilisation:</b> Configurez l'attaque et lancez la simulation.</p>" },
-                    { title: "4. Télémétrie et XAI", content: "<p><b>Métriques:</b> Évaluation instantanée de la précision.</p>" },
-                    { title: "5. Auto-Correction & ISO/NIST", content: "<p><b>Défense:</b> Correctifs Cisco/Linux et rapports PDF ISO 27001.</p>" }
-                ]
+                guideFinish: "Fin",
+                detTitle: "Rapport Technique Détaillé",
+                detSub: "Guide complet sur l'IA, les GNN et la conformité.",
+                detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. Introduction</h3><p>Bases de l'IA et de la cybersécurité.</p></section>`,
+                steps: [{ title: "1. Configuration", content: "Sélectionnez la topologie." }]
             },
-            fi: {
-                controls: "⚙️ Simulaation Hallinta",
-                dataset: "Datalähde",
-                synGraph: "Synteettinen Graafi",
-                customFile: "Mukautettu Tiedosto",
-                nodeCount: "IoT-solmujen määrä",
-                uploadTopo: "Lataa Topologia",
-                gnnArch: "GNN Arkkitehtuuri",
-                attackStrat: "Hyökkäysstrategia",
-                attackRate: "Hyökkäysintensiteetti (%)",
-                proKey: "Pro Avain (Valinnainen)",
-                runSim: "🚀 Suorita Simulaatio",
-                cleanAcc: "Puhdas Tarkkuus",
-                attackAcc: "Hyökätty Tarkkuus",
-                xaiScore: "XAI Pisteet",
-                logTitle: "📊 Uhka- ja Puolustusloki",
-                exportPdf: "📄 Vie Raportti (PDF)",
-                remedTitle: "⚡ Automaattinen Korjaus ja Vaatimustenmukaisuus",
-                copyPatch: "📋 Kopioi CLI Patch",
-                downloadSh: "💾 Lataa .sh",
-                logInit: "[Järjestelmä] GraphGuard IoT alustettu...",
-                guidePrev: "Edellinen",
-                guideNext: "Seuraava",
-                guideFinish: "Valmis",
-                steps: [
-                    { title: "1. Datalähde ja Topologia", content: "<p>GNN-pohjainen IoT-verkon analyysi. Valitse synteettinen graafi tai lataa tiedosto.</p>" },
-                    { title: "2. GNN Arkkitehtuuri", content: "<p>Valitse GraphSAGE, GCN, GAT, RGCN tai GIN mallit.</p>" },
-                    { title: "3. Hyökkäyssimulaatio", content: "<p>Määritä hyökkäystyypit ja suorita simulaatio.</p>" },
-                    { title: "4. Mittarit ja XAI", content: "<p>Arvioi tarkkuutta reaaliajassa.</p>" },
-                    { title: "5. Automaattinen Korjaus", content: "<p>Cisco/Linux korjaukset ja ISO 27001 PDF-raportit.</p>" }
-                ]
-            },
-            no: {
-                controls: "⚙️ Simuleringskontroller",
-                dataset: "Datakilde",
-                synGraph: "Syntetisk Graf",
-                customFile: "Egendefinert Fil",
-                nodeCount: "IoT Node Antall",
-                uploadTopo: "Last opp Topologi",
-                gnnArch: "GNN Arkitektur",
-                attackStrat: "Angrepsstrategi",
-                attackRate: "Angrepsintensitet (%)",
-                proKey: "Pro Lisensnøkkel (Valgfritt)",
-                runSim: "🚀 Kjør Simulering",
-                cleanAcc: "Ren Nøyaktighet",
-                attackAcc: "Angrepet Nøyaktighet",
-                xaiScore: "XAI Poengsum",
-                logTitle: "📊 Trussel- og Forsvarslogg",
-                exportPdf: "📄 Eksporter Rapport (PDF)",
-                remedTitle: "⚡ Auto-Utbedring og Samsvarsrevisjon",
-                copyPatch: "📋 Kopier CLI Patch",
-                downloadSh: "💾 Last ned .sh",
-                logInit: "[System] GraphGuard IoT initialisert...",
-                guidePrev: "Forrige",
-                guideNext: "Neste",
-                guideFinish: "Fullfør",
-                steps: [
-                    { title: "1. Datakilde og Topologi", content: "<p>GNN-analyse av IoT-nettverk. Velg syntetisk graf eller last opp filer.</p>" },
-                    { title: "2. GNN Arkitektur", content: "<p>Velg GraphSAGE, GCN, GAT, RGCN eller GIN.</p>" },
-                    { title: "3. Angrepstester", content: "<p>Konfigurer og kjør simuleringen.</p>" },
-                    { title: "4. Telemetri", content: "<p>Evaluer nøyaktighet og XAI-poeng.</p>" },
-                    { title: "5. Auto-Utbedring", content: "<p>Cisco/Linux patcher og ISO 27001 PDF-rapporter.</p>" }
-                ]
-            },
-            hi: {
-                controls: "⚙️ सिमुलेशन नियंत्रण",
-                dataset: "डेटासेट स्रोत",
-                synGraph: "सिंथेटिक ग्राफ़",
-                customFile: "कस्टम फ़ाइल",
-                nodeCount: "IoT नोड संख्या",
-                uploadTopo: "टोपोलॉजी अपलोड करें",
-                gnnArch: "GNN आर्किटेक्चर",
-                attackStrat: "हमला रणनीति",
-                attackRate: "हमला तीव्रता दर (%)",
-                proKey: "प्रो लाइसेंस कुंजी",
-                runSim: "🚀 सिमुलेशन चलाएं",
-                cleanAcc: "स्वच्छ सटीकता",
-                attackAcc: "आक्रमण सटीकता",
-                xaiScore: "XAI फिडेलिटी स्कोर",
-                logTitle: "📊 एंटरप्राइज लॉग",
-                exportPdf: "📄 रिपोर्ट निर्यात करें (PDF)",
-                remedTitle: "⚡ ऑटो-रेमेडिएशन और अनुपालन ऑडिट",
-                copyPatch: "📋 CLI पैच कॉपी करें",
-                downloadSh: "💾 .sh डाउनलोड करें",
-                logInit: "[सिस्टम] GraphGuard IoT तैयार है...",
-                guidePrev: "पिछला",
-                guideNext: "अगला",
-                guideFinish: "समाप्त",
-                steps: [
-                    { title: "1. डेटासेट और टोपोलॉजी", content: "<p>IoT नेटवर्क विश्लेषण। सिंथेटिक ग्राफ़ चुनें या फ़ाइल अपलोड करें।</p>" },
-                    { title: "2. GNN आर्किटेक्चर", content: "<p>GraphSAGE, GCN, GAT, RGCN या GIN चुनें।</p>" },
-                    { title: "3. हमला सिमुलेशन", content: "<p>हमले के प्रकार सेट करें और सिमुलेशन चलाएं।</p>" },
-                    { title: "4. मेट्रिक्स", content: "<p>सटीकता और XAI स्कोर का मूल्यांकन करें।</p>" },
-                    { title: "5. ऑटो-रेमेडिएशन", content: "<p>Cisco/Linux पैच और ISO 27001 PDF रिपोर्ट।</p>" }
-                ]
-            },
-            zh: {
-                controls: "⚙️ 仿真控制",
-                dataset: "数据集来源",
-                synGraph: "合成图",
-                customFile: "自定义文件",
-                nodeCount: "IoT 节点数",
-                uploadTopo: "上传拓扑结构",
-                gnnArch: "GNN 架构",
-                attackStrat: "攻击策略",
-                attackRate: "攻击强度率 (%)",
-                proKey: "Pro 许可证密钥",
-                runSim: "🚀 运行对抗仿真",
-                cleanAcc: "清洁准确率",
-                attackAcc: "受攻击准确率",
-                xaiScore: "XAI 保真度评分",
-                logTitle: "📊 企业威胁与防御日志",
-                exportPdf: "📄 导出审计报告 (PDF)",
-                remedTitle: "⚡ 自动修复与合规审计",
-                copyPatch: "📋 复制 CLI 补丁",
-                downloadSh: "💾 下载 .sh",
-                logInit: "[系统] GraphGuard IoT 初始化完成...",
-                guidePrev: "上一步",
-                guideNext: "下一步",
-                guideFinish: "完成向导",
-                steps: [
-                    { title: "1. 数据集与拓扑源", content: "<p>GNN 神经网络分析 IoT 系统。选择合成图或上传自定义 CSV/JSON 文件。</p>" },
-                    { title: "2. GNN 架构选择", content: "<p>选择 GraphSAGE、GCN、GAT、RGCN 或 GIN 模型。</p>" },
-                    { title: "3. 攻击仿真", content: "<p>配置对抗攻击策略并运行仿真。</p>" },
-                    { title: "4. 遥测与 XAI", content: "<p>评估准确率及 XAI 保真度评分。</p>" },
-                    { title: "5. 自动修复与 ISO/NIST", content: "<p>生成 Cisco/Linux 安全补丁及 ISO 27001 PDF 报告。</p>" }
-                ]
-            },
-            ja: {
-                controls: "⚙️ シミュレーション制御",
-                dataset: "データセットソース",
-                synGraph: "合成グラフ",
-                customFile: "カスタムファイル",
-                nodeCount: "IoTノード数",
-                uploadTopo: "トポロジのアップロード",
-                gnnArch: "GNNアーキテクチャ",
-                attackStrat: "攻撃戦略",
-                attackRate: "攻撃強度 (%)",
-                proKey: "Proライセンスキー",
-                runSim: "🚀 敵対的シミュレーションを実行",
-                cleanAcc: "クリーン精度",
-                attackAcc: "攻撃時精度",
-                xaiScore: "XAI忠実度スコア",
-                logTitle: "📊 企業脅威および防御ログ",
-                exportPdf: "📄 監査レポートのエクスポート (PDF)",
-                remedTitle: "⚡ 自動修復プレイブック & コンプライアンス監査",
-                copyPatch: "📋 CLIパッチをコピー",
-                downloadSh: "💾 .shをダウンロード",
-                logInit: "[システム] GraphGuard IoTフロントエンドが初期化されました...",
-                guidePrev: "前へ",
-                guideNext: "次へ",
-                guideFinish: "ガイドを完了",
-                steps: [
-                    { title: "1. データセットとトポロジ", content: "<p>GNNによるIoTネットワーク分析。合成グラフまたはカスタムファイルをアップロードします。</p>" },
-                    { title: "2. GNNアーキテクチャ", content: "<p>GraphSAGE、GCN、GAT、RGCN、GINモデルを選択。</p>" },
-                    { title: "3. 攻撃シミュレーション", content: "<p>攻撃戦略を設定しシミュレーションを実行します。</p>" },
-                    { title: "4. テレメトリーとXAI", content: "<p>精度とXAIスコアを評価します。</p>" },
-                    { title: "5. 自動修復 & ISO/NIST", content: "<p>Cisco/LinuxパッチとISO 27001 PDFレポート。</p>" }
-                ]
-            }
+            fi: { controls: "Simulaatio", dataset: "Datalähde", synGraph: "Graafi", customFile: "Tiedosto", nodeCount: "Solmut", uploadTopo: "Lataa", gnnArch: "GNN", attackStrat: "Hyökkäys", attackRate: "Taso", proKey: "Avain", runSim: "Suorita", cleanAcc: "Puhdas", attackAcc: "Hyökätty", xaiScore: "XAI", logTitle: "Loki", exportPdf: "PDF", remedTitle: "Korjaus", copyPatch: "Kopioi", downloadSh: "Lataa", logInit: "Alustettu...", guidePrev: "Edellinen", guideNext: "Seuraava", guideFinish: "Valmis", detTitle: "Yksityiskohtainen tekninen raportti", detSub: "Kattava opas tekoälystä, GNN-malleista ja vaatimustenmukaisuudesta.", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. Perusteet</h3><p>Tekoälyn ja kyberturvallisuuden perusteet.</p></section>`, steps: [{ title: "1. Asetukset", content: "Valitse topologia." }] },
+            no: { controls: "Kontroller", dataset: "Datakilde", synGraph: "Graf", customFile: "Fil", nodeCount: "Noder", uploadTopo: "Last opp", gnnArch: "GNN", attackStrat: "Angrep", attackRate: "Rate", proKey: "Nøkkel", runSim: "Kjør", cleanAcc: "Ren", attackAcc: "Angrepet", xaiScore: "XAI", logTitle: "Logg", exportPdf: "PDF", remedTitle: "Utbedring", copyPatch: "Kopier", downloadSh: "Last ned", logInit: "Startet...", guidePrev: "Forrige", guideNext: "Neste", guideFinish: "Fullfør", detTitle: "Detaljert Teknisk Rapport", detSub: "Omfattende guide om KI, GNN-modeller og samsvar.", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. Grunnleggende</h3><p>Innføring i KI og IoT-sikkerhet.</p></section>`, steps: [{ title: "1. Konfigurasjon", content: "Velg topologi." }] },
+            hi: { controls: "नियंत्रण", dataset: "स्रोत", synGraph: "ग्राफ़", customFile: "फ़ाइल", nodeCount: "नोड्स", uploadTopo: "अपलोड", gnnArch: "GNN", attackStrat: "हमला", attackRate: "दर", proKey: "कुंजी", runSim: "चलाएं", cleanAcc: "स्वच्छ", attackAcc: "आक्रमण", xaiScore: "XAI", logTitle: "लॉग", exportPdf: "PDF", remedTitle: "सुधार", copyPatch: "कॉपी", downloadSh: "डाउनलोड", logInit: "तैयार...", guidePrev: "पिछला", guideNext: "अगला", guideFinish: "समाप्त", detTitle: "विस्तृत तकनीकी रिपोर्ट", detSub: "AI, GNN और अनुपालन पर व्यापक मार्गदर्शिका।", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. परिचय</h3><p>AI और साइबर सुरक्षा का परिचय।</p></section>`, steps: [{ title: "1. सेटअप", content: "टोपोलॉजी चुनें।" }] },
+            zh: { controls: "控制", dataset: "源", synGraph: "图", customFile: "文件", nodeCount: "节点", uploadTopo: "上传", gnnArch: "GNN", attackStrat: "攻击", attackRate: "率", proKey: "密钥", runSim: "运行", cleanAcc: "清洁", attackAcc: "受攻击", xaiScore: "XAI", logTitle: "日志", exportPdf: "PDF", remedTitle: "修复", copyPatch: "复制", downloadSh: "下载", logInit: "初始化...", guidePrev: "上一步", guideNext: "下一步", guideFinish: "完成", detTitle: "详细技术报告与知识库", detSub: "涵盖 AI、GNN 模型、攻击向量和合规标准的综合参考指南。", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. 基础概念</h3><p>人工智能与网络安全简介。</p></section>`, steps: [{ title: "1. 配置", content: "选择拓扑。" }] },
+            ja: { controls: "制御", dataset: "ソース", synGraph: "グラフ", customFile: "ファイル", nodeCount: "ノード", uploadTopo: "アップロード", gnnArch: "GNN", attackStrat: "攻撃", attackRate: "レート", proKey: "キー", runSim: "実行", cleanAcc: "クリーン", attackAcc: "攻撃時", xaiScore: "XAI", logTitle: "ログ", exportPdf: "PDF", remedTitle: "修復", copyPatch: "コピー", downloadSh: "ダウンロード", logInit: "初期化...", guidePrev: "前へ", guideNext: "次へ", guideFinish: "完了", detTitle: "詳細テクニカルレポートとナレッジベース", detSub: "AI、GNNモデル、攻撃ベクトル、コンプライアンスに関する包括的ガイド。", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. 基本概念</h3><p>AIとサイバーセキュリティの紹介。</p></section>`, steps: [{ title: "1. 設定", content: "トポロジを選択します。" }] }
         };
 
         function changeLanguage(lang) {
@@ -679,7 +591,24 @@
             document.getElementById('downloadPatchBtn').innerText = t.downloadSh;
             document.getElementById('txtLogInit').innerText = t.logInit;
 
+            // Detailed Report texts
+            document.getElementById('detRepTitle').innerText = t.detTitle;
+            document.getElementById('detRepSub').innerText = t.detSub;
+            document.getElementById('detRepContent').innerHTML = t.detailedReportHTML;
+
             updateGuideModal();
+        }
+
+        function openDetailedReportModal() {
+            const t = translations[currentLang] || translations.en;
+            document.getElementById('detRepTitle').innerText = t.detTitle;
+            document.getElementById('detRepSub').innerText = t.detSub;
+            document.getElementById('detRepContent').innerHTML = t.detailedReportHTML;
+            document.getElementById('detailedReportModal').classList.remove('hidden');
+        }
+
+        function closeDetailedReportModal() {
+            document.getElementById('detailedReportModal').classList.add('hidden');
         }
 
         function startPlatformGuide() {
@@ -703,16 +632,13 @@
 
             document.getElementById('guidePrevBtn').innerText = t.guidePrev;
             document.getElementById('guidePrevBtn').disabled = currentGuideStep === 0;
-            
             document.getElementById('guideNextBtn').innerText = currentGuideStep === steps.length - 1 ? t.guideFinish : t.guideNext;
 
-            // Update Clickable Dots
             const dotsContainer = document.getElementById('guideDots');
             dotsContainer.innerHTML = '';
             for (let i = 0; i < steps.length; i++) {
                 const dot = document.createElement('button');
                 dot.className = `w-3 h-3 rounded-full cursor-pointer transition-all ${i === currentGuideStep ? 'bg-emerald-500 scale-125' : 'bg-slate-700 hover:bg-slate-500'}`;
-                dot.title = `Go to step ${i + 1}`;
                 dot.onclick = () => goToGuideStep(i);
                 dotsContainer.appendChild(dot);
             }
