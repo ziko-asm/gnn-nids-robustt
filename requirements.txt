@@ -8,3 +8,5 @@ scikit-learn
 networkx
 psutil
 torch-geometric
+reportlab
+pandas
