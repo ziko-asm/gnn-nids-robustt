@@ -1,20 +1,31 @@
 ﻿import os
+import io
+import json
 import random
 import stripe
+import pandas as pd
+from typing import Optional
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import torch
+from torch_geometric.data import Data
 from torch_geometric.utils import dropout_edge
 from src.dataset import generate_iot_graph_dataset
 from src.model import IoTGNN
 
+# ReportLab imports for Enterprise PDF Report Generation
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
+
 app = FastAPI(
     title="GraphGuard IoT - Enterprise GNN NIDS API",
-    version="1.0.0",
+    version="1.1.0",
     description="Production-grade GNN-powered Intrusion Detection and Adversarial Resilience Engine."
 )
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,9 +44,21 @@ class SecurityCheckRequest(BaseModel):
     attack_type: str = "structural"
     perturbation_rate: float = 0.3
     api_key: str = ""
+    is_custom: bool = False
+    custom_file_data: Optional[str] = None
 
 class CheckoutRequest(BaseModel):
     email: str
+
+class PDFExportRequest(BaseModel):
+    model: str
+    attack_type: str
+    perturbation_rate: float
+    clean_accuracy: float
+    attacked_accuracy: float
+    accuracy_drop: float
+    xai_fidelity_score: float
+    threat_detected: bool
 
 @app.get("/")
 def read_root():
@@ -54,9 +77,9 @@ def create_checkout_session(data: CheckoutRequest):
                     'currency': 'usd',
                     'product_data': {
                         'name': 'GraphGuard IoT Professional Tier',
-                        'description': 'Aylık abonelik ve GNN güvenlik modeli',
+                        'description': 'Aylıq abunəlik və GNN təhlükəsizlik modeli',
                     },
-                    'unit_amount': 2900,  # 29.00 USD
+                    'unit_amount': 2900,  # $29.00 USD
                     'recurring': {
                         'interval': 'month',
                     },
@@ -73,7 +96,6 @@ def create_checkout_session(data: CheckoutRequest):
         print(f"[ERROR] Stripe Checkout Session creation failed: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
 
-
 @app.post("/api/v1/verify-payment")
 def verify_payment(session_id: str):
     try:
@@ -86,13 +108,49 @@ def verify_payment(session_id: str):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+def parse_custom_topology(file_content: str) -> Data:
+    """
+    CSV və ya JSON olaraq daxil olan faylı PyTorch Geometric Data obyektinə çevirir.
+    """
+    try:
+        file_content_clean = file_content.strip()
+        if file_content_clean.startswith("{") or file_content_clean.startswith("["):
+            data_json = json.loads(file_content_clean)
+            edges = torch.tensor(data_json.get("edges", [[0, 1], [1, 0]]), dtype=torch.long).t().contiguous()
+            num_nodes = data_json.get("num_nodes", int(edges.max().item()) + 1)
+            x = torch.tensor(data_json.get("features", torch.randn(num_nodes, 16).tolist()), dtype=torch.float)
+            y = torch.tensor(data_json.get("labels", torch.randint(0, 2, (num_nodes,)).tolist()), dtype=torch.long)
+        else:
+            df = pd.read_csv(io.StringIO(file_content_clean))
+            if "source" in df.columns and "target" in df.columns:
+                sources = df["source"].values
+                targets = df["target"].values
+                edges = torch.tensor([sources, targets], dtype=torch.long)
+            else:
+                sources = df.iloc[:, 0].values
+                targets = df.iloc[:, 1].values
+                edges = torch.tensor([sources, targets], dtype=torch.long)
+            
+            num_nodes = int(edges.max().item()) + 1
+            x = torch.randn(num_nodes, 16)
+            y = torch.randint(0, 2, (num_nodes,))
+            
+        data = Data(x=x, edge_index=edges, y=y)
+        data.num_nodes = num_nodes
+        data.num_features = x.size(1)
+        return data
+    except Exception as parse_err:
+        raise ValueError(f"Failed to parse custom network topology file: {str(parse_err)}")
 
 @app.post("/api/v1/analyze")
 def analyze_network_security(payload: SecurityCheckRequest):
     try:
-        data = generate_iot_graph_dataset(num_nodes=payload.node_count)
+        if payload.is_custom and payload.custom_file_data:
+            data = parse_custom_topology(payload.custom_file_data)
+        else:
+            data = generate_iot_graph_dataset(num_nodes=payload.node_count)
         
-        if not hasattr(data, 'train_mask'):
+        if not hasattr(data, 'train_mask') or data.train_mask is None:
             indices = torch.randperm(data.num_nodes)
             train_size = int(data.num_nodes * 0.7)
             data.train_mask = torch.zeros(data.num_nodes, dtype=torch.bool)
@@ -100,7 +158,6 @@ def analyze_network_security(payload: SecurityCheckRequest):
             data.test_mask = torch.zeros(data.num_nodes, dtype=torch.bool)
             data.test_mask[indices[train_size:]] = True
 
-        # m_key yoxlamasını if-dən çıxardıq ki, həmişə işləsin
         m_key = "sage"
         if hasattr(payload, "model_type") and payload.model_type:
             m_key = payload.model_type.lower()
@@ -141,7 +198,6 @@ def analyze_network_security(payload: SecurityCheckRequest):
             acc_clean = float((pred_clean[data.test_mask] == data.y[data.test_mask]).sum()) / float(data.test_mask.sum())
 
         p_rate = payload.perturbation_rate
-        p_rate = payload.perturbation_rate
         attack_lower = payload.attack_type.lower()
 
         if "struct" in attack_lower:
@@ -179,6 +235,91 @@ def analyze_network_security(payload: SecurityCheckRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/export-pdf")
+def export_pdf_report(payload: PDFExportRequest):
+    """
+    Enterprise səviyyəli kiber-təhlükəsizlik audit PDF hesabatını generasiya edir.
+    """
+    try:
+        buffer = io.BytesIO()
+        doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=36, leftMargin=36, topMargin=36, bottomMargin=36)
+        styles = getSampleStyleSheet()
+        
+        story = []
+        
+        title_style = ParagraphStyle(
+            'ReportTitle',
+            parent=styles['Heading1'],
+            fontSize=22,
+            textColor=colors.HexColor('#0f172a'),
+            spaceAfter=10
+        )
+        subtitle_style = ParagraphStyle(
+            'ReportSubTitle',
+            parent=styles['Normal'],
+            fontSize=10,
+            textColor=colors.HexColor('#475569'),
+            spaceAfter=20
+        )
+        
+        story.append(Paragraph("🛡️ GraphGuard IoT - Threat & Defense Report", title_style))
+        story.append(Paragraph("Automated Adversarial Security Assessment | Enterprise Security Intelligence", subtitle_style))
+        story.append(Spacer(1, 10))
+
+        status_text = "CRITICAL VULNERABILITY DETECTED" if payload.threat_detected else "NETWORK RESILIENT / SECURE"
+        status_color = colors.HexColor('#ef4444') if payload.threat_detected else colors.HexColor('#10b981')
+        
+        status_style = ParagraphStyle('StatusStyle', parent=styles['Heading2'], textColor=status_color, fontSize=14)
+        story.append(Paragraph(f"Security Posture: {status_text}", status_style))
+        story.append(Spacer(1, 15))
+
+        table_data = [
+            ["Metric Parameter", "Audit Value"],
+            ["GNN Architecture Model", payload.model.upper()],
+            ["Simulated Attack Vector", payload.attack_type],
+            ["Attack Intensity Rate", f"{payload.perturbation_rate}%"],
+            ["Baseline Accuracy (Clean)", f"{payload.clean_accuracy}%"],
+            ["Post-Attack Accuracy", f"{payload.attacked_accuracy}%"],
+            ["System Performance Drop", f"{payload.accuracy_drop}%"],
+            ["XAI Fidelity & Reliability Score", f"{payload.xai_fidelity_score}%"]
+        ]
+
+        t = Table(table_data, colWidths=[250, 250])
+        t.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (1, 0), colors.HexColor('#1e293b')),
+            ('TEXTCOLOR', (0, 0), (1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 11),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#f8fafc')),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#cbd5e1')),
+            ('PADDING', (0, 0), (-1, -1), 8),
+        ]))
+        
+        story.append(t)
+        story.append(Spacer(1, 20))
+        
+        exec_summary = (
+            "<b>Executive Summary:</b> The GraphGuard IoT engine conducted an adversarial resilience benchmark "
+            f"using the <b>{payload.model.upper()}</b> Graph Neural Network framework under a simulated <b>{payload.attack_type}</b>. "
+            f"The network maintained a post-attack accuracy of <b>{payload.attacked_accuracy}%</b>, resulting in a system degradation of "
+            f"<b>{payload.accuracy_drop}%</b>."
+        )
+        story.append(Paragraph(exec_summary, styles['Normal']))
+
+        doc.build(story)
+        buffer.seek(0)
+        
+        return StreamingResponse(
+            buffer,
+            media_type="application/pdf",
+            headers={"Content-Disposition": "attachment; filename=GraphGuard_Threat_Report.pdf"}
+        )
+    except Exception as pdf_err:
+        raise HTTPException(status_code=500, detail=f"PDF Generation error: {str(pdf_err)}")
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
