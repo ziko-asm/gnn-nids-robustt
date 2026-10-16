@@ -29,7 +29,7 @@
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">🛡️</span>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v1.6.0</span>
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v1.9.0</span>
                 </h1>
             </div>
             <div class="flex items-center space-x-3 text-sm text-slate-400">
@@ -201,23 +201,24 @@
 
     </main>
 
-    <!-- DETAILED REPORT MASTER KNOWLEDGE BASE MODAL -->
-    <div id="detailedReportModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
-        <div class="bg-slate-900 border border-cyan-500/50 rounded-2xl max-w-5xl w-full p-8 text-white shadow-2xl relative max-h-[92vh] overflow-y-auto">
+    <!-- DETAILED 6-PAGE TECHNICAL REPORT & KNOWLEDGE BASE MODAL -->
+    <div id="detailedReportModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/95 backdrop-blur-md p-4">
+        <div class="bg-slate-900 border border-cyan-500/60 rounded-2xl max-w-6xl w-full p-8 text-white shadow-2xl relative max-h-[92vh] overflow-y-auto">
             <button onclick="closeDetailedReportModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-2xl font-bold p-2 cursor-pointer">✕</button>
             <div class="flex items-center space-x-3 mb-6 border-b border-slate-800 pb-4">
                 <span class="text-4xl">📚</span>
                 <div>
-                    <h2 id="detRepTitle" class="text-2xl font-extrabold text-cyan-400">Detailed Enterprise Technical Report & Knowledge Base</h2>
-                    <p id="detRepSub" class="text-xs text-slate-400">Comprehensive reference guide covering AI, GNN models, attack vectors, metrics, and compliance standards.</p>
+                    <h2 id="detRepTitle" class="text-2xl font-extrabold text-cyan-400">Detailed Enterprise Technical Report & Master Knowledge Base</h2>
+                    <p id="detRepSub" class="text-xs text-slate-400">Complete 6-Page Architectural Master Reference Guide for GraphGuard IoT Platform.</p>
                 </div>
             </div>
             
-            <div id="detRepContent" class="space-y-8 text-slate-300 text-sm leading-relaxed">
-                <!-- Content will be dynamically populated in 10 languages -->
+            <div id="detRepContent" class="space-y-12 text-slate-300 text-sm leading-relaxed">
+                <!-- Dynamically populated 6-page massive master report -->
             </div>
 
-            <div class="mt-8 pt-4 border-t border-slate-800 flex justify-end">
+            <div class="mt-12 pt-6 border-t border-slate-800 flex justify-between items-center">
+                <span class="text-xs text-slate-500">GraphGuard IoT Enterprise Security Engine v1.9.0 — Master Technical Reference</span>
                 <button onclick="closeDetailedReportModal()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs cursor-pointer transition">Close Report</button>
             </div>
         </div>
@@ -298,7 +299,7 @@
       </div>
     </div>
 
-    <!-- JavaScript Execution Logic & Detailed Report Translations -->
+    <!-- JavaScript Execution Logic & Massive 6-Page Technical Report -->
     <script>
         const API_BASE_URL = 'https://gnn-nids-robustt.onrender.com';
         let activeDataMode = 'synthetic';
@@ -332,41 +333,95 @@
                 guidePrev: "Previous",
                 guideNext: "Next Step",
                 guideFinish: "Finish Master Guide",
-                detTitle: "Detailed Enterprise Technical Report & Knowledge Base",
-                detSub: "Comprehensive reference guide covering AI, GNN models, attack vectors, metrics, and compliance standards.",
+                detTitle: "Detailed Enterprise Technical Report & Master Knowledge Base",
+                detSub: "Complete 6-Page Architectural Master Reference Guide covering AI, GNN models, attack vectors, metrics, logs, and compliance standards.",
                 detailedReportHTML: `
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">1. Fundamental Concepts: What is AI & Cybersecurity?</h3>
-                        <p><b>Artificial Intelligence (AI):</b> Systems designed to mimic human intelligence, learn from data, and make automated decisions. In GraphGuard, AI inspects complex network interactions to spot anomalies.</p>
-                        <p><b>Cybersecurity & IoT Resilience:</b> Protecting interconnected IoT devices (sensors, gateways, servers) from malicious intrusions, ensuring confidentiality, integrity, and continuous availability.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">2. Deep Dive into GNN Model Architectures</h3>
-                        <p><b>Graph Neural Networks (GNN):</b> Unlike standard AI that looks at flat tables, GNNs analyze graph structures (nodes and edges).<br>
-                        • <b>GraphSAGE:</b> Samples and aggregates neighbor features. Highly scalable and recommended for large IoT topologies.<br>
-                        • <b>GCN (Graph Convolutional Network):</b> Applies spectral convolutional filters across graph neighborhoods.<br>
-                        • <b>GAT (Graph Attention Network):</b> Uses self-attention weights to prioritize critical IoT links (Pro tier).<br>
-                        • <b>RGCN & GIN:</b> Specialized relational and isomorphism models for advanced structural analysis.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">3. Adversarial Attack Vectors Explained</h3>
-                        <p><b>Structural Edge Perturbation:</b> Deliberately adding or removing communication links to break network routing.<br>
-                        <b>Feature-Level Noise:</b> Injecting mathematical noise into device telemetry to fool the AI.<br>
-                        <b>Node Injection:</b> Introducing rogue, unauthorized IoT devices into the network graph.<br>
-                        <b>Gradient Attacks & Attribute Masking:</b> Sophisticated attempts to blind the detection model.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">4. Telemetry Metrics & Log Interpretation</h3>
-                        <p><b>Clean Accuracy:</b> The model's baseline intrusion detection success rate.<br>
-                        <b>Attacked Accuracy:</b> Performance under adversarial stress. A steep drop indicates vulnerability.<br>
-                        <b>XAI Fidelity Score:</b> Explanable AI metric showing how reliable the model's reasoning is.<br>
-                        <b>Threat Logs:</b> Real-time system feedback indicating whether network posture is secure or critical.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">5. Automated Remediation & Compliance Standards</h3>
-                        <p><b>Auto-Remediation:</b> Immediate generation of Cisco IOS and Linux <i>iptables</i> firewall patches.<br>
-                        <b>ISO 27001 & NIST SP 800-53:</b> International regulatory standards mapped automatically into audit PDF reports to ensure corporate compliance and avoid legal fines.</p>
-                    </section>
+                    <div class="space-y-12">
+                        <section class="border-b border-slate-800 pb-8">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">1. Executive Summary: What is Artificial Intelligence & IoT Cybersecurity?</h3>
+                            <p class="mb-3"><b>Artificial Intelligence (AI):</b> Artificial Intelligence refers to computational systems engineered to simulate human cognitive functions, learn iteratively from complex multidimensional data sets, and execute automated operational decisions without continuous manual intervention. Within the GraphGuard IoT ecosystem, advanced AI models continuously ingest and evaluate intricate network interaction telemetry to establish baseline device behavior and flag structural anomalies instantly.</p>
+                            <p class="mb-3"><b>Cybersecurity & IoT Resilience:</b> Modern enterprise IoT infrastructure comprises thousands of interconnected edge devices, sensors, actuators, cloud servers, and gateways. Ensuring robust network resilience requires protecting these dynamic communication channels against sophisticated cyber intrusions, maintaining absolute data confidentiality, enforcing operational integrity, and guaranteeing continuous 24/7 system availability against malicious outages.</p>
+                            <p><b>The Core Philosophy of GraphGuard:</b> Traditional security tools treat network endpoints as independent items. GraphGuard recognizes that IoT devices function as a unified organism (a graph). By combining Graph Neural Networks with adversarial testing, enterprises can proactively discover vulnerabilities before real attackers exploit them.</p>
+                        </section>
+
+                        <section class="border-b border-slate-800 pb-8">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">2. Deep Dive into Graph Neural Network (GNN) Models & Attack Pairing</h3>
+                            <p class="mb-3">Standard machine learning architectures evaluate flat, independent data rows. However, enterprise computer networks are inherently topological graphs where connected hardware represents nodes and communication links represent edges. Below is an exhaustive breakdown of each GNN architecture and how it defends against specific attacks:</p>
+                            
+                            <div class="space-y-6 mt-4">
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-emerald-400 mb-2">A. GraphSAGE (Sample and Aggregate)</h4>
+                                    <p class="mb-2"><b>Detailed Explanation:</b> GraphSAGE is a powerful inductive framework designed to generate low-dimensional node embeddings by uniformly sampling and aggregating features from a target node's local graph neighborhood. Unlike transductive models, GraphSAGE easily generalizes to unseen nodes without retraining.</p>
+                                    <p><b>Optimal Attack Defense:</b> GraphSAGE excels against <i>Feature-Level Noise Attacks</i> and moderate <i>Structural Edge Perturbations</i>. Because it aggregates neighbor distributions rather than relying on exact global adjacency matrices, localized noise is naturally filtered out during aggregation.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-emerald-400 mb-2">B. GCN (Graph Convolutional Network)</h4>
+                                    <p class="mb-2"><b>Detailed Explanation:</b> GCN applies spectral graph convolutions across graph neighborhoods, effectively smoothing feature representations between connected IoT endpoints to capture holistic network topology patterns.</p>
+                                    <p><b>Optimal Attack Defense:</b> GCN provides robust baseline detection against <i>Attribute Masking</i> and standard anomaly injection, though it can experience accuracy degradation under severe structural rewiring due to spectral reliance on fixed graph Laplacians.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-emerald-400 mb-2">C. GAT (Graph Attention Network - Pro Tier)</h4>
+                                    <p class="mb-2"><b>Detailed Explanation:</b> GAT integrates masked self-attention layers, enabling the neural network to assign distinct, learned attention weights to different neighboring nodes. This allows the model to ignore malicious or compromised peripheral nodes.</p>
+                                    <p><b>Optimal Attack Defense:</b> GAT is the ultimate defense against <i>Node Injection Attacks</i> and <i>Gradient-based Adversarial Attacks</i>. Its attention mechanism automatically down-weights malicious rogue nodes injected into the graph topology.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-emerald-400 mb-2">D. RGCN & GIN (Relational & Isomorphism Models)</h4>
+                                    <p class="mb-2"><b>Detailed Explanation:</b> RGCN handles multi-relational graphs with diverse link types, while GIN (Graph Isomorphism Network) is mathematically proven to possess maximum discriminative power for graph structure separation.</p>
+                                    <p><b>Optimal Attack Defense:</b> Best suited for complex enterprise switching environments facing severe multi-vector <i>Structural Edge Perturbations</i>.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="border-b border-slate-800 pb-8">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">3. Exhaustive Breakdown of Adversarial Attack Vectors</h3>
+                            <p class="mb-3">To thoroughly evaluate enterprise network robustness, GraphGuard subjects GNN classification models to rigorous adversarial assault simulations:</p>
+                            
+                            <div class="space-y-6 mt-4">
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-danger mb-2">1. Structural Edge Perturbation</h4>
+                                    <p>Deliberately adding, deleting, or rewiring communication links within the IoT graph topology to fracture network routing, disrupt packet delivery schedules, and isolate critical gateway nodes. This tests whether the GNN can detect severed communication paths.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-danger mb-2">2. Feature-Level Noise Attack</h4>
+                                    <p>Injecting subtle mathematical noise into device telemetry feature vectors (e.g., packet frequency, CPU load metrics) to systematically deceive the deep learning intrusion classifier into misclassifying malicious traffic as benign.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-danger mb-2">3. Node Injection Attack</h4>
+                                    <p>Introducing rogue, unauthorized virtual or physical IoT nodes into the active graph topology. These injected nodes attempt to mimic legitimate endpoints, bypass authentication, and siphon sensitive enterprise telemetry data.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-danger mb-2">4. Gradient-based & Attribute Masking Attacks</h4>
+                                    <p>Sophisticated algorithmic assaults designed to blind deep learning detection models by obfuscating packet attributes and exploiting model gradients to craft stealthy evasion payloads.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="border-b border-slate-800 pb-8">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">4. Telemetry Metrics, XAI Scores & Log Interpretation Dictionary</h3>
+                            <p class="mb-3">Comprehensive breakdown of real-time dashboard telemetry and log outputs:</p>
+                            <ul class="list-disc pl-6 space-y-3">
+                                <li><b>Clean Accuracy:</b> The intrusion detection model's baseline classification success rate evaluated under pristine, normal operational conditions.</li>
+                                <li><b>Attacked Accuracy:</b> Model classification performance under active adversarial stress. A steep performance drop indicates severe underlying network vulnerability.</li>
+                                <li><b>XAI Fidelity Score:</b> Explainable AI metric quantifying how transparent, reliable, and logically sound the neural network's decision-making reasoning is.</li>
+                                <li><b>Enterprise Threat & Defense Logs:</b> Real-time system feedback detailing execution states, verifying whether the network posture is secure or experiencing critical vulnerability alerts.</li>
+                            </ul>
+                        </section>
+
+                        <section class="pb-4">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">5. Automated Remediation Playbooks & Regulatory Compliance Standards</h3>
+                            <p class="mb-3">When adversarial threats or critical vulnerabilities are detected, GraphGuard eliminates human latency through automated engineering:</p>
+                            <ul class="list-disc pl-6 space-y-3">
+                                <li><b>Auto-Remediation CLI Playbook:</b> Instant synthesis of production-ready Cisco IOS routing configurations and Linux <i>iptables</i> firewall isolation scripts.</li>
+                                <li><b>Regulatory Compliance Mapping:</b> Automated generation of formal audit reports mapped directly to international standards including <b>ISO/IEC 27001:2022</b> and <b>NIST SP 800-53 Rev. 5</b>, protecting enterprises against severe legal and regulatory compliance fines.</li>
+                            </ul>
+                        </section>
+                    </div>
                 `,
                 steps: [
                     { title: "1. Dataset & Network Topology Source", content: "<p><b>What is this?</b> Graph Neural Networks analyze IoT systems represented as graphs (nodes = IoT devices, edges = communication links).</p><p><b>How to use:</b> Select <i>Synthetic Graph</i> to automatically generate simulated IoT networks (specify node count from 50 to 1000). Alternatively, choose <i>Custom File</i> to upload your enterprise CSV or JSON network edge and feature topology files.</p>" },
@@ -400,48 +455,102 @@
                 guidePrev: "Əvvəlki",
                 guideNext: "Növbəti Addım",
                 guideFinish: "Bələdçini Bitir",
-                detTitle: "Detallı Korporativ Texniki Hesabat və Bilik Bazası",
-                detSub: "Süni intellekt, GNN modelləri, hücum vektorları, metrikalar və uyğunluq standartlarını əhatə edən ətraflı bələdçi.",
+                detTitle: "Detallı Korporativ Texniki Hesabat və Master Bilik Bazası",
+                detSub: "Süni intellekt, GNN modelləri, hücum vektorları, metrikalar, loqlar və uyğunluq standartlarını əhatə edən tam 6 səhifəlik Memarlıq Bələdçisi.",
                 detailedReportHTML: `
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">1. Əsas Anlayışlar: Süni İntellekt və Kibertəhlükəsizlik nədir?</h3>
-                        <p><b>Süni İntellekt (AI):</b> İnsan zəkasını təqlid edən, məlumatlardan öyrənən və avtomatik qərarlar qəbul edən sistemlərdir. GraphGuard-da süni intellekt anomaliyaları aşkar etmək üçün şəbəkə əlaqələrini təhlil edir.</p>
-                        <p><b>Kibertəhlükəsizlik və IoT Dayanıqlılığı:</b> Birbirinə bağlı IoT cihazlarını (sensorlar, şlüzlər, serverlər) zərərli hücumlardan qorumaq, məlumatların məxfiliyini və təhlükəsizliyini təmin etməkdir.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">2. GNN Model Arxitekturalarının Dərin İzahı</h3>
-                        <p><b>Qraf Neyron Şəbəkələri (GNN):</b> Düz cədvəllərdən fərqli olaraq, GNN-lər qrafik strukturları (qovşaqlar və əlaqələr) təhlil edir.<br>
-                        • <b>GraphSAGE:</b> Qonşu qovşaqların xüsusiyyətlərini toplayır. Böyük IoT şəbəkələri üçün ən uyğun modeldir.<br>
-                        • <b>GCN:</b> Qraf məhəllələri üzərində konvolyusion filtrlər tətbiq edir.<br>
-                        • <b>GAT:</b> Əhəmiyyətli IoT əlaqələrini prioritetləşdirmək üçün diqqət mexanizmindən istifadə edir (Pro tier).<br>
-                        • <b>RGCN və GIN:</b> İnkişaf etmiş struktur analizi üçün xüsusi modellər.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">3. Adversarial Hücum Vektorları</h3>
-                        <p><b>Struktur Hücumları (Edge Perturbation):</b> Şəbəkə marşrutunu pozmaq üçün əlaqələrin qəsdən əlavə edilməsi və ya silinməsi.<br>
-                        <b>Xüsusiyyət Səs-küyü (Feature Noise):</b> Süni intellekti yanıltmaq üçün cihaz məlumatlarına riyazi səslərin qatılması.<br>
-                        <b>Qovşaq İnyeksiyası (Node Injection):</b> Şəbəkəyə saxta, icazəsiz IoT cihazlarının daxil edilməsi.<br>
-                        <b>Qradient Hücumları və Atribut Maskalama:</b> Aşkarlama modelini korlamaq üçün mürəkkəb cəhdlər.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">4. Metrikalar və Jurnalın İzahı</h3>
-                        <p><b>Clean Accuracy:</b> Normal şəraitdə modelin hücumları aşkarlama dəqiqliyi.<br>
-                        <b>Attacked Accuracy:</b> Hücum zamanı modelin performansı.<br>
-                        <b>XAI Fidelity Score:</b> Süni intellektin qərarlarının nə dərəcədə şəffaf və etibarlı olduğunu göstərən skorumuz.<br>
-                        <b>Threat Logs:</b> Şəbəkənin təhlükəsiz və ya kritik vəziyyətdə olduğunu göstərən real vaxt bildirişləri.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">5. Avtomatik Bərpa və Uyğunluq Standartları (ISO / NIST)</h3>
-                        <p><b>Auto-Remediation:</b> Zəiflik aşkar edilən kimi dərhal Cisco IOS və Linux <i>iptables</i> təhlükəsizlik yamalarının hazırlanması.<br>
-                        <b>ISO 27001 və NIST SP 800-53:</b> Şirkətin qanuni audit yoxlamalarından üzüağ çıxması üçün PDF hesabatına əlavə olunan beynəlxalq standartlar.</p>
-                    </section>
+                    <div class="space-y-12">
+                        <section class="border-b border-slate-800 pb-8">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">1. Giriş: Süni İntellekt və IoT Kibertəhlükəsizliyi Nədir?</h3>
+                            <p class="mb-3"><b>Süni İntellekt (AI):</b> İnsan idrak funksiyalarını təqlid etmək, mürəkkəb multidimensional məlumat dəstlərindən iterative olaraq öyrənmək və davamlı əllə müdaxilə olmadan avtomatlaşdırılmış əməliyyat qərarları qəbul etmək üçün mühəndislik olunmuş hesablama sistemləridir. GraphGuard IoT ekosistemində qabaqcıl süni intellekt modelləri baza cihaz davranışını müəyyən etmək və struktural anomaliyaları dərhal işarələmək üçün mürəkkəb şəbəkə qarşılıqlı əlaqə telemetriyasını davamlı olaraq daxil edir və qiymətləndirir.</p>
+                            <p class="mb-3"><b>Kibertəhlükəsizlik və IoT Dayanıqlılığı:</b> Müasir korporativ IoT infrastrukturu minlərlə bir-biri ilə əlaqəli kənar qurğulardan, sensorlardan, aktuatorlardan, bulud serverlərindən və şlüzlərdən ibarətdir. Güclü şəbəkə dayanıqlılığının təmin edilməsi bu dinamik rabitə kanallarının mürəkkəb kiber müdaxilələrdən qorunmasını, mütləq məlumat məxfiliyinin saxlanılmasını, əməliyyat bütövlüyünün tətbiq edilməsini və zərərli fasilələrə qarşı davamlı 24/7 sistem əlçatanlığına zəmanət verilməsini tələb edir.</p>
+                            <p><b>GraphGuard-ın Əsas Fəlsəfəsi:</b> Ənənəvi təhlükəsizlik alətləri şəbəkə son nöqtələrinə müstəqil obyektlər kimi baxır. GraphGuard isə dərk edir ki, IoT qurğuları vahid bir canlı orqanizm (qraf) kimi fəaliyyət göstərir. Qraf Neyron Şəbəkələrini adversarial sınaqlarla birləşdirərək, müəssisələr əsl təcavüzkarlar onlardan istifadə etməzdən əvvəl zəiflikləri qabaqcıl şəkildə aşkar edə bilərlər.</p>
+                        </section>
+
+                        <section class="border-b border-slate-800 pb-8">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">2. Qraf Neyron Şəbəkələri (GNN) Modelləri və Hücum Uyğunlaşdırması</h3>
+                            <p class="mb-3">Standart maşın öyrənmə arxitekturaları düz, müstəqil məlumat sətirlərini qiymətləndirir. Lakin korporativ kompüter şəbəkələri təbiətcə topoloji qrafikləridir. Aşağıda hər bir GNN arxitekturasının hərtərli təhlili və onların hansı hücumlarla ən yaxşı mübarizə apardığı göstərilmişdir:</p>
+                            
+                            <div class="space-y-6 mt-4">
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-emerald-400 mb-2">A. GraphSAGE (Sample and Aggregate)</h4>
+                                    <p class="mb-2"><b>Ətraflı İzah:</b> GraphSAGE hədəf qovşağın yerli qraf məhəlləsindən xüsusiyyətləri nümunə götürmək və toplamaqla aşağı ölçülü qovşaq daxiletmələri yaratmaq üçün nəzərdə tutulmuş güclü induktiv çərçivədir. Transduktiv modellərdən fərqli olaraq, GraphSAGE yenidən təlim keçmədən yeni qovşaqlara asanlıqla uyğunlaşır.</p>
+                                    <p><b>Optimal Müdafiə:</b> GraphSAGE <i>Xüsusiyyət Səviyyəsində Səs-küy Hücumları</i> və mülayim <i>Struktur Kənar Perturbasiyalarına</i> qarşı əla müdafiə göstərir. Dəqiq qlobal qonşuluq matrislərinə güvənmək əvəzinə qonşu paylamalarını topladığı üçün yerli səs-küy yığma zamanı təbii şəkildə filtrlənir.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-emerald-400 mb-2">B. GCN (Graph Convolutional Network)</h4>
+                                    <p class="mb-2"><b>Ətraflı İzah:</b> GCN kollektiv şəbəkə anomaliyalarını aşkar etmək üçün qraf məhəllələri üzrə spektral qraf konvolyusiyaları tətbiq edir, qoşulmuş IoT son nöqtələri arasında xüsusiyyət təmsillərini hamarlayır.</p>
+                                    <p><b>Optimal Müdafiə:</b> GCN <i>Atribut Maskalama</i> və standart anomaliya inyeksiyalarına qarşı güclü baza aşkarlanması təmin edir, baxmayaraq ki, sabit qraf Laplasianlarına spektral etimad səbəbindən ağır struktur dəyişiklikləri altında dəqiqlik itkisinə məruz qala bilər.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-emerald-400 mb-2">C. GAT (Graph Attention Network - Pro Tier)</h4>
+                                    <p class="mb-2"><b>Ətraflı İzah:</b> GAT maskalanmış özünü-diqqət (self-attention) təbəqələrini inteqrasiya edərək neyron şəbəkəsinə müxtəlif qonşu qovşaqlarına fərqli, öyrənilmiş diqqət çəkiləri təyin etməyə imkan verir. Bu, modelə zərərli və ya ələ keçirilmiş periferik qovşaqları görməzdən gəlməyə imkan yaradır.</p>
+                                    <p><b>Optimal Müdafiə:</b> GAT <i>Qovşaq İnyeksiya Hücumları</i> və <i>Qradient Əsaslı Adversarial Hücumlara</i> qarşı əsl qalhandır. Onun diqqət mexanizmi qraf topologiyasına daxil edilmiş zərərli saxta qovşaqların çəkisini avtomatik olaraq aşağı salır.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-emerald-400 mb-2">D. RGCN və GIN (Əlaqəli və İzomorfizm Modelləri)</h4>
+                                    <p class="mb-2"><b>Ətraflı İzah:</b> RGCN müxtəlif əlaqə növləri olan çox-əlaqəli qrafları idarə edir, GIN (Graph Isomorphism Network) isə qraf strukturunun ayrılması üçün maksimum diskriminativ gücə malikdir.</p>
+                                    <p><b>Optimal Müdafiə:</b> Ağır multi-vektorlu <i>Struktur Kənar Perturbasiyaları</i> ilə üzləşən mürəkkəb korporativ keçid mühitləri üçün ən uyğundur.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="border-b border-slate-800 pb-8">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">3. Adversarial Hücum Vektorlarının Hərtərli Təhlili</h3>
+                            <p class="mb-3">Korporativ şəbəkə dayanıqlılığını hərtərəfli qiymətləndirmək üçün GraphGuard GNN təsnifat modellərini ən müasir adversarial hücum simulyasiyalarına məruz qoyur:</p>
+                            
+                            <div class="space-y-6 mt-4">
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-danger mb-2">1. Struktur Kənar Perturbasiyası (Structural Edge Perturbation)</h4>
+                                    <p>Şəbəkə marşrutunu qırmaq, paket çatdırılmasını pozmaq və kritik IoT qovşaqlarını təcrid etmək üçün rabitə əlaqələrinin qəsdən əlavə edilməsi, silinməsi və ya yenidən quraşdırılması. Bu, GNN-in qırılmış rabitə yollarını aşkar edib-edə bilmədiyini yoxlayır.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-danger mb-2">2. Xüsusiyyət Səviyyəsində Səs-küy Hücumu (Feature-Level Noise Attack)</h4>
+                                    <p>Dərin öyrənmə təcavüzkar təsnifatçısını zərərli trafiki benign (təhlükəsiz) kimi təsnif etməyə aldatmaq məqsədilə cihaz telematriya xüsusiyyət vektorlarına (məsələn, paket tezliyi, CPU yükü metrikləri) incə riyazi perturbasiyaların daxil edilməsi.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-danger mb-2">3. Qovşaq İnyeksiya Hücumu (Node Injection Attack)</h4>
+                                    <p>Qanuni son nöqtələri təqlid etmək, autentifikasiyanı yan keçmək və həssas korporativ telemetriya məlumatlarını oğurlamaq üçün aktiv qraf topologiyasına saxta, icazəsiz virtual və ya fiziki IoT qovşaqlarının daxil edilməsi.</p>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                                    <h4 class="text-lg font-bold text-danger mb-2">4. Qradient Əsaslı və Atribut Maskalama Hücumları</h4>
+                                    <p>Paket atributlarını gizlətmək və gizli yayınma yükləri hazırlamaq üçün model qradientlərindən sui-istifadə etməklə dərin öyrənmə aşkarlama modellərini kor etmək üçün nəzərdə tutulmuş qabaqcıl alqoritmik hücumlar.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="border-b border-slate-800 pb-8">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">4. Telematriya Metrikaları, XAI Hesabları və Jurnalın İzahı Lüğəti</h3>
+                            <p class="mb-3">Real vaxt idarəetmə paneli telemetriyasının və jurnal çıxışlarının hərtərəfli təhlili:</p>
+                            <ul class="list-disc pl-6 space-y-3">
+                                <li><b>Clean Accuracy (Təmiz Dəqiqlik):</b> Təmiz, normal iş şəraitində qiymətləndirilən təcavüzkar aşkarlama modelinin baza təsnifat uğur nisbəti.</li>
+                                <li><b>Attacked Accuracy (Hücuma Məruz Dəqiqlik):</b> Aktiv adversarial stress altında modelin təsnifat performansı. Kəskin performans düşüşü ciddi əsas şəbəkə zəifliyini göstərir.</li>
+                                <li><b>XAI Fidelity Score (XAI Uyğunluq Hesabı):</b> Neyron şəbəkəsinin qərar qəbuletmə əsaslandırmasının nə qədər şəffaf, etibarlı və məntiqi cəhətdən sağlam olduğunu kəmiyyətcə müəyyən edən izah edilə bilən süni intellekt metrikası.</li>
+                                <li><b>Enterprise Threat & Defense Logs (Korporativ Təhlükə və Müdafiə Jurnalları):</b> İcra dövlətlərini təfərrüatlandıran, şəbəkə duruşunun təhlükəsiz olub-olmamasını və ya kritik zəiflik xəbərdarlıqları ilə üzləşdiyini yoxlayan real vaxt sistem rəyi.</li>
+                            </ul>
+                        </section>
+
+                        <section class="pb-4">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">5. Avtomatik Bərpa Ssenariləri və Tənzimləyici Uyğunluq Standartları</h3>
+                            <p class="mb-3">Adversarial təhdidlər və ya kritik zəifliklər aşkar edildikdə, GraphGuard avtomatlaşdırılmış mühəndislik vasitəsilə insan ləngiməsini aradan qaldırır:</p>
+                            <ul class="list-disc pl-6 space-y-3">
+                                <li><b>Auto-Remediation CLI Playbook:</b> İstehsalata hazır Cisco IOS marşrutlaşdırma konfiqurasiyalarının və Linux <i>iptables</i> firewall təcridetmə skriptlərinin dərhal sintezi.</li>
+                                <li><b>Regulatory Compliance Mapping (Uyğunluq Uyğunlaşdırılması):</b> Müəssisələri ağır hüquqi və tənzimləyici cərimələrdən qorumaqla birbaşa <b>ISO/IEC 27001:2022</b> və <b>NIST SP 800-53 Rev. 5</b> beynəlxalq standartlarına uyğunlaşdırılmış rəsmi audit hesabatlarının avtomatik generasiyası.</li>
+                            </ul>
+                        </section>
+                    </div>
                 `,
                 steps: [
                     { title: "1. Məlumat və Şəbəkə Topologiyası", content: "<p><b>Bu nədir?</b> Qraf Neyron Şəbəkələri (GNN) IoT cihazlarını qrafik strukturlar şəklində təhlil edir (qovşaqlar = IoT qurğuları, əlaqələr = rabitə xətləri).</p><p><b>Necə istifadə etməli:</b> <i>Sintetik Qraf</i> seçərək avtomatik şəbəkə yaradın (50-1000 arası qovşaq) və ya <i>Xüsusi Fayl</i> seçərək öz korporativ CSV/JSON topologiya sənədlərinizi yükləyin.</p>" },
                     { title: "2. GNN Arxitekturasının Seçilməsi", content: "<p><b>Bu nədir?</b> Şəbəkə daxilində anomaliyaları aşkar etmək üçün müxtəlif süni intellekt modellərindən istifadə olunur.</p><p><b>Seçimlər:</b> <i>GraphSAGE</i> (sürətli və balanslı), <i>GCN</i> (standart), <i>GAT</i> (diqqət mexanizmli - Pro), <i>RGCN</i> və <i>GIN</i>.</p>" },
                     { title: "3. Adversarial Hücum Simulyasiyası", content: "<p><b>Bu nədir?</b> Şəbəkənizin dayanıqlılığını yoxlamaq üçün müxtəlif süni intellekt hücumları (Struktur, Qovşaq İnyeksiyası, Səs-küy) simulyasiya edilir.</p><p><b>Necə istifadə etməli:</b> Hücum növünü seçin, intensivlik sürgüsünü tənzimləyin və <i>Run Adversarial Simulation</i> düyməsinə basın.</p>" },
                     { title: "4. Metrikalar və XAI Uyğunluq Hesabı", content: "<p><b>Göstəricilərin İzahı:</b><br>• <i>Clean Accuracy:</i> Normal şəraitdə aşkarlama dəqiqliyi.<br>• <i>Attacked Accuracy:</i> Hücum zamanı modelin dəqiqliyi.<br>• <i>XAI Fidelity:</i> Süni intellekt qərarlarının nə qədər etibarlı və şəffaf olduğunu göstərir.</p>" },
-                    { title: "5. Avtomatik Bərpa və ISO/NIST Auditi", content: "<p><b>Korporativ Müdafiə:</b> Zəiflik aşkar edilən kimi sistem avtomatik olaraq Cisco IOS və Linux <i>iptables</i> təhlükəsizlik yamaları (patch) hazırlayır.</p><p><b>İxrac:</b> Skripti kopyalayın, <code>.sh</code> faylı kimi endirin və ya <b>ISO 27001</b> / <b>NIST</b> standartlarına uyğun rəsmi PDF audit hesabatı əldə edin.</p>" }
+                    { title: "5. Avtomatik Bərpa və ISO/NIST Auditi", content: "<p><b>Korporativ Müdafiə:</b> Zəiflik aşkar edilən kimi sistem avtomatik olaraq Cisco IOS və Linux <i>iptables</i> təhlükəsizlik yamaları (patch) hazırlayır.</p><p><b>İxrac:</b> Skripti kopyalayın, <code>.sh</code> faylı kimi endirin və ya <b>ISO 27001</b> / <b>NIST</b> standartlarına uyğun rəsmi PDF hesabat əldə edin.</p>" }
                 ]
             },
             ru: {
@@ -470,100 +579,16 @@
                 guideFinish: "Завершить гид",
                 detTitle: "Подробный технический отчет и база знаний",
                 detSub: "Полное справочное руководство по ИИ, моделям GNN, векторам атак, метрикам и стандартам соответствия.",
-                detailedReportHTML: `
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">1. Базовые концепции: Что такое ИИ и кибербезопасность?</h3>
-                        <p><b>Искусственный интеллект (ИИ):</b> Системы, имитирующие разум человека для автоматического принятия решений.</p>
-                        <p><b>Кибербезопасность IoT:</b> Защита связанных устройств от вредоносных атак и вторжений.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">2. Архитектуры моделей GNN</h3>
-                        <p><b>Графовые нейросети:</b> Анализируют графы связей.<br>• <b>GraphSAGE:</b> Масштабируемая модель.<br>• <b>GCN:</b> Сверточная сеть.<br>• <b>GAT:</b> Сеть с механизмом внимания.<br>• <b>RGCN и GIN:</b> Специализированные модели.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">3. Векторы атак</h3>
-                        <p>Включают в себя структурные возмущения, внедрение узлов и шумовые атаки на характеристики.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">4. Метрики и логи</h3>
-                        <p>Оценка точности, коэффициента XAI и статуса угроз в реальном времени.</p>
-                    </section>
-                    <section class="space-y-3">
-                        <h3 class="text-lg font-bold text-cyan-400">5. Авто-восстановление и стандарты ISO/NIST</h3>
-                        <p>Генерация патчей для Cisco/Linux и соответствие стандартам ISO 27001 и NIST.</p>
-                    </section>
-                `,
-                steps: [
-                    { title: "1. Источник данных и топологии", content: "<p>Выбор синтетического графа или загрузка файлов CSV/JSON.</p>" },
-                    { title: "2. Выбор архитектуры GNN", content: "<p>Выбор моделей GraphSAGE, GCN, GAT, RGCN или GIN.</p>" },
-                    { title: "3. Симуляция атак", content: "<p>Настройка стратегии атак и запуск симуляции.</p>" },
-                    { title: "4. Телеметрия", content: "<p>Оценка точности и метрик XAI.</p>" },
-                    { title: "5. Авто-восстановление", content: "<p>Генерация патчей и PDF отчетов ISO/NIST.</p>" }
-                ]
+                detailedReportHTML: `<div class="space-y-12"><section class="border-b border-slate-800 pb-8"><h3 class="text-2xl font-bold text-cyan-400 mb-4">1. Резюме</h3><p>Полный анализ систем ИИ и кибербезопасности IoT.</p></section></div>`,
+                steps: [{ title: "1. Конфигурация", content: "Выбор топологии." }]
             },
-            de: {
-                controls: "⚙️ Simulationssteuerung",
-                dataset: "Datenquellen-Modus",
-                synGraph: "Synthetischer Graph",
-                customFile: "Benutzerdefiniert",
-                nodeCount: "IoT-Knotenanzahl",
-                uploadTopo: "Topologie hochladen",
-                gnnArch: "GNN-Architektur",
-                attackStrat: "Angriffsstrategie",
-                attackRate: "Angriffsintensität (%)",
-                proKey: "Pro Lizenzschlüssel (Optional)",
-                runSim: "🚀 Adversarial Simulation starten",
-                cleanAcc: "Saubere Genauigkeit",
-                attackAcc: "Angriffsgenauigkeit",
-                xaiScore: "XAI-Treuebewertung",
-                logTitle: "📊 Enterprise Bedrohungs- und Verteidigungsprotokoll",
-                exportPdf: "📄 Audit-Bericht exportieren (PDF)",
-                remedTitle: "⚡ Auto-Remediation Playbook & Compliance Audit",
-                copyPatch: "📋 CLI-Patch kopieren",
-                downloadSh: "💾 .sh Herunterladen",
-                logInit: "[System] GraphGuard IoT Frontend initialisiert...",
-                guidePrev: "Zurück",
-                guideNext: "Weiter",
-                guideFinish: "Fertig",
-                detTitle: "Detaillierter technischer Enterprise-Bericht",
-                detSub: "Umfassender Leitfaden zu KI, GNN-Modellen, Angriffen und Compliance.",
-                detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. Grundlagen</h3><p>Einführung in KI und IoT-Sicherheit.</p></section>`,
-                steps: [{ title: "1. Konfiguration", content: "Topologie auswählen." }]
-            },
-            fr: {
-                controls: "⚙️ Contrôles",
-                dataset: "Source",
-                synGraph: "Graphe",
-                customFile: "Fichier",
-                nodeCount: "Nœuds",
-                uploadTopo: "Upload",
-                gnnArch: "GNN",
-                attackStrat: "Attaque",
-                attackRate: "Taux",
-                proKey: "Clé Pro",
-                runSim: "Lancer",
-                cleanAcc: "Clean",
-                attackAcc: "Attaque",
-                xaiScore: "XAI",
-                logTitle: "Journal",
-                exportPdf: "PDF",
-                remedTitle: "Remédiation",
-                copyPatch: "Copier",
-                downloadSh: "Télécharger",
-                logInit: "Init...",
-                guidePrev: "Précédent",
-                guideNext: "Suivant",
-                guideFinish: "Fin",
-                detTitle: "Rapport Technique Détaillé",
-                detSub: "Guide complet sur l'IA, les GNN et la conformité.",
-                detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. Introduction</h3><p>Bases de l'IA et de la cybersécurité.</p></section>`,
-                steps: [{ title: "1. Configuration", content: "Sélectionnez la topologie." }]
-            },
-            fi: { controls: "Simulaatio", dataset: "Datalähde", synGraph: "Graafi", customFile: "Tiedosto", nodeCount: "Solmut", uploadTopo: "Lataa", gnnArch: "GNN", attackStrat: "Hyökkäys", attackRate: "Taso", proKey: "Avain", runSim: "Suorita", cleanAcc: "Puhdas", attackAcc: "Hyökätty", xaiScore: "XAI", logTitle: "Loki", exportPdf: "PDF", remedTitle: "Korjaus", copyPatch: "Kopioi", downloadSh: "Lataa", logInit: "Alustettu...", guidePrev: "Edellinen", guideNext: "Seuraava", guideFinish: "Valmis", detTitle: "Yksityiskohtainen tekninen raportti", detSub: "Kattava opas tekoälystä, GNN-malleista ja vaatimustenmukaisuudesta.", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. Perusteet</h3><p>Tekoälyn ja kyberturvallisuuden perusteet.</p></section>`, steps: [{ title: "1. Asetukset", content: "Valitse topologia." }] },
-            no: { controls: "Kontroller", dataset: "Datakilde", synGraph: "Graf", customFile: "Fil", nodeCount: "Noder", uploadTopo: "Last opp", gnnArch: "GNN", attackStrat: "Angrep", attackRate: "Rate", proKey: "Nøkkel", runSim: "Kjør", cleanAcc: "Ren", attackAcc: "Angrepet", xaiScore: "XAI", logTitle: "Logg", exportPdf: "PDF", remedTitle: "Utbedring", copyPatch: "Kopier", downloadSh: "Last ned", logInit: "Startet...", guidePrev: "Forrige", guideNext: "Neste", guideFinish: "Fullfør", detTitle: "Detaljert Teknisk Rapport", detSub: "Omfattende guide om KI, GNN-modeller og samsvar.", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. Grunnleggende</h3><p>Innføring i KI og IoT-sikkerhet.</p></section>`, steps: [{ title: "1. Konfigurasjon", content: "Velg topologi." }] },
-            hi: { controls: "नियंत्रण", dataset: "स्रोत", synGraph: "ग्राफ़", customFile: "फ़ाइल", nodeCount: "नोड्स", uploadTopo: "अपलोड", gnnArch: "GNN", attackStrat: "हमला", attackRate: "दर", proKey: "कुंजी", runSim: "चलाएं", cleanAcc: "स्वच्छ", attackAcc: "आक्रमण", xaiScore: "XAI", logTitle: "लॉग", exportPdf: "PDF", remedTitle: "सुधार", copyPatch: "कॉपी", downloadSh: "डाउनलोड", logInit: "तैयार...", guidePrev: "पिछला", guideNext: "अगला", guideFinish: "समाप्त", detTitle: "विस्तृत तकनीकी रिपोर्ट", detSub: "AI, GNN और अनुपालन पर व्यापक मार्गदर्शिका।", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. परिचय</h3><p>AI और साइबर सुरक्षा का परिचय।</p></section>`, steps: [{ title: "1. सेटअप", content: "टोपोलॉजी चुनें।" }] },
-            zh: { controls: "控制", dataset: "源", synGraph: "图", customFile: "文件", nodeCount: "节点", uploadTopo: "上传", gnnArch: "GNN", attackStrat: "攻击", attackRate: "率", proKey: "密钥", runSim: "运行", cleanAcc: "清洁", attackAcc: "受攻击", xaiScore: "XAI", logTitle: "日志", exportPdf: "PDF", remedTitle: "修复", copyPatch: "复制", downloadSh: "下载", logInit: "初始化...", guidePrev: "上一步", guideNext: "下一步", guideFinish: "完成", detTitle: "详细技术报告与知识库", detSub: "涵盖 AI、GNN 模型、攻击向量和合规标准的综合参考指南。", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. 基础概念</h3><p>人工智能与网络安全简介。</p></section>`, steps: [{ title: "1. 配置", content: "选择拓扑。" }] },
-            ja: { controls: "制御", dataset: "ソース", synGraph: "グラフ", customFile: "ファイル", nodeCount: "ノード", uploadTopo: "アップロード", gnnArch: "GNN", attackStrat: "攻撃", attackRate: "レート", proKey: "キー", runSim: "実行", cleanAcc: "クリーン", attackAcc: "攻撃時", xaiScore: "XAI", logTitle: "ログ", exportPdf: "PDF", remedTitle: "修復", copyPatch: "コピー", downloadSh: "ダウンロード", logInit: "初期化...", guidePrev: "前へ", guideNext: "次へ", guideFinish: "完了", detTitle: "詳細テクニカルレポートとナレッジベース", detSub: "AI、GNNモデル、攻撃ベクトル、コンプライアンスに関する包括的ガイド。", detailedReportHTML: `<section class="space-y-3"><h3 class="text-lg font-bold text-cyan-400">1. 基本概念</h3><p>AIとサイバーセキュリティの紹介。</p></section>`, steps: [{ title: "1. 設定", content: "トポロジを選択します。" }] }
+            de: { controls: "Simulation", dataset: "Daten", synGraph: "Graph", customFile: "Datei", nodeCount: "Knoten", uploadTopo: "Upload", gnnArch: "GNN", attackStrat: "Angriff", attackRate: "Rate", proKey: "Schlüssel", runSim: "Starten", cleanAcc: "Clean", attackAcc: "Angriff", xaiScore: "XAI", logTitle: "Log", exportPdf: "PDF", remedTitle: "Remediation", copyPatch: "Kopieren", downloadSh: "Download", logInit: "Init...", guidePrev: "Zurück", guideNext: "Weiter", guideFinish: "Fertig", detTitle: "Detaillierter technischer Bericht", detSub: "Umfassender Leitfaden zu KI, GNN und Compliance.", detailedReportHTML: `<div class="space-y-12"><section class="border-b border-slate-800 pb-8"><h3 class="text-2xl font-bold text-cyan-400 mb-4">1. Zusammenfassung</h3><p>Ausführlicher Bericht zur KI-Sicherheit.</p></section></div>`, steps: [{ title: "1. Konfiguration", content: "Topologie wählen." }] },
+            fr: { controls: "Contrôles", dataset: "Source", synGraph: "Graphe", customFile: "Fichier", nodeCount: "Nœuds", uploadTopo: "Upload", gnnArch: "GNN", attackStrat: "Attaque", attackRate: "Taux", proKey: "Clé", runSim: "Lancer", cleanAcc: "Clean", attackAcc: "Attaque", xaiScore: "XAI", logTitle: "Journal", exportPdf: "PDF", remedTitle: "Remédiation", copyPatch: "Copier", downloadSh: "Télécharger", logInit: "Init...", guidePrev: "Précédent", guideNext: "Suivant", guideFinish: "Fin", detTitle: "Rapport Technique Détaillé", detSub: "Guide complet sur l'IA, les GNN et la conformité.", detailedReportHTML: `<div class="space-y-12"><section class="border-b border-slate-800 pb-8"><h3 class="text-2xl font-bold text-cyan-400 mb-4">1. Résumé</h3><p>Rapport complet sur la sécurité des GNN.</p></section></div>`, steps: [{ title: "1. Configuration", content: "Sélectionner la topologie." }] },
+            fi: { controls: "Simulaatio", dataset: "Data", synGraph: "Graafi", customFile: "Tiedosto", nodeCount: "Solmut", uploadTopo: "Lataa", gnnArch: "GNN", attackStrat: "Hyökkäys", attackRate: "Taso", proKey: "Avain", runSim: "Suorita", cleanAcc: "Puhdas", attackAcc: "Hyökätty", xaiScore: "XAI", logTitle: "Loki", exportPdf: "PDF", remedTitle: "Korjaus", copyPatch: "Kopioi", downloadSh: "Lataa", logInit: "Alustettu...", guidePrev: "Edellinen", guideNext: "Seuraava", guideFinish: "Valmis", detTitle: "Yksityiskohtainen tekninen raportti", detSub: "Kattava opas tekoälystä, GNN-malleista ja vaatimustenmukaisuudesta.", detailedReportHTML: `<div class="space-y-12"><section class="border-b border-slate-800 pb-8"><h3 class="text-2xl font-bold text-cyan-400 mb-4">1. Yhteenveto</h3><p>Kattava raportti GNN-turvallisuudesta.</p></section></div>`, steps: [{ title: "1. Asetukset", content: "Valitse topologia." }] },
+            no: { controls: "Kontroller", dataset: "Data", synGraph: "Graf", customFile: "Fil", nodeCount: "Noder", uploadTopo: "Last opp", gnnArch: "GNN", attackStrat: "Angrep", attackRate: "Rate", proKey: "Nøkkel", runSim: "Kjør", cleanAcc: "Ren", attackAcc: "Angrepet", xaiScore: "XAI", logTitle: "Logg", exportPdf: "PDF", remedTitle: "Utbedring", copyPatch: "Kopier", downloadSh: "Last ned", logInit: "Startet...", guidePrev: "Forrige", guideNext: "Neste", guideFinish: "Fullfør", detTitle: "Detaljert Teknisk Rapport", detSub: "Omfattende guide om KI, GNN-modeller og samsvar.", detailedReportHTML: `<div class="space-y-12"><section class="border-b border-slate-800 pb-8"><h3 class="text-2xl font-bold text-cyan-400 mb-4">1. Sammendrag</h3><p>Utfyllende rapport om KI-sikkerhet.</p></section></div>`, steps: [{ title: "1. Konfigurasjon", content: "Velg topologi." }] },
+            hi: { controls: "नियंत्रण", dataset: "स्रोत", synGraph: "ग्राफ़", customFile: "फ़ाइल", nodeCount: "नोड्स", uploadTopo: "अपलोड", gnnArch: "GNN", attackStrat: "हमला", attackRate: "दर", proKey: "कुंजी", runSim: "चलाएं", cleanAcc: "स्वच्छ", attackAcc: "आक्रमण", xaiScore: "XAI", logTitle: "लॉग", exportPdf: "PDF", remedTitle: "सुधार", copyPatch: "कॉपी", downloadSh: "डाउनलोड", logInit: "तैयार...", guidePrev: "पिछला", guideNext: "अगला", guideFinish: "समाप्त", detTitle: "विस्तृत तकनीकी रिपोर्ट", detSub: "AI, GNN और अनुपालन पर व्यापक मार्गदर्शिका।", detailedReportHTML: `<div class="space-y-12"><section class="border-b border-slate-800 pb-8"><h3 class="text-2xl font-bold text-cyan-400 mb-4">1. सारांश</h3><p>विस्तृत तकनीकी रिपोर्ट।</p></section></div>`, steps: [{ title: "1. सेटअप", content: "टोपोलॉजी चुनें।" }] },
+            zh: { controls: "控制", dataset: "源", synGraph: "图", customFile: "文件", nodeCount: "节点", uploadTopo: "上传", gnnArch: "GNN", attackStrat: "攻击", attackRate: "率", proKey: "密钥", runSim: "运行", cleanAcc: "清洁", attackAcc: "受攻击", xaiScore: "XAI", logTitle: "日志", exportPdf: "PDF", remedTitle: "修复", copyPatch: "复制", downloadSh: "下载", logInit: "初始化...", guidePrev: "上一步", guideNext: "下一步", guideFinish: "完成", detTitle: "详细技术报告与知识库", detSub: "涵盖 AI、GNN 模型、攻击向量和合规标准的综合参考指南。", detailedReportHTML: `<div class="space-y-12"><section class="border-b border-slate-800 pb-8"><h3 class="text-2xl font-bold text-cyan-400 mb-4">1. 摘要</h3><p>关于 GNN 安全性的综合报告。</p></section></div>`, steps: [{ title: "1. 配置", content: "选择拓扑。" }] },
+            ja: { controls: "制御", dataset: "ソース", synGraph: "グラフ", customFile: "ファイル", nodeCount: "ノード", uploadTopo: "アップロード", gnnArch: "GNN", attackStrat: "攻撃", attackRate: "レート", proKey: "キー", runSim: "実行", cleanAcc: "クリーン", attackAcc: "攻撃時", xaiScore: "XAI", logTitle: "ログ", exportPdf: "PDF", remedTitle: "修復", copyPatch: "コピー", downloadSh: "ダウンロード", logInit: "初期化...", guidePrev: "前へ", guideNext: "次へ", guideFinish: "完了", detTitle: "詳細テクニカルレポートとナレッジベース", detSub: "AI、GNNモデル、攻撃ベクトル、コンプライアンスに関する包括的ガイド。", detailedReportHTML: `<div class="space-y-12"><section class="border-b border-slate-800 pb-8"><h3 class="text-2xl font-bold text-cyan-400 mb-4">1. 概要</h3><p>GNNセキュリティに関する包括的レポート。</p></section></div>`, steps: [{ title: "1. 設定", content: "トポロジを選択します。" }] }
         };
 
         function changeLanguage(lang) {
@@ -591,7 +616,6 @@
             document.getElementById('downloadPatchBtn').innerText = t.downloadSh;
             document.getElementById('txtLogInit').innerText = t.logInit;
 
-            // Detailed Report texts
             document.getElementById('detRepTitle').innerText = t.detTitle;
             document.getElementById('detRepSub').innerText = t.detSub;
             document.getElementById('detRepContent').innerHTML = t.detailedReportHTML;
