@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GraphGuard IoT - Enterprise GNN Security Platform v4.0</title>
+    <title>GraphGuard IoT - Enterprise GNN Security Platform v4.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Smooth Custom Scrollbar for Master Knowledge Base */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    </style>
 </head>
 <body class="bg-[#0f172a] text-slate-100 min-h-screen font-sans">
     
@@ -14,7 +21,7 @@
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">🛡️</span>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v4.0.0</span>
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v4.1.0</span>
                 </h1>
             </div>
             <div class="flex items-center space-x-3 text-sm text-slate-400">
@@ -31,7 +38,7 @@
                     <option value="ja">🇯🇵 日本語</option>
                 </select>
 
-                <button onclick="openDetailedReportModal()" class="bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1">
+                <button onclick="openDetailedReportModal()" class="bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1 shadow-lg shadow-cyan-500/10">
                     📚 Detailed Report (Ultimate Encyclopedia)
                 </button>
 
@@ -195,7 +202,7 @@
             </div>
 
             <div class="mt-16 pt-6 border-t border-slate-800 flex justify-between items-center">
-                <span class="text-xs text-slate-500">GraphGuard IoT Enterprise Security Engine v4.0.0 — Ultimate Master Reference</span>
+                <span class="text-xs text-slate-500">GraphGuard IoT Enterprise Security Engine v4.1.0 — Ultimate Master Reference</span>
                 <button onclick="closeDetailedReportModal()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs cursor-pointer transition">Close Report</button>
             </div>
         </div>
@@ -248,7 +255,7 @@
               <div>
                 <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-600 text-white">Most Popular</span>
                 <h3 class="text-xl font-bold mt-3">Professional Tier</h3>
-                <div class="my-4"><span class="text-3xl font-extrabold">\$29</span><span class="text-slate-400 text-sm"> / monthly</span></div>
+                <div class="my-4"><span class="text-3xl font-extrabold">$29</span><span class="text-slate-400 text-sm"> / monthly</span></div>
                 <ul class="space-y-2 text-sm text-slate-300 mb-6">
                   <li>✓ Advanced GAT & GIN Models</li>
                   <li>✓ Custom CSV/JSON Upload</li>
@@ -288,7 +295,7 @@
         const massiveEncyclopediaContent = `
             <div class="space-y-16">
                 <section class="border-b border-slate-800 pb-12">
-                    <h3 class="text-3xl font-extrabold text-cyan-400 mb-6">1. Executive Summary: What is Artificial Intelligence & IoT Cybersecurity? (Ultimate Reference v4.0)</h3>
+                    <h3 class="text-3xl font-extrabold text-cyan-400 mb-6">1. Executive Summary: What is Artificial Intelligence & IoT Cybersecurity? (Ultimate Reference v4.1)</h3>
                     <p class="mb-6 text-base leading-relaxed"><b>Artificial Intelligence (AI):</b> Artificial Intelligence represents the apex of modern computational engineering, referring specifically to algorithmic systems designed to simulate human cognitive functions, reason through complex logical constraints, learn iteratively from massive multidimensional telemetry datasets, and execute automated operational decisions without continuous manual oversight. Within the GraphGuard IoT security architecture, sophisticated deep neural models continuously ingest, process, and evaluate intricate network interaction telemetry. By mapping real-time packet exchanges against historical behavioral graphs, these AI systems establish precise baseline device profiles, learn normal packet routing patterns, and flag structural anomalies instantly. Unlike legacy static rule-based firewalls that rely strictly on predefined signatures, AI models utilize relational graph geometry to predict and intercept novel zero-day attack vectors before they cause catastrophic operational disruption across enterprise infrastructure. Modern neural intrusion detection systems utilize deep pattern recognition to identify subtle deviations in network traffic that traditional signature-based security tools completely fail to notice, providing an autonomous analytical shield across complex enterprise environments where thousands of connected endpoints generate petabytes of unstructured behavioral telemetry every single second.</p>
                     <p class="mb-6 text-base leading-relaxed"><b>Cybersecurity & IoT Resilience:</b> Modern enterprise IoT infrastructure comprises tens of thousands of interconnected edge devices, distributed sensors, intelligent actuators, regional gateways, and cloud servers. Ensuring robust network resilience requires protecting these highly dynamic communication channels against sophisticated cyber intrusions, maintaining absolute data confidentiality, enforcing strict operational integrity, and guaranteeing continuous 24/7 system availability against malicious outages. A single compromised temperature sensor or smart industrial valve can serve as an unvetted lateral entry point into core enterprise cloud databases unless guarded by advanced topological anomaly detection. Enterprise resilience is no longer measured solely by perimeter firewalls, but by how rapidly an automated network can detect, isolate, and remediate internal compromises. In an era where automated botnets scan public IP ranges continuously, maintaining unbreakable zero-trust architectures across distributed operational technology (OT) and information technology (IT) convergence layers is an absolute existential prerequisite for enterprise survival.</p>
                     <p class="text-base leading-relaxed"><b>The Core Philosophy of GraphGuard:</b> Traditional cybersecurity tools treat network endpoints as isolated, flat items in a database table. GraphGuard fundamentally recognizes that modern IoT devices function as a unified living organism structured as an interconnected topological graph. By combining Graph Neural Networks with rigorous adversarial assault testing, enterprises can proactively discover hidden architectural vulnerabilities before real malicious threat actors can exploit them, establishing an unshakeable digital defense perimeter that evolves seamlessly alongside emerging threat intelligence. Our platform bridges the critical gap between theoretical deep learning research and production-grade enterprise network protection, empowering security operators with instantaneous automated mitigation playbooks, deep topological XAI fidelity telemetry, and flawless international regulatory compliance mapping.</p>
@@ -303,7 +310,7 @@
                             <h4 class="text-2xl font-bold text-emerald-400">A. GraphSAGE (Sample and Aggregate)</h4>
                             <p class="text-base leading-relaxed"><b>Detailed Technical Explanation:</b> GraphSAGE is a powerful inductive framework designed to generate low-dimensional node embeddings by uniformly sampling and aggregating feature distributions from a target node's local graph neighborhood. Unlike transductive models that require retraining for every new device added to the network, GraphSAGE easily generalizes to unseen nodes in dynamic, expanding IoT networks by learning aggregation functions rather than individual node embeddings.</p>
                             <p class="text-base leading-relaxed"><b>Operational Mechanics:</b> Instead of processing the entire graph adjacency matrix at once—which creates extreme computational bottlenecks—GraphSAGE fixes a constant sample size for neighborhood exploration across multiple search depths (e.g., 25 neighbors at hop-1, 10 at hop-2). This samples localized message passing, drastically reducing memory overhead while preserving structural context across enterprise switches and gateways.</p>
-                            <p class="text-base leading-relaxed"><b>Optimal Attack Defense Pairing:</b> GraphSAGE excels against <i>Feature-Level Noise Attacks</i> and moderate <i>Structural Edge Perturbations</i>. Because it aggregates neighbor distributions through pooling functions rather than relying on exact global adjacency matrices, localized feature noise and minor link deletions are naturally filtered out during the aggregation phase.</p>
+                            <p class="text-base leading-relaxed"><b>Optimal Attack Defense Pairing:</b> GraphSAGE excels against <span class="text-red-400 font-semibold">Feature-Level Noise Attacks</span> and moderate <span class="text-red-400 font-semibold">Structural Edge Perturbations</span>. Because it aggregates neighbor distributions through pooling functions rather than relying on exact global adjacency matrices, localized feature noise and minor link deletions are naturally filtered out during the aggregation phase.</p>
                             <p class="text-base leading-relaxed"><b>Engineering Justification:</b> In large-scale smart factory environments where hundreds of new micro-sensors join and disconnect daily, GraphSAGE prevents exponential memory scaling, ensuring real-time threat detection latency remains under 50 milliseconds across the entire industrial IoT fabric.</p>
                         </div>
 
@@ -311,7 +318,7 @@
                             <h4 class="text-2xl font-bold text-emerald-400">B. GCN (Graph Convolutional Network)</h4>
                             <p class="text-base leading-relaxed"><b>Detailed Technical Explanation:</b> GCN applies spectral graph convolutions across graph neighborhoods, effectively smoothing feature representations between connected IoT endpoints to capture holistic network topology patterns. Rooted in rigorous spectral graph theory, GCN approximates localized convolutions on graphs to efficiently classify nodes and detect anomalous packet exchanges.</p>
                             <p class="text-base leading-relaxed"><b>Operational Mechanics:</b> GCN aggregates node features from immediate adjacent neighbors, weighting them symmetrically based on node degree connectivity matrices. The propagation rule updates feature representations by combining current node states with averaged neighbor representations, effectively blurring high-frequency noise across the graph structure.</p>
-                            <p class="text-base leading-relaxed"><b>Optimal Attack Defense Pairing:</b> GCN provides robust baseline detection against <i>Attribute Masking</i> and standard anomaly injection, though it can experience accuracy degradation under severe structural rewiring due to spectral reliance on fixed graph Laplacians.</p>
+                            <p class="text-base leading-relaxed"><b>Optimal Attack Defense Pairing:</b> GCN provides robust baseline detection against <span class="text-red-400 font-semibold">Attribute Masking</span> and standard anomaly injection, though it can experience accuracy degradation under severe structural rewiring due to spectral reliance on fixed graph Laplacians.</p>
                             <p class="text-base leading-relaxed"><b>Engineering Justification:</b> GCN serves as the foundational computational workhorse for stable enterprise data centers where network topology changes infrequently, providing unmatched mathematical convergence speed during baseline training cycles.</p>
                         </div>
 
@@ -319,46 +326,54 @@
                             <h4 class="text-2xl font-bold text-emerald-400">C. GAT (Graph Attention Network - Pro Tier)</h4>
                             <p class="text-base leading-relaxed"><b>Detailed Technical Explanation:</b> GAT integrates masked self-attention layers, enabling the neural network to assign distinct, learned attention weights to different neighboring nodes. This allows the model to prioritize critical IoT communication channels while completely ignoring malicious peripheral nodes.</p>
                             <p class="text-base leading-relaxed"><b>Operational Mechanics:</b> By computing attention coefficients between connected pairs of nodes using shared parameterized weight matrices and leaky ReLU activations, GAT dynamically weighs neighborhood influence without requiring costly matrix inversions or costly graph Laplacian eigenvalue decompositions.</p>
-                            <p class="text-base leading-relaxed"><b>Optimal Attack Defense Pairing:</b> GAT is the ultimate defense against <i>Node Injection Attacks</i> and <i>Gradient-based Adversarial Attacks</i>. Its attention mechanism automatically down-weights malicious rogue nodes injected into the graph topology, neutralizing their toxic influence by assigning them near-zero attention coefficients.</p>
+                            <p class="text-base leading-relaxed"><b>Optimal Attack Defense Pairing:</b> GAT is the ultimate defense against <span class="text-red-400 font-semibold">Node Injection Attacks</span> and <span class="text-red-400 font-semibold">Gradient-based Adversarial Attacks</span>. Its attention mechanism automatically down-weights malicious rogue nodes injected into the graph topology, neutralizing their toxic influence by assigning them near-zero attention coefficients.</p>
                             <p class="text-base leading-relaxed"><b>Engineering Justification:</b> Essential for high-security enterprise tiers where advanced persistent threats attempt stealthy lateral traversal; GAT dynamically filters out compromised subnet gateways in real time.</p>
                         </div>
 
                         <div class="bg-slate-950 p-8 rounded-3xl border border-slate-800 shadow-2xl space-y-6">
                             <h4 class="text-2xl font-bold text-emerald-400">D. RGCN & GIN (Relational & Isomorphism Models)</h4>
                             <p class="text-base leading-relaxed"><b>Detailed Technical Explanation:</b> Relational GCN (RGCN) handles multi-relational graphs with diverse link types (e.g., HTTP, MQTT, SSH traffic), while Graph Isomorphism Network (GIN) is mathematically proven to possess maximum discriminative power for graph structure separation, distinguishing graph topologies that weaker message-passing models conflate.</p>
-                            <p class="text-base leading-relaxed"><b>Optimal Attack Defense Pairing:</b> Best suited for complex enterprise switching environments facing severe multi-vector <i>Structural Edge Perturbations</i>.</p>
+                            <p class="text-base leading-relaxed"><b>Optimal Attack Defense Pairing:</b> Best suited for complex enterprise switching environments facing severe multi-vector <span class="text-red-400 font-semibold">Structural Edge Perturbations</span>.</p>
                         </div>
                     </div>
                 </section>
 
                 <section class="border-b border-slate-800 pb-12">
                     <h3 class="text-3xl font-extrabold text-cyan-400 mb-6">3. Exhaustive Breakdown of Adversarial Attack Vectors</h3>
-                    <p class="mb-6 text-base leading-relaxed">To thoroughly evaluate enterprise network robustness, GraphGuard subjects GNN classification models to rigorous adversarial assault simulations. Below is a comprehensive, massive half-page deep analysis of each attack vector:</p>
+                    <p class="mb-6 text-base leading-relaxed">To thoroughly evaluate enterprise network robustness, GraphGuard subjects GNN classification models to rigorous adversarial assault simulations. Below is a comprehensive, massive half-page deep analysis of each attack vector with highlighted critical threats:</p>
                     
                     <div class="space-y-12 mt-8">
                         <div class="bg-slate-950 p-8 rounded-3xl border border-slate-800 shadow-2xl space-y-6">
-                            <h4 class="text-2xl font-bold text-danger">1. Structural Edge Perturbation</h4>
+                            <h4 class="text-2xl font-bold text-red-500 tracking-wide flex items-center gap-2">
+                                <span>🚨</span> 1. Structural Edge Perturbation
+                            </h4>
                             <p class="text-base leading-relaxed">Deliberately adding, deleting, or rewiring communication links within the IoT graph topology to fracture network routing, disrupt packet delivery schedules, and isolate critical gateway nodes. This tests whether the GNN can detect severed communication paths and abnormal topological cuts across enterprise network segments.</p>
                             <p class="text-base leading-relaxed"><b>Advanced Attack Mechanism:</b> Sophisticated threat actors execute greedy heuristic algorithms or gradient-guided edge manipulation strategies to systematically flip connectivity states in a way that maximizes model classification error, forcing routing protocols into highly suboptimal and vulnerable convergence states. By surgically severing backbone links between regional IoT clusters and cloud aggregators, attackers simulate catastrophic hardware failures.</p>
                             <p class="text-base leading-relaxed"><b>Enterprise Impact Analysis:</b> Destabilizes underlying network routing tables, breaks software-defined networking (SDN) controller security policies, and isolates essential backend microservices from front-end telemetry collectors, resulting in catastrophic operational blind spots and prolonged network downtime that paralyzes industrial automation lines.</p>
                         </div>
 
                         <div class="bg-slate-950 p-8 rounded-3xl border border-slate-800 shadow-2xl space-y-6">
-                            <h4 class="text-2xl font-bold text-danger">2. Feature-Level Noise Attack</h4>
+                            <h4 class="text-2xl font-bold text-red-500 tracking-wide flex items-center gap-2">
+                                <span>🚨</span> 2. Feature-Level Noise Attack
+                            </h4>
                             <p class="text-base leading-relaxed">Injecting subtle mathematical noise into device telemetry feature vectors (such as packet transmission frequency, payload length, and CPU load metrics) to systematically deceive the deep learning intrusion classifier into misclassifying malicious traffic as benign.</p>
                             <p class="text-base leading-relaxed"><b>Advanced Attack Mechanism:</b> Attackers leverage optimization routines like Fast Gradient Sign Method (FGSM) or Projected Gradient Descent (PGD) directly on node feature matrices, adding bounded adversarial perturbations that remain entirely imperceptible to simple threshold-based security checks. These perturbations exploit numerical gradient sensitivities within the neural layers.</p>
                             <p class="text-base leading-relaxed"><b>Enterprise Impact Analysis:</b> Blinds traditional threshold-based monitors by masquerading malicious botnet command-and-control communication channels as normal background device heartbeat signals, enabling long-term unauthorized surveillance and data pilfering without triggering standard SIEM alerts.</p>
                         </div>
 
                         <div class="bg-slate-950 p-8 rounded-3xl border border-slate-800 shadow-2xl space-y-6">
-                            <h4 class="text-2xl font-bold text-danger">3. Node Injection Attack</h4>
+                            <h4 class="text-2xl font-bold text-red-500 tracking-wide flex items-center gap-2">
+                                <span>🚨</span> 3. Node Injection Attack
+                            </h4>
                             <p class="text-base leading-relaxed">Introducing rogue, unauthorized virtual or physical IoT nodes into the active graph topology. These injected nodes attempt to mimic legitimate endpoints, bypass authentication mechanisms, and siphon sensitive enterprise telemetry data across internal segments.</p>
                             <p class="text-base leading-relaxed"><b>Advanced Attack Mechanism:</b> The adversary crafts synthetic node feature vectors and connects them strategically to high-degree enterprise hub switches, maximizing malicious influence over subsequent message-passing neighborhood aggregations. By poisoning local neighborhood averages, injected nodes corrupt neighboring embeddings.</p>
                             <p class="text-base leading-relaxed"><b>Enterprise Impact Analysis:</b> Establishes unauthorized covert channels for data exfiltration, corrupts neighboring node embedding representations, and facilitates seamless lateral movement across previously secure enterprise subnets, allowing attackers to compromise adjacent industrial controllers.</p>
                         </div>
 
                         <div class="bg-slate-950 p-8 rounded-3xl border border-slate-800 shadow-2xl space-y-6">
-                            <h4 class="text-2xl font-bold text-danger">4. Gradient-based & Attribute Masking Attacks</h4>
+                            <h4 class="text-2xl font-bold text-red-500 tracking-wide flex items-center gap-2">
+                                <span>🚨</span> 4. Gradient-based & Attribute Masking Attacks
+                            </h4>
                             <p class="text-base leading-relaxed">Sophisticated algorithmic assaults designed to blind deep learning detection models by obfuscating packet attributes and exploiting model gradients to craft stealthy evasion payloads that bypass standard signature detection.</p>
                             <p class="text-base leading-relaxed"><b>Advanced Attack Mechanism:</b> White-box gradient analysis exposes internal neural network model weights, allowing attackers to iteratively mutate packet attributes until model classification scores drop safely below detection thresholds. Attribute masking selectively zeroes out critical packet header fields during inspection.</p>
                             <p class="text-base leading-relaxed"><b>Enterprise Impact Analysis:</b> Direct exploitation of neural network decision boundaries to bypass automated defense systems entirely, allowing advanced persistent threats (APTs) to operate completely undetected within core enterprise infrastructure for extended operational cycles.</p>
