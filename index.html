@@ -34,7 +34,7 @@
             </div>
             <div class="flex items-center space-x-4 text-sm text-slate-400">
                 <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>API Active</span>
-                <button onclick="openPricingModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg font-semibold cursor-pointer">
+                <button onclick="openPricingModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg font-semibold cursor-pointer transition">
                     Pro Plans
                 </button>
             </div>
@@ -52,9 +52,30 @@
                 </h2>
                 
                 <div class="space-y-4">
+                    <!-- Data Input Source Mode Toggle -->
                     <div>
+                        <label class="block text-sm text-slate-400 mb-1 font-medium">Dataset Source</label>
+                        <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1 rounded-xl border border-slate-800">
+                            <button id="btnSynthetic" onclick="switchDataMode('synthetic')" class="py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950 transition">Synthetic Graph</button>
+                            <button id="btnCustom" onclick="switchDataMode('custom')" class="py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">Custom File (CSV/JSON)</button>
+                        </div>
+                    </div>
+
+                    <!-- Synthetic Node Count Input -->
+                    <div id="syntheticContainer">
                         <label class="block text-sm text-slate-400 mb-1">IoT Node Count</label>
                         <input id="nodeCount" type="number" value="300" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <!-- Custom File Upload Container (Hidden by default) -->
+                    <div id="customFileContainer" class="hidden">
+                        <label class="block text-sm text-slate-400 mb-1">Upload Topology (Edges/Features)</label>
+                        <div class="border-2 border-dashed border-slate-700 hover:border-emerald-500 rounded-xl p-4 text-center cursor-pointer bg-slate-900/50 transition" onclick="document.getElementById('fileInput').click()">
+                            <p class="text-2xl mb-1">📁</p>
+                            <p class="text-xs text-slate-300 font-medium" id="fileNameLabel">Click or Drag & Drop CSV / JSON</p>
+                            <p class="text-[10px] text-slate-500 mt-1">Supports edge_list.csv, features.json</p>
+                            <input id="fileInput" type="file" accept=".csv,.json" class="hidden" onchange="handleFileSelect(event)">
+                        </div>
                     </div>
 
                     <div>
@@ -111,11 +132,18 @@
                 </div>
             </div>
 
-            <!-- Deep Analysis Box -->
-            <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl">
-                <h3 class="text-lg font-semibold mb-4 text-emerald-400">📊 Enterprise Threat & Defense Log</h3>
-                <div id="logBox" class="bg-slate-900 border border-slate-800 rounded-xl p-4 h-56 overflow-y-auto font-mono text-xs text-slate-300 space-y-2">
-                    <p class="text-slate-500">[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...</p>
+            <!-- Deep Analysis Box & PDF Export -->
+            <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-emerald-400">📊 Enterprise Threat & Defense Log</h3>
+                        <button id="pdfBtn" onclick="exportPDFReport()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 cursor-not-allowed transition">
+                            📄 Export Report (PDF)
+                        </button>
+                    </div>
+                    <div id="logBox" class="bg-slate-900 border border-slate-800 rounded-xl p-4 h-56 overflow-y-auto font-mono text-xs text-slate-300 space-y-2">
+                        <p class="text-slate-500">[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...</p>
+                    </div>
                 </div>
             </div>
 
@@ -157,9 +185,9 @@
                 <h3 class="text-xl font-bold mt-3">Professional Tier</h3>
                 <div class="my-4"><span class="text-3xl font-extrabold">\$29</span><span class="text-slate-400 text-sm"> / monthly</span></div>
                 <ul class="space-y-2 text-sm text-slate-300 mb-6">
-                  <li>✓ Advanced GAT Model</li>
-                  <li>✓ Unlimited Real-Time Analysis</li>
-                  <li>✓ Automated PDF Report</li>
+                  <li>✓ Advanced GAT & GIN Models</li>
+                  <li>✓ Custom CSV/JSON Upload</li>
+                  <li>✓ Automated PDF Report Export</li>
                   <li>✓ Instant Telegram Alerts</li>
                 </ul>
               </div>
@@ -189,6 +217,44 @@
     <!-- JavaScript Execution Logic -->
     <script>
         const API_BASE_URL = 'https://gnn-nids-robustt.onrender.com';
+        let activeDataMode = 'synthetic'; // 'synthetic' or 'custom'
+        let uploadedFileRawData = null;
+        let lastSimulationResults = null;
+
+        function switchDataMode(mode) {
+            activeDataMode = mode;
+            const btnSynthetic = document.getElementById('btnSynthetic');
+            const btnCustom = document.getElementById('btnCustom');
+            const syntheticContainer = document.getElementById('syntheticContainer');
+            const customFileContainer = document.getElementById('customFileContainer');
+
+            if (mode === 'synthetic') {
+                btnSynthetic.className = "py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950 transition";
+                btnCustom.className = "py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition";
+                syntheticContainer.classList.remove('hidden');
+                customFileContainer.classList.add('hidden');
+            } else {
+                btnCustom.className = "py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950 transition";
+                btnSynthetic.className = "py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition";
+                syntheticContainer.classList.add('hidden');
+                customFileContainer.classList.remove('hidden');
+            }
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('fileNameLabel').innerText = `📄 ${file.name}`;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedFileRawData = e.target.result;
+                    const logBox = document.getElementById('logBox');
+                    logBox.innerHTML += `<p class="text-teal-400">[File Loaded] '${file.name}' ready for analysis.</p>`;
+                    logBox.scrollTop = logBox.scrollHeight;
+                };
+                reader.readAsText(file);
+            }
+        }
 
         async function runSimulation() {
             const logBox = document.getElementById('logBox');
@@ -197,26 +263,34 @@
             const attackType = document.getElementById('attackType').value;
             const perturbRate = parseFloat(document.getElementById('perturbRate').value) / 100.0;
 
-            logBox.innerHTML += `<p class="text-cyan-400">[Simulation] Dispatching request for model: <b>${modelType}</b> under <b>${attackType}</b>...</p>`;
+            if (activeDataMode === 'custom' && !uploadedFileRawData) {
+                alert("Please upload a CSV or JSON topology file first!");
+                return;
+            }
+
+            logBox.innerHTML += `<p class="text-cyan-400">[Simulation] Running ${modelType.toUpperCase()} under ${attackType} (${activeDataMode} mode)...</p>`;
             logBox.scrollTop = logBox.scrollHeight;
+
+            const payload = {
+                node_count: nodeCount,
+                model_type: modelType,
+                attack_type: attackType,
+                perturbation_rate: perturbRate,
+                is_custom: activeDataMode === 'custom',
+                custom_file_data: activeDataMode === 'custom' ? uploadedFileRawData : null
+            };
 
             try {
                 const response = await fetch(`${API_BASE_URL}/api/v1/analyze`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        node_count: nodeCount,
-                        model_type: modelType,
-                        attack_type: attackType,
-                        perturbation_rate: perturbRate
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
+                    lastSimulationResults = data;
                     document.getElementById('cleanAcc').innerText = data.clean_accuracy + '%';
                     document.getElementById('attackAcc').innerText = data.attacked_accuracy + '%';
                     document.getElementById('xaiScore').innerText = data.xai_fidelity_score + '%';
@@ -227,6 +301,11 @@
                     } else {
                         logBox.innerHTML += `<p class="text-teal-400">[Secure] Model maintained robust defensive posture against attack.</p>`;
                     }
+
+                    // Enable PDF Export button
+                    const pdfBtn = document.getElementById('pdfBtn');
+                    pdfBtn.disabled = false;
+                    pdfBtn.className = "bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 cursor-pointer transition shadow-md shadow-emerald-600/30";
                 } else {
                     logBox.innerHTML += `<p class="text-red-400">[Error] API execution failed: ${data.detail || 'Unknown error'}</p>`;
                 }
@@ -236,37 +315,52 @@
             logBox.scrollTop = logBox.scrollHeight;
         }
 
-        function openPricingModal() {
-            document.getElementById('pricingModal').classList.remove('hidden');
-        }
-        
-        function closePricingModal() {
-            document.getElementById('pricingModal').classList.add('hidden');
+        async function exportPDFReport() {
+            if (!lastSimulationResults) return;
+            
+            const logBox = document.getElementById('logBox');
+            logBox.innerHTML += `<p class="text-cyan-400">[Report] Requesting automated PDF report generation...</p>`;
+            logBox.scrollTop = logBox.scrollHeight;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/v1/export-pdf`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(lastSimulationResults)
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `GraphGuard_Threat_Report_${Date.now()}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    logBox.innerHTML += `<p class="text-emerald-400">[Downloaded] Threat Report PDF generated successfully!</p>`;
+                } else {
+                    logBox.innerHTML += `<p class="text-red-400">[Error] PDF generation endpoint not ready on backend.</p>`;
+                }
+            } catch (err) {
+                logBox.innerHTML += `<p class="text-red-400">[Error] Failed to connect to PDF service.</p>`;
+            }
+            logBox.scrollTop = logBox.scrollHeight;
         }
 
-        // Stripe Checkout handler
+        function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
+        function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
+
         async function handleStripeCheckout() {
-            const emailInput = "test@graphguard.io";
-            
             try {
                 const response = await fetch(`${API_BASE_URL}/api/v1/create-checkout-session`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email: emailInput })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: "user@graphguard.io" })
                 });
-                
                 const data = await response.json();
-                if (data.checkout_url) {
-                    window.location.href = data.checkout_url;
-                } else {
-                    alert("Failed to create checkout session.");
-                }
-            } catch (error) {
-                console.error("Error occurred:", error);
-                alert("Could not connect to the server.");
-            }
+                if (data.checkout_url) window.location.href = data.checkout_url;
+            } catch (error) { alert("Could not connect to payment server."); }
         }
     </script>
 </body>
