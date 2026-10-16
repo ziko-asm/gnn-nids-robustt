@@ -3,32 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GraphGuard IoT - Enterprise GNN Security Platform v5.1</title>
+    <title>GraphGuard IoT - Enterprise GNN Security Platform v6.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #10b981; }
-        .hover-accordion { transition: all 0.3s ease-in-out; }
-        .hover-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out; opacity: 0; }
-        .hover-accordion:hover .hover-content { max-height: 2500px; opacity: 1; }
-        .hover-accordion:hover .arrow-icon { transform: rotate(180deg); }
+
+        .kb-card { transition: all 0.25s ease; }
+        .kb-body { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.45s ease, opacity 0.3s ease; }
+        .kb-card:hover .kb-body, .kb-card.pinned .kb-body { max-height: 6000px; opacity: 1; }
+        .kb-card:hover .kb-arrow, .kb-card.pinned .kb-arrow { transform: rotate(180deg); }
+        .kb-card.pinned { border-color: #06b6d4; box-shadow: 0 0 20px rgba(6, 182, 212, 0.15); }
+
+        .math-box { background: #020617; border-left: 4px solid #06b6d4; font-family: monospace; }
+        .math-box-danger { background: #1a0505; border-left: 4px solid #ef4444; font-family: monospace; }
     </style>
 </head>
 <body class="bg-[#0f172a] text-slate-100 min-h-screen font-sans">
     
     <!-- Navigation Bar -->
-    <nav class="border-b border-slate-800 bg-[#1e293b]/50 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav class="border-b border-slate-800 bg-[#1e293b]/70 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-3">
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">🛡️</span>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v5.1.0</span>
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">v6.0.0 Encyclopedia</span>
                 </h1>
             </div>
-            <div class="flex items-center space-x-3 text-sm text-slate-400">
-                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-emerald-500 cursor-pointer">
+            <div class="flex flex-wrap items-center gap-3 text-sm text-slate-400">
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-emerald-500 cursor-pointer">
                     <option value="en">🇬🇧 English</option>
                     <option value="az">🇦🇿 Azərbaycan</option>
                     <option value="ru">🇷🇺 Русский</option>
@@ -41,16 +46,16 @@
                     <option value="ja">🇯🇵 日本語</option>
                 </select>
 
-                <button onclick="openDetailedReportModal()" class="bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1 shadow-lg shadow-cyan-500/10">
-                    📚 Detailed Report (Hover Master KB)
+                <button onclick="openDetailedReportModal()" class="bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/40 px-3.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition flex items-center gap-1.5 shadow-lg shadow-cyan-500/10">
+                    📚 Detailed Report (10-Lang Encyclopedia)
                 </button>
 
                 <button onclick="startPlatformGuide()" class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1">
                     📖 Platform Guide
                 </button>
 
-                <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>API Active</span>
-                <button onclick="openPricingModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg font-semibold cursor-pointer transition">
+                <span class="flex items-center text-xs"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>API Active</span>
+                <button onclick="openPricingModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition">
                     Pro Plans
                 </button>
             </div>
@@ -63,9 +68,7 @@
         <!-- Left Panel: Controls -->
         <div class="bg-[#1e293b] border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
             <div>
-                <h2 id="txtControlsTitle" class="text-lg font-semibold mb-4 text-emerald-400 flex items-center">
-                    ⚙️ Simulation Controls
-                </h2>
+                <h2 id="txtControlsTitle" class="text-lg font-semibold mb-4 text-emerald-400 flex items-center">⚙️ Simulation Controls</h2>
                 
                 <div class="space-y-4">
                     <div>
@@ -93,11 +96,11 @@
                     <div>
                         <label id="txtGnnArch" class="block text-sm text-slate-400 mb-1">GNN Architecture</label>
                         <select id="modelType" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
-                            <option value="graphsage">GraphSAGE (Recommended)</option>
-                            <option value="gcn">GCN (Graph Convolutional)</option>
-                            <option value="gat">GAT (Graph Attention - Pro)</option>
-                            <option value="rgcn">RGCN (Relational-GCN)</option>
-                            <option value="gin">GIN (Graph Isomorphism)</option>
+                            <option value="graphsage">GraphSAGE (Inductive Sampling)</option>
+                            <option value="gcn">GCN (Spectral Convolutional)</option>
+                            <option value="gat">GAT (Multi-Head Attention - Pro)</option>
+                            <option value="rgcn">RGCN (Relational Multi-Edge)</option>
+                            <option value="gin">GIN (Weisfeiler-Lehman Isomorphism)</option>
                         </select>
                     </div>
 
@@ -125,14 +128,13 @@
                 </div>
             </div>
 
-            <button id="btnRunSim" onclick="runSimulation()" class="mt-8 w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-emerald-500/20 active:scale-[0.99] cursor-pointer">
+            <button id="btnRunSim" onclick="runSimulation()" class="mt-8 w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-emerald-500/20 cursor-pointer">
                 🚀 Run Adversarial Simulation
             </button>
         </div>
 
         <!-- Right Panel: Results & Analytics -->
         <div class="lg:col-span-2 space-y-6">
-            
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-[#1e293b] border border-slate-800 rounded-2xl p-5 shadow-lg">
                     <p id="txtCleanAcc" class="text-xs text-slate-400 uppercase tracking-wider">Clean Accuracy</p>
@@ -140,7 +142,7 @@
                 </div>
                 <div class="bg-[#1e293b] border border-slate-800 rounded-2xl p-5 shadow-lg">
                     <p id="txtAttackAcc" class="text-xs text-slate-400 uppercase tracking-wider">Attacked Accuracy</p>
-                    <h3 id="attackAcc" class="text-3xl font-extrabold text-danger mt-2">--</h3>
+                    <h3 id="attackAcc" class="text-3xl font-extrabold text-red-500 mt-2">--</h3>
                 </div>
                 <div class="bg-[#1e293b] border border-slate-800 rounded-2xl p-5 shadow-lg">
                     <p id="txtXaiScore" class="text-xs text-slate-400 uppercase tracking-wider">XAI Fidelity Score</p>
@@ -148,145 +150,113 @@
                 </div>
             </div>
 
-            <div class="bg-[#1e293b] border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 id="txtLogTitle" class="text-lg font-semibold text-emerald-400">📊 Enterprise Threat & Defense Log</h3>
-                        <button id="pdfBtn" onclick="exportPDFReport()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 cursor-not-allowed transition">
-                            📄 Export Audit Report (PDF)
-                        </button>
-                    </div>
-                    <div id="logBox" class="bg-slate-900 border border-slate-800 rounded-xl p-4 h-44 overflow-y-auto font-mono text-xs text-slate-300 space-y-2">
-                        <p id="txtLogInit" class="text-slate-500">[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...</p>
-                    </div>
+            <div class="bg-[#1e293b] border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="txtLogTitle" class="text-lg font-semibold text-emerald-400">📊 Enterprise Threat & Defense Log</h3>
+                    <button id="pdfBtn" onclick="exportPDFReport()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 cursor-not-allowed transition">
+                        📄 Export Audit Report (PDF)
+                    </button>
+                </div>
+                <div id="logBox" class="bg-slate-900 border border-slate-800 rounded-xl p-4 h-44 overflow-y-auto font-mono text-xs text-slate-300 space-y-2">
+                    <p id="txtLogInit" class="text-slate-500">[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation...</p>
                 </div>
             </div>
 
             <div class="bg-[#1e293b] border border-slate-800 rounded-2xl p-6 shadow-xl">
                 <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4">
                     <div>
-                        <h3 id="txtRemediationTitle" class="text-lg font-semibold text-cyan-400 flex items-center gap-2">
-                            ⚡ Auto-Remediation Playbook & Compliance Audit
-                        </h3>
-                        <p id="complianceBadge" class="text-xs text-slate-400 mt-1">
-                            Regulatory Status: <span class="text-slate-500 font-semibold">Awaiting simulation telemetry...</span>
-                        </p>
+                        <h3 id="txtRemediationTitle" class="text-lg font-semibold text-cyan-400">⚡ Auto-Remediation Playbook & Compliance Audit</h3>
+                        <p id="complianceBadge" class="text-xs text-slate-400 mt-1">Regulatory Status: <span class="text-slate-500 font-semibold">Awaiting simulation telemetry...</span></p>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button id="copyPatchBtn" onclick="copyRemediationScript()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-not-allowed transition">
-                            📋 Copy CLI Patch
-                        </button>
-                        <button id="downloadPatchBtn" onclick="downloadRemediationScript()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-not-allowed transition">
-                            💾 Download .sh
-                        </button>
+                        <button id="copyPatchBtn" onclick="copyRemediationScript()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-not-allowed transition">📋 Copy CLI Patch</button>
+                        <button id="downloadPatchBtn" onclick="downloadRemediationScript()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-not-allowed transition">💾 Download .sh</button>
                     </div>
                 </div>
                 <pre id="remediationBox" class="bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-x-auto leading-relaxed"># Run an adversarial simulation to synthesize automated Cisco IOS & Linux iptables defense patches...</pre>
             </div>
-
         </div>
-
     </main>
 
-    <!-- DETAILED TECHNICAL REPORT MODAL (HOVER DROPDOWN CARDS) -->
+    <!-- DETAILED TECHNICAL REPORT MODAL -->
     <div id="detailedReportModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/95 backdrop-blur-md p-4">
-        <div class="bg-slate-900 border border-cyan-500/60 rounded-2xl max-w-6xl w-full p-8 text-white shadow-2xl relative max-h-[92vh] overflow-y-auto">
+        <div class="bg-slate-900 border border-cyan-500/60 rounded-2xl max-w-6xl w-full p-6 sm:p-8 text-white shadow-2xl relative max-h-[92vh] overflow-y-auto">
             <button onclick="closeDetailedReportModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-2xl font-bold p-2 cursor-pointer">✕</button>
-            <div class="flex items-center space-x-3 mb-6 border-b border-slate-800 pb-4">
-                <span class="text-4xl">📚</span>
-                <div>
-                    <h2 id="detRepTitle" class="text-2xl font-extrabold text-cyan-400">Detailed Enterprise Technical Report & Master Knowledge Base</h2>
-                    <p id="detRepSub" class="text-xs text-slate-400">Hover your mouse over any section card below to smoothly expand deep academic insights and security documentation.</p>
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-slate-800 pb-4 pr-10">
+                <div class="flex items-center space-x-3">
+                    <span class="text-4xl">📚</span>
+                    <div>
+                        <h2 id="detRepTitle" class="text-xl sm:text-2xl font-extrabold text-cyan-400">Detailed Enterprise Technical Report & Encyclopedia</h2>
+                        <p id="detRepSub" class="text-xs text-slate-400 mt-1">Hover over any topic card to open, or click to pin it open.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="expandAllKB(true)" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer">➕ Expand All</button>
+                    <button onclick="expandAllKB(false)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer">➖ Collapse All</button>
                 </div>
             </div>
             
-            <div id="detRepContent" class="space-y-4 text-slate-300 text-sm leading-relaxed">
-                <!-- Hover dropdown cards populated via JS -->
-            </div>
+            <div id="detRepContent" class="space-y-4 text-slate-300 text-sm leading-relaxed"></div>
 
-            <div class="mt-16 pt-6 border-t border-slate-800 flex justify-between items-center">
-                <span class="text-xs text-slate-500">GraphGuard IoT Enterprise Security Engine v5.1.0 — Hover Interactive Reference</span>
-                <button onclick="closeDetailedReportModal()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs cursor-pointer transition">Close Report</button>
+            <div class="mt-10 pt-6 border-t border-slate-800 flex justify-between items-center">
+                <span class="text-xs text-slate-500">GraphGuard IoT v6.0.0 — 10-Language Mathematical & Topological Encyclopedia</span>
+                <button onclick="closeDetailedReportModal()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs cursor-pointer">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- PLATFORM GUIDE OVERLAY MODAL -->
+    <!-- PLATFORM GUIDE MODAL -->
     <div id="guideModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
-        <div class="bg-slate-900 border border-emerald-500/40 rounded-2xl max-w-3xl w-full p-6 text-white shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div class="bg-slate-900 border border-emerald-500/40 rounded-2xl max-w-3xl w-full p-6 text-white shadow-2xl relative">
             <button onclick="closePlatformGuide()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold p-2 cursor-pointer">✕</button>
             <div class="flex items-center space-x-3 mb-4">
                 <span class="text-3xl">📘</span>
                 <div>
-                    <h3 id="guideStepTitle" class="text-xl font-bold text-emerald-400">Comprehensive Platform Master Guide</h3>
+                    <h3 id="guideStepTitle" class="text-xl font-bold text-emerald-400">Platform Guide</h3>
                     <p id="guideStepCounter" class="text-xs text-slate-400">Step 1 of 5</p>
                 </div>
             </div>
             <div id="guideStepContent" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-300 mb-6 leading-relaxed space-y-3"></div>
             <div class="flex justify-between items-center">
-                <button id="guidePrevBtn" onclick="prevGuideStep()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer transition disabled:opacity-50" disabled>Previous</button>
+                <button id="guidePrevBtn" onclick="prevGuideStep()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer disabled:opacity-50">Previous</button>
                 <div class="flex space-x-2" id="guideDots"></div>
-                <button id="guideNextBtn" onclick="nextGuideStep()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-5 py-2 rounded-xl text-xs font-bold cursor-pointer transition">Next Step</button>
+                <button id="guideNextBtn" onclick="nextGuideStep()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-5 py-2 rounded-xl text-xs font-bold cursor-pointer">Next</button>
             </div>
         </div>
     </div>
 
-    <!-- STRIPE PRICING MODAL -->
+    <!-- PRICING MODAL -->
     <div id="pricingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full p-6 text-white shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full p-6 text-white shadow-2xl relative">
         <button onclick="closePricingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold p-2 cursor-pointer">✕</button>
-        <div id="pricingView">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-extrabold text-blue-400">GraphGuard IoT Pricing</h2>
-            <p class="text-slate-400 mt-2">Scale your GNN cyber threat analysis according to your needs</p>
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-extrabold text-blue-400">GraphGuard IoT Pricing</h2>
+          <p class="text-slate-400 mt-2">Enterprise GNN Cyber Threat Analysis</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="rounded-xl p-5 border border-slate-800 bg-slate-950/50">
+            <h3 class="text-xl font-bold">Researcher</h3>
+            <div class="my-4"><span class="text-3xl font-extrabold">$0</span></div>
+            <ul class="space-y-2 text-sm text-slate-300 mb-6"><li>✓ GCN Standard</li><li>✓ 50 Req/Day</li></ul>
+            <button disabled class="w-full py-2 rounded-lg bg-slate-800 text-slate-500">Current Plan</button>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="rounded-xl p-5 flex flex-col justify-between border border-slate-800 bg-slate-950/50">
-              <div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-700 text-gray-300">Base</span>
-                <h3 class="text-xl font-bold mt-3">Researcher / Free</h3>
-                <div class="my-4"><span class="text-3xl font-extrabold">$0</span><span class="text-slate-400 text-sm"> / forever</span></div>
-                <ul class="space-y-2 text-sm text-slate-300 mb-6">
-                  <li>✓ GCN Standard Analysis</li>
-                  <li>✓ 50 Requests/Day Limit</li>
-                  <li>✓ Basic CSV Export</li>
-                </ul>
-              </div>
-              <button disabled class="w-full py-2.5 rounded-lg font-semibold bg-slate-800 text-slate-500 cursor-not-allowed">Current Plan</button>
-            </div>
-            <div class="rounded-xl p-5 flex flex-col justify-between border border-blue-500 bg-slate-800/80 shadow-blue-500/10 shadow-lg">
-              <div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-600 text-white">Most Popular</span>
-                <h3 class="text-xl font-bold mt-3">Professional Tier</h3>
-                <div class="my-4"><span class="text-3xl font-extrabold">$29</span><span class="text-slate-400 text-sm"> / monthly</span></div>
-                <ul class="space-y-2 text-sm text-slate-300 mb-6">
-                  <li>✓ Advanced GAT & GIN Models</li>
-                  <li>✓ Custom CSV/JSON Upload</li>
-                  <li>✓ ISO 27001 & NIST PDF Audit</li>
-                  <li>✓ Automated Cisco/Firewall Patches</li>
-                </ul>
-              </div>
-              <button onclick="handleStripeCheckout()" class="w-full py-2.5 rounded-lg font-semibold bg-blue-600 hover:bg-blue-500 text-white transition shadow-lg shadow-blue-600/30 cursor-pointer">Upgrade to Pro</button>
-            </div>
-            <div class="rounded-xl p-5 flex flex-col justify-between border border-slate-800 bg-slate-950/50">
-              <div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-600 text-white">Business</span>
-                <h3 class="text-xl font-bold mt-3">Enterprise / On-Prem</h3>
-                <div class="my-4"><span class="text-3xl font-extrabold">Custom</span><span class="text-slate-400 text-sm"> / pricing</span></div>
-                <ul class="space-y-2 text-sm text-slate-300 mb-6">
-                  <li>✓ On-Premise Server Deployment</li>
-                  <li>✓ Network Fine-tuning</li>
-                  <li>✓ Unlimited API Volume</li>
-                </ul>
-              </div>
-              <button onclick="alert('Contact: support@graphguard.iot')" class="w-full py-2.5 rounded-lg font-semibold bg-slate-800 hover:bg-slate-700 text-white transition cursor-pointer">Contact Us</button>
-            </div>
+          <div class="rounded-xl p-5 border border-blue-500 bg-slate-800/80">
+            <h3 class="text-xl font-bold">Professional Tier</h3>
+            <div class="my-4"><span class="text-3xl font-extrabold">$29</span> / mo</div>
+            <ul class="space-y-2 text-sm text-slate-300 mb-6"><li>✓ All 5 GNN Models (GAT/GIN)</li><li>✓ Custom CSV/JSON & PDF Audit</li></ul>
+            <button onclick="handleStripeCheckout()" class="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold cursor-pointer">Upgrade to Pro</button>
+          </div>
+          <div class="rounded-xl p-5 border border-slate-800 bg-slate-950/50">
+            <h3 class="text-xl font-bold">Enterprise</h3>
+            <div class="my-4"><span class="text-3xl font-extrabold">Custom</span></div>
+            <ul class="space-y-2 text-sm text-slate-300 mb-6"><li>✓ On-Premise Deployment</li><li>✓ Unlimited API</li></ul>
+            <button onclick="alert('Contact: support@graphguard.iot')" class="w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white cursor-pointer">Contact Us</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- JavaScript Execution Logic with Hover Dropdowns -->
     <script>
         const API_BASE_URL = 'https://gnn-nids-robustt.onrender.com';
         let activeDataMode = 'synthetic';
@@ -295,184 +265,565 @@
         let currentGuideStep = 0;
         let currentLang = 'en';
 
-        const massiveHoverContent = `
-            <div class="space-y-4">
-                <!-- Section 1 -->
-                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
-                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition">
-                        <span class="text-lg">1. Executive Summary: What is Artificial Intelligence & IoT Cybersecurity?</span>
-                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
-                    </div>
-                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-4">
-                        <p><b>Artificial Intelligence (AI):</b> Artificial Intelligence represents the apex of modern computational engineering, referring specifically to algorithmic systems designed to simulate human cognitive functions, reason through complex logical constraints, learn iteratively from massive multidimensional telemetry datasets, and execute automated operational decisions without continuous manual oversight. Within the GraphGuard IoT security architecture, sophisticated deep neural models continuously ingest, process, and evaluate intricate network interaction telemetry. By mapping real-time packet exchanges against historical behavioral graphs, these AI systems establish precise baseline device profiles, learn normal packet routing patterns, and flag structural anomalies instantly.</p>
-                        <p><b>Cybersecurity & IoT Resilience:</b> Modern enterprise IoT infrastructure comprises tens of thousands of interconnected edge devices, distributed sensors, intelligent actuators, regional gateways, and cloud servers. Ensuring robust network resilience requires protecting these highly dynamic communication channels against sophisticated cyber intrusions, maintaining absolute data confidentiality, enforcing strict operational integrity, and guaranteeing continuous 24/7 system availability against malicious outages.</p>
-                    </div>
-                </div>
-
-                <!-- Section 2 -->
-                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
-                    <div class="p-5 font-bold text-emerald-400 flex justify-between items-center hover:bg-slate-900 transition">
-                        <span class="text-lg">2. Architectural Deep Dive: Graph Neural Network (GNN) Models & Attack Pairing</span>
-                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
-                    </div>
-                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-6">
-                        <p>Standard machine learning architectures evaluate flat, independent data rows. However, enterprise computer networks are inherently topological graphs where connected hardware represents nodes and communication links represent edges. Below is an exhaustive breakdown of each GNN architecture:</p>
-                        
-                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                            <h5 class="text-base font-bold text-emerald-400 mb-2">A. GraphSAGE (Sample and Aggregate)</h5>
-                            <p>GraphSAGE is a powerful inductive framework designed to generate low-dimensional node embeddings by uniformly sampling and aggregating feature distributions from a target node's local graph neighborhood. It excels against <span class="text-red-400 font-semibold">Feature-Level Noise Attacks</span> and moderate <span class="text-red-400 font-semibold">Structural Edge Perturbations</span>.</p>
-                        </div>
-
-                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                            <h5 class="text-base font-bold text-emerald-400 mb-2">B. GCN (Graph Convolutional Network)</h5>
-                            <p>GCN applies spectral graph convolutions across graph neighborhoods, smoothing feature representations between connected IoT endpoints. It provides robust baseline detection against <span class="text-red-400 font-semibold">Attribute Masking</span> and standard anomaly injection.</p>
-                        </div>
-
-                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                            <h5 class="text-base font-bold text-emerald-400 mb-2">C. GAT (Graph Attention Network - Pro Tier)</h5>
-                            <p>GAT integrates masked self-attention layers, empowering the model to assign distinct attention weights to neighboring nodes. It is the ultimate defense against <span class="text-red-400 font-semibold">Node Injection Attacks</span> and <span class="text-red-400 font-semibold">Gradient-based Adversarial Attacks</span>.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 3 -->
-                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
-                    <div class="p-5 font-bold text-red-400 flex justify-between items-center hover:bg-slate-900 transition">
-                        <span class="text-lg">3. Exhaustive Breakdown of Adversarial Attack Vectors</span>
-                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
-                    </div>
-                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-6">
-                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                            <h5 class="text-base font-bold text-red-500 mb-2">🚨 1. Structural Edge Perturbation</h5>
-                            <p>Deliberately adding, deleting, or rewiring communication links within the IoT graph topology to fracture network routing, disrupt packet delivery schedules, and isolate critical gateway nodes.</p>
-                        </div>
-                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                            <h5 class="text-base font-bold text-red-500 mb-2">🚨 2. Feature-Level Noise Attack</h5>
-                            <p>Injecting subtle mathematical noise into device telemetry feature vectors (packet frequency, payload length, CPU load) to systematically deceive the deep learning intrusion classifier.</p>
-                        </div>
-                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                            <h5 class="text-base font-bold text-red-500 mb-2">🚨 3. Node Injection Attack</h5>
-                            <p>Introducing rogue, unauthorized virtual or physical IoT nodes into the active graph topology to mimic legitimate endpoints and siphon sensitive enterprise telemetry data.</p>
-                        </div>
-                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
-                            <h5 class="text-base font-bold text-red-500 mb-2">🚨 4. Gradient-based & Attribute Masking Attacks</h5>
-                            <p>Sophisticated algorithmic assaults designed to blind deep learning detection models by obfuscating packet attributes and exploiting model gradients.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 4 -->
-                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
-                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition">
-                        <span class="text-lg">4. Telemetry Metrics, XAI Scores & Log Interpretation Dictionary</span>
-                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
-                    </div>
-                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-3">
-                        <p><b>Clean Accuracy:</b> The intrusion detection model's baseline classification success rate evaluated under pristine conditions.</p>
-                        <p><b>Attacked Accuracy:</b> Model classification performance under active adversarial stress. A steep drop indicates severe vulnerability.</p>
-                        <p><b>XAI Fidelity Score:</b> Explainable AI metric quantifying how transparent and reliable the neural network's decision-making reasoning is.</p>
-                    </div>
-                </div>
-
-                <!-- Section 5 -->
-                <div class="hover-accordion border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer">
-                    <div class="p-5 font-bold text-emerald-400 flex justify-between items-center hover:bg-slate-900 transition">
-                        <span class="text-lg">5. Automated Remediation Playbooks & Regulatory Compliance</span>
-                        <span class="arrow-icon text-xl transition-transform duration-300">▼</span>
-                    </div>
-                    <div class="hover-content px-6 pb-6 text-slate-300 text-sm leading-relaxed space-y-3">
-                        <p><b>Auto-Remediation CLI Playbook:</b> Instant synthesis of production-ready Cisco IOS routing configurations and Linux <i>iptables</i> firewall isolation scripts.</p>
-                        <p><b>Regulatory Compliance Mapping:</b> Automated generation of formal audit reports mapped directly to international standards including <b>ISO/IEC 27001:2022</b> and <b>NIST SP 800-53 Rev. 5</b>.</p>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        const translations = {
+        // 10-Language Localization Data
+        const L = {
             en: {
-                controls: "⚙️ Simulation Controls",
-                dataset: "Dataset Source",
-                synGraph: "Synthetic Graph",
-                customFile: "Custom File",
-                nodeCount: "IoT Node Count",
-                uploadTopo: "Upload Topology (Edges/Features)",
-                gnnArch: "GNN Architecture",
-                attackStrat: "Attack Strategy",
-                attackRate: "Attack Intensity Rate (%)",
-                proKey: "Pro License Key (Optional)",
-                runSim: "🚀 Run Adversarial Simulation",
-                cleanAcc: "Clean Accuracy",
-                attackAcc: "Attacked Accuracy",
-                xaiScore: "XAI Fidelity Score",
-                logTitle: "📊 Enterprise Threat & Defense Log",
-                exportPdf: "📄 Export Audit Report (PDF)",
-                remedTitle: "⚡ Auto-Remediation Playbook & Compliance Audit",
-                copyPatch: "📋 Copy CLI Patch",
-                downloadSh: "💾 Download .sh",
-                logInit: "[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...",
-                detTitle: "Detailed Enterprise Technical Report & Master Knowledge Base",
-                detSub: "Hover your mouse over any section card below to smoothly expand deep academic insights and security documentation.",
-                detailedReportHTML: massiveHoverContent,
-                guidePrev: "Previous",
-                guideNext: "Next Step",
-                guideFinish: "Finish Master Guide",
-                steps: [
-                    { title: "1. Dataset & Network Topology Source", content: "<p><b>What is this?</b> Graph Neural Networks analyze IoT systems represented as graphs (nodes = IoT devices, edges = communication links).</p><p><b>How to use:</b> Select <i>Synthetic Graph</i> to automatically generate simulated IoT networks (specify node count from 50 to 1000). Alternatively, choose <i>Custom File</i> to upload your enterprise CSV or JSON network edge and feature topology files.</p>" },
-                    { title: "2. GNN Architecture Selection", content: "<p><b>What is this?</b> Different neural network models inspect graph topologies for anomalies and intrusions.</p><p><b>Options:</b> <i>GraphSAGE</i> (fast & balanced), <i>GCN</i> (standard convolutional), <i>GAT</i> (attention-based, Pro tier), <i>RGCN</i> (relational), and <i>GIN</i> (isomorphism).</p>" },
-                    { title: "3. Adversarial Attack Simulation", content: "<p><b>What is this?</b> To test your network resilience, GraphGuard simulates various AI attacks (e.g., Structural Edge Perturbation, Node Injection, Feature Noise, Gradient Attacks).</p><p><b>How to use:</b> Select attack strategy and adjust the intensity slider (0% to 50%), then click <i>Run Adversarial Simulation</i>.</p>" },
-                    { title: "4. Telemetry & XAI Fidelity Score", content: "<p><b>Metrics Explained:</b><br>• <i>Clean Accuracy:</i> Model detection rate under normal conditions.<br>• <i>Attacked Accuracy:</i> Detection rate under adversarial stress.<br>• <i>XAI Fidelity:</i> Measures how trustworthy and explainable the AI decision is.</p>" },
-                    { title: "5. Auto-Remediation & ISO/NIST Audit", content: "<p><b>Enterprise Defense:</b> When vulnerabilities are detected, the system automatically synthesizes emergency Cisco IOS and Linux <i>iptables</i> security patches.</p><p><b>Export:</b> Click <i>Copy CLI Patch</i>, download the <code>.sh</code> script, or export a formal PDF audit report mapped to <b>ISO 27001</b> and <b>NIST SP 800-53</b> standards.</p>" }
+                controls: "⚙️ Simulation Controls", dataset: "Dataset Source", synGraph: "Synthetic Graph", customFile: "Custom File",
+                nodeCount: "IoT Node Count", uploadTopo: "Upload Topology (CSV/JSON)", gnnArch: "GNN Architecture",
+                attackStrat: "Attack Strategy", attackRate: "Attack Intensity Rate (%)", proKey: "Pro License Key (Optional)",
+                runSim: "🚀 Run Adversarial Simulation", cleanAcc: "Clean Accuracy", attackAcc: "Attacked Accuracy",
+                xaiScore: "XAI Fidelity Score", logTitle: "📊 Enterprise Threat & Defense Log", exportPdf: "📄 Export Audit Report (PDF)",
+                remedTitle: "⚡ Auto-Remediation Playbook & Compliance Audit", copyPatch: "📋 Copy CLI Patch", downloadSh: "💾 Download .sh",
+                logInit: "[System] GraphGuard IoT initialized. Ready for adversarial GNN simulation...",
+                detTitle: "Detailed Enterprise Technical Report & Complete Encyclopedia",
+                detSub: "Hover over any topic card to expand, or click to pin open. Includes Graph Diagrams, Math Operations, Real Examples & Full Glossary.",
+                s1: "1. Fundamental Theory: Graph Representation of IoT Networks, Math & AI",
+                s1Text: "An enterprise IoT network is mathematically a living topological graph G = (V, E, X). Every physical or virtual device (sensors, PLC controllers, cameras, routers, cloud gateways) is a Node (v ∈ V), and every communication session (TCP/IP, MQTT, Modbus) is an Edge (e_ij ∈ E). Each node holds a D-dimensional Feature Vector x_i ∈ ℝ^D (packet size, frequency, CPU load, latency, port entropy). Network connections are stored in an N × N Adjacency Matrix A (A_ij = 1 if linked, 0 otherwise) and Degree Matrix D_ii = ∑_j A_ij.",
+                s1Ex: "Concrete Example: In a Smart Grid of N = 300 nodes, Node #14 (Substation Sensor) sends 50 bytes every 10s to Node #1 (SCADA Gateway): x_14 = [50B, 0.1Hz, 2% CPU, Port 1883]. If compromised to scan 200 internal devices, its degree D_14 jumps from 1 to 201 and its feature vector shifts—instantly caught by GNN message passing.",
+                s2: "2. Deep Mathematical & Architectural Breakdown of All 5 GNN Models",
+                m1: "GraphSAGE (Sample & Aggregate): Inductive model that samples a fixed neighborhood size S_k at hop depth k and aggregates features via Mean, LSTM, or Max-Pooling. Ideal for dynamic IoT networks where new devices join without retraining the whole graph. Example: 50 warehouse robots joining Wi-Fi zones are classified in 12ms.",
+                m2: "GCN (Graph Convolutional Network): Spectral model using first-order Chebyshev polynomial approximation. Adds self-loops (Ã = A + I) and normalizes by symmetric node degrees (D̃^-1/2 Ã D̃^-1/2). Smooths neighborhood telemetry to catch cluster-wide anomalies like synchronized SYN-floods across data-center switches.",
+                m3: "GAT (Graph Attention Network - Pro): Computes learnable Multi-Head Self-Attention weights α_ij via LeakyReLU before aggregating neighbors. Example: If a hacker connects a rogue Raspberry Pi to 15 hospital monitors, GAT assigns α_ij = 0.002 to the rogue node, muting the poison while keeping α = 0.95 on legitimate traffic.",
+                m4: "RGCN (Relational GCN): Assigns distinct weight matrices W_r per protocol relation r ∈ R (r_1 = MQTT, r_2 = SSH, r_3 = RTSP, r_4 = Modbus). Example: Immediately flags an IoT camera that normally sends RTSP video (r_3) if it suddenly opens an SSH shell (r_2) to a database server.",
+                m5: "GIN (Graph Isomorphism Network): Mathematically as powerful as the Weisfeiler-Lehman (WL) isomorphism test using injective summation (1 + ε)h_v + ∑ h_u. Distinguishes subtle structural topologies (e.g., peer-to-peer botnet rings disguised as star subnets) that standard averaging models miss.",
+                s3: "3. Exhaustive Breakdown of All 5 Adversarial Attack Vectors (Red Alert Reference)",
+                a1: "Structural Edge Perturbation (Nettack / Metattack): Modifies the Adjacency Matrix A → A' within budget ||A' - A||_0 ≤ 2Δ. Adds fake links between dissimilar devices (breaking homophily) or severs critical gateway links. Example: At 30% intensity on 300 nodes, 90 edges are flipped to isolate security collectors.",
+                a2: "Feature-Level Noise Attack: Leaves physical topology A intact but injects bounded mathematical noise η into telemetry X' = X + η (||η||_∞ ≤ ε). Example: A compromised pump masks 50MB data exfiltration by adding subtle noise (+0.03ms jitter, -1.2% CPU) to cross the neural boundary undetected by static thresholds.",
+                a3: "Node Injection Attack (TDGIA): Connects brand-new unauthorized rogue nodes V_atk to the graph, expanding A to (N + N_atk) × (N + N_atk). Example: Spawning 15 rogue containers connected to core hub switches to poison 2-hop embeddings of 120 innocent sensors.",
+                a4: "Gradient-based Adversarial Attack (FGSM / PGD): Computes partial derivatives of Cross-Entropy Loss (∇_X L, ∇_A L) and perturbs features/edges in the exact gradient sign direction to maximize classification error with minimal modification.",
+                a5: "Attribute Masking Attack: Multiplies node features by a binary mask x'_i = x_i ⊙ m (m ∈ {0,1}^D), zeroing out critical telemetry fields (like TCP window size or payload entropy) via packet header stripping or encryption.",
+                s4: "4. Complete Site Terminology Glossary, Metrics & Compliance Dictionary",
+                terms: [
+                    ["Node (Vertex / v)", "Any physical or virtual IoT device (sensor, camera, router, server) represented as a point in the graph."],
+                    ["Edge (Link / e_ij)", "A communication session or network flow connecting two nodes (TCP, UDP, MQTT, Modbus)."],
+                    ["Adjacency Matrix (A)", "An N × N grid of 0s and 1s defining which devices communicate directly."],
+                    ["Feature Vector (x_i)", "Numerical list of device telemetry attributes (bytes, packet rate, CPU, latency) analyzed by the GNN."],
+                    ["Message Passing", "Iterative process where each node aggregates feature vectors from its k-hop neighbors."],
+                    ["Clean vs. Attacked Accuracy", "Model classification rate before attack vs. remaining accuracy during active adversarial assault."],
+                    ["Attack Intensity Rate (%)", "Percentage of topological edges or feature dimensions perturbed during simulation (0%–50%)."],
+                    ["XAI Fidelity Score (%)", "GNNExplainer metric measuring how accurately the highlighted subgraph explains the AI's decision."],
+                    ["Auto-Remediation CLI & ISO/NIST", "Automated Linux iptables & Cisco IOS ACL isolation scripts mapped to ISO/IEC 27001:2022 & NIST SP 800-53."]
                 ]
             },
             az: {
-                controls: "⚙️ Simulyasiya İdarəetməsi",
-                dataset: "Məlumat Mənbəyi",
-                synGraph: "Sintetik Qraf",
-                customFile: "Xüsusi Fayl",
-                nodeCount: "IoT Qovşaq Sayı",
-                uploadTopo: "Topologiya Yüklə (Edge/Feature)",
-                gnnArch: "GNN Arxitekturası",
-                attackStrat: "Hücum Strategiyası",
-                attackRate: "Hücum İntensivliyi (%)",
-                proKey: "Pro Lisenziya Açar (İstəyə bağlı)",
-                runSim: "🚀 Adversarial Simulyasiyanı Başlat",
-                cleanAcc: "Təmiz Dəqiqlik",
-                attackAcc: "Hücuma Məruz Dəqiqlik",
-                xaiScore: "XAI Uyğunluq Hesabı",
-                logTitle: "📊 Korporativ Təhlükə və Müdafiə Jurnalı",
-                exportPdf: "📄 Audit Hesabatını Endir (PDF)",
-                remedTitle: "⚡ Avtomatik Bərpa Skripti və Uyğunluq Auditi",
-                copyPatch: "📋 CLI Yamasını Kopyala",
-                downloadSh: "💾 .sh Faylını Endir",
-                logInit: "[Sistem] GraphGuard IoT interfeysi işə düşdü. FastAPI backend ilə simulyasiyaya hazırdır...",
-                detTitle: "Detallı Korporativ Texniki Hesabat və Master Bilik Bazası",
-                detSub: "Dərin akademik məlumatları görmək üçün mouse-u istənilən bölmə kartının üzərinə aparın.",
-                detailedReportHTML: massiveHoverContent,
-                guidePrev: "Əvvəlki",
-                guideNext: "Növbəti Addım",
-                guideFinish: "Bələdçini Bitir",
-                steps: [
-                    { title: "1. Məlumat və Şəbəkə Topologiyası", content: "<p><b>Bu nədir?</b> Qraf Neyron Şəbəkələri (GNN) IoT cihazlarını qrafik strukturlar şəklində təhlil edir (qovşaqlar = IoT qurğuları, əlaqələr = rabitə xətləri).</p><p><b>Necə istifadə etməli:</b> <i>Sintetik Qraf</i> seçərək avtomatik şəbəkə yaradın (50-1000 arası qovşaq) və ya <i>Xüsusi Fayl</i> seçərək öz korporativ CSV/JSON topologiya sənədlərinizi yükləyin.</p>" },
-                    { title: "2. GNN Arxitekturasının Seçilməsi", content: "<p><b>Bu nədir?</b> Şəbəkə daxilində anomaliyaları aşkar etmək üçün müxtəlif süni intellekt modellərindən istifadə olunur.</p><p><b>Seçimlər:</b> <i>GraphSAGE</i> (sürətli və balanslı), <i>GCN</i> (standart), <i>GAT</i> (diqqət mexanizmli - Pro), <i>RGCN</i> və <i>GIN</i>.</p>" },
-                    { title: "3. Adversarial Hücum Simulyasiyası", content: "<p><b>Bu nədir?</b> Şəbəkənizin dayanıqlılığını yoxlamaq üçün müxtəlif süni intellekt hücumları (Struktur, Qovşaq İnyeksiyası, Səs-küy) simulyasiya edilir.</p><p><b>Necə istifadə etməli:</b> Hücum növünü seçin, intensivlik sürgüsünü tənzimləyin və <i>Run Adversarial Simulation</i> düyməsinə basın.</p>" },
-                    { title: "4. Metrikalar və XAI Uyğunluq Hesabı", content: "<p><b>Göstəricilərin İzahı:</b><br>• <i>Clean Accuracy:</i> Normal şəraitdə aşkarlama dəqiqliyi.<br>• <i>Attacked Accuracy:</i> Hücum zamanı modelin dəqiqliyi.<br>• <i>XAI Fidelity:</i> Süni intellekt qərarlarının nə qədər etibarlı və şəffaf olduğunu göstərir.</p>" },
-                    { title: "5. Avtomatik Bərpa və ISO/NIST Auditi", content: "<p><b>Korporativ Müdafiə:</b> Zəiflik aşkar edilən kimi sistem avtomatik olaraq Cisco IOS və Linux <i>iptables</i> təhlükəsizlik yamaları (patch) hazırlayır.</p><p><b>İxrac:</b> Skripti kopyalayın, <code>.sh</code> faylı kimi endirin və ya <b>ISO 27001</b> / <b>NIST</b> standartlarına uyğun rəsmi PDF hesabat əldə edin.</p>" }
+                controls: "⚙️ Simulyasiya İdarəetməsi", dataset: "Məlumat Mənbəyi", synGraph: "Sintetik Qraf", customFile: "Xüsusi Fayl",
+                nodeCount: "IoT Qovşaq Sayı (Node)", uploadTopo: "Topologiya Yüklə (CSV/JSON)", gnnArch: "GNN Arxitekturası",
+                attackStrat: "Hücum Strategiyası", attackRate: "Hücum İntensivliyi (%)", proKey: "Pro Lisenziya Açarı",
+                runSim: "🚀 Adversarial Simulyasiyanı Başlat", cleanAcc: "Təmiz Dəqiqlik (Clean Acc)", attackAcc: "Hücum Altında Dəqiqlik",
+                xaiScore: "XAI İzaholunma Dəqiqliyi", logTitle: "📊 Korporativ Təhlükə və Müdafiə Jurnalı", exportPdf: "📄 Audit Hesabatını Endir (PDF)",
+                remedTitle: "⚡ Avtomatik Bərpa Skripti və Uyğunluq Auditi", copyPatch: "📋 CLI Yamasını Kopyala", downloadSh: "💾 .sh Faylını Endir",
+                logInit: "[Sistem] GraphGuard IoT işə düşdü. FastAPI backend ilə simulyasiyaya hazırdır...",
+                detTitle: "Detallı Korporativ Texniki Hesabat və Tam Ensiklopediya",
+                detSub: "Mövzunun üzərinə gəlin (hover) açılıb genişlənsin, və ya klikləyin sabit qalsın. Qraflar, Riyazi Düsturlar, Nümunələr və Lüğət daxildir.",
+                s1: "1. Fundamental Nəzəriyyə: IoT Şəbəkələrinin Qraf Təsviri, Riyaziyyat və Süni İntellekt",
+                s1Text: "Korporativ IoT şəbəkəsi riyazi olaraq canlı topoloji qrafdır: G = (V, E, X). Hər bir fiziki və ya virtual cihaz (sensorlar, PLC kontrollerlər, kameralar, şlüzlər) bir Qovşaq (Node: v ∈ V), onların arasındakı hər bir rabitə sessiyası (TCP/IP, MQTT, Modbus) isə bir Til / Əlaqədir (Edge: e_ij ∈ E). Hər qovşağın D-ölçülü Xüsusiyyət Vektoru x_i ∈ ℝ^D var (paket ölçüsü, tezlik, CPU yükü, gecikmə). Bütün əlaqələr N × N ölçülü Qonşuluq Matrisində (A_ij = 1 və ya 0) və Dərəcə Matrisində (D_ii = ∑_j A_ij) saxlanılır.",
+                s1Ex: "Konkret Nümunə: N = 300 cihazlı Ağıllı Elektrik Şəbəkəsində Qovşaq #14 (Yarımstansiya Sensoru) hər 10 saniyədə Qovşaq #1-ə (SCADA Mərkəzi) 50 bayt göndərir: x_14 = [50B, 0.1Hs, 2% CPU, Port 1883]. Haker onu ələ keçirib 200 cihaza sorğu göndərsə, dərəcəsi D_14 = 1-dən 201-ə qalxır və GNN mesaj ötürməsi ilə bunu dərhal tutur!",
+                s2: "2. Bütün 5 GNN (Qraf Neyron Şəbəkəsi) Modelinin Riyazi və Arxitektur Təhlili",
+                m1: "GraphSAGE (Sample & Aggregate): İnduktiv modeldir. Bütün qrafı yenidən öyrətmədən k-addımlıq məsafədən sabit S_k sayda qonşu seçir və Ortalama (Mean), LSTM və ya Max-Pooling ilə birləşdirir. Nümunə: Anbarda Wi-Fi-a yeni qoşulan 50 avtomatlaşdırılmış robot-yükdaşıyan cəmi 12 millisaniyədə analiz edilir.",
+                m2: "GCN (Graph Convolutional Network): Çebışev polinomlarının 1-ci dərəcəli spektral yaxınlaşmasını işlədir. Öz-özünə əlaqə (Ã = A + I) əlavə edir və simmetrik dərəcə matrisi (D̃^-1/2 Ã D̃^-1/2) ilə qonşu xüsusiyyətlərini hamarlayır. Nümunə: Data-mərkəzdə 3 qonşu kommutatorda başlayan sinxron SYN-flood hücumunu 98.4% dəqiqliklə tutur.",
+                m3: "GAT (Graph Attention Network - Pro): Qonşuları birləşdirməzdən əvvəl LeakyReLU ilə hər qonşunun nə qədər etibarlı olduğunu ölçən Diqqət Əmsalı (α_ij) hesablayır. Nümunə: Xəstəxana şəbəkəsinə qoşulan saxta Raspberry Pi cihazına α_ij = 0.002 çəki verərək hakerin zəhərli siqnalını sıfırlayır, sağlam tibbi trafikdə isə α = 0.95 saxlayır.",
+                m4: "RGCN (Relational GCN): Hər rabitə protokolu üçün (r_1 = MQTT, r_2 = SSH, r_3 = RTSP, r_4 = Modbus) ayrıca W_r çəki matrisi ayırır. Nümunə: Normalda RTSP video (r_3) göndərən kamera birdən məlumat bazasına SSH (r_2) əlaqəsi açarsa, RGCN bu qeyri-qanuni əlaqəni dərhal bloklayır.",
+                m5: "GIN (Graph Isomorphism Network): Weisfeiler-Lehman (WL) qraf izomorfizm testi qədər güclüdür. İnyektiv cəmləmə (1 + ε)h_v + ∑ h_u sayəsində digər modellərin eyni saydığı fərqli qraf həndəsələrini (məsələn, ulduz topologiyası kimi maskalanmış halqavari botnet şəbəkəsini) dəqiq ayırd edir.",
+                s3: "3. Bütün 5 Adversarial Hücum Vektorunun Dərin Riyazi və Praktiki Təhlili",
+                a1: "Structural Edge Perturbation (Struktur Til Pozulması): Qonşuluq Matrisini ||A' - A||_0 ≤ 2Δ büdcəsi daxilində dəyişir. Fərqli cihazlar arasında saxta əlaqələr açır və ya şlüz xətlərini kəsir. Nümunə: 300 qovşaqda 30% intensivliklə 90 əlaqə dəyişdirilir, yoluxmuş termostat birbaşa maliyyə serverinə bağlanır.",
+                a2: "Feature-Level Noise Attack (Xüsusiyyət Səs-küyü Hücumu): Fiziki əlaqələrə (A) toxunmur, lakin telemetriya matrisinə X' = X + η (||η||_∞ ≤ ε) səs-küyü qatır. Nümunə: Nasos 50MB məlumat oğurlayarkən gecikməyə +0.03ms, CPU-ya -1.2% səs-küy qatır ki, adi hədd yoxlamaları bunu normal saysın.",
+                a3: "Node Injection Attack (Qovşaq İnyeksiyası - TDGIA): Şəbəkəyə tamamilə yeni saxta qovşaqlar (V_atk) qoşaraq matrisi (N + N_atk) ölçüsünə böyüdür. Nümunə: 15 icazəsiz konteyner əsas kommutatorlara qoşularaq 120 sağlam sensorun qonşuluq vektorlarını zəhərləyir.",
+                a4: "Gradient-based Adversarial Attack (FGSM / PGD): İtki funksiyasının (Cross-Entropy Loss) qradientini (∇_X L, ∇_A L) hesablayır və təsnifat xətasını maksimuma çatdıran ən həssas istiqamətdə paket parametrlərini dəyişdirir.",
+                a5: "Attribute Masking Attack (Atributların Maskalanması): Xüsusiyyət vektorunu ikilik maskaya vurur (x'_i = x_i ⊙ m, m ∈ {0,1}^D). Paket başlıqlarını gizlədərək və ya şifrələyərək vacib telemetriya sütunlarını sıfırlayır.",
+                s4: "4. Saytdakı Bütün Terminlərin Lüğəti, Metrikalar və Beynəlxalq Standartlar",
+                terms: [
+                    ["Node (Qovşaq / v)", "Şəbəkədəki hər hansı fiziki və ya virtual IoT cihazı (sensor, kamera, marşrutlayıcı, server)."],
+                    ["Edge (Til / Əlaqə / e_ij)", "İki qovşaq arasındakı rabitə kanalı və ya məlumat axını (TCP, MQTT, Modbus)."],
+                    ["Adjacency Matrix (Qonşuluq Matrisi A)", "Hansı cihazların bir-biri ilə əlaqədə olduğunu 0 və 1-lərlə göstərən N × N cədvəl."],
+                    ["Feature Vector (Xüsusiyyət Vektoru x_i)", "Cihazın süni intellektə ötürülən rəqəmsal göstəriciləri (bayt sayı, tezlik, CPU yükü, gecikmə)."],
+                    ["Message Passing (Mesaj Ötürmə)", "Hər qovşağın öz qonşularından xüsusiyyət vektorlarını toplayıb yeniləməsi prosesi."],
+                    ["Clean vs. Attacked Accuracy", "Hücumdan əvvəlki təmiz dəqiqlik ilə aktiv hücum altındakı dayanıqlılıq dəqiqliyinin müqayisəsi."],
+                    ["Attack Intensity Rate (%)", "Simulyasiya zamanı dəyişdirilən əlaqələrin və ya atributların faiz dərəcəsi (0%–50%)."],
+                    ["XAI Fidelity Score (%)", "GNNExplainer vasitəsilə süni intellektin qərarının nə qədər şəffaf və izaholunan olduğunu ölçən bal."],
+                    ["Auto-Remediation & ISO/NIST", "Zərərli qovşaqları təcrid edən avtomatik Linux iptables / Cisco IOS skriptləri və ISO 27001 / NIST uyğunluğu."]
                 ]
             },
-            ru: { controls: "Управление", dataset: "Данные", synGraph: "Граф", customFile: "Файл", nodeCount: "Узлы", uploadTopo: "Загрузить", gnnArch: "GNN", attackStrat: "Атака", attackRate: "Уровень", proKey: "Ключ", runSim: "Запуск", cleanAcc: "Чистая", attackAcc: "Атака", xaiScore: "XAI", logTitle: "Лог", exportPdf: "PDF", remedTitle: "Исправление", copyPatch: "Копировать", downloadSh: "Скачать", logInit: "Инициализация...", detTitle: "Подробный технический отчет", detSub: "Наведите курсор на карточку.", detailedReportHTML: massiveHoverContent, guidePrev: "Назад", guideNext: "Далее", guideFinish: "Готово", steps: [{ title: "1. Настройка", content: "Выберите топологию." }] },
-            de: { controls: "Steuerung", dataset: "Daten", synGraph: "Graph", customFile: "Datei", nodeCount: "Knoten", uploadTopo: "Hochladen", gnnArch: "GNN", attackStrat: "Angriff", attackRate: "Rate", proKey: "Schlüssel", runSim: "Starten", cleanAcc: "Clean", attackAcc: "Angriff", xaiScore: "XAI", logTitle: "Log", exportPdf: "PDF", remedTitle: "Remediation", copyPatch: "Kopieren", downloadSh: "Download", logInit: "Init...", detTitle: "Detaillierter technischer Bericht", detSub: "Bewegen Sie den Mauszeiger.", detailedReportHTML: massiveHoverContent, guidePrev: "Zurück", guideNext: "Weiter", guideFinish: "Fertig", steps: [{ title: "1. Konfiguration", content: "Wählen Sie Topologie." }] },
-            fr: { controls: "Contrôles", dataset: "Source", synGraph: "Graphe", customFile: "Fichier", nodeCount: "Nœuds", uploadTopo: "Upload", gnnArch: "GNN", attackStrat: "Attaque", attackRate: "Taux", proKey: "Clé", runSim: "Lancer", cleanAcc: "Propre", attackAcc: "Attaque", xaiScore: "XAI", logTitle: "Journal", exportPdf: "PDF", remedTitle: "Remédiation", copyPatch: "Copier", downloadSh: "Télécharger", logInit: "Init...", detTitle: "Rapport Technique Détaillé", detSub: "Survolez une carte.", detailedReportHTML: massiveHoverContent, guidePrev: "Précédent", guideNext: "Suivant", guideFinish: "Fin", steps: [{ title: "1. Configuration", content: "Sélectionnez la topologie." }] },
-            fi: { controls: "Hallinta", dataset: "Data", synGraph: "Graafi", customFile: "Tiedosto", nodeCount: "Solmut", uploadTopo: "Lataa", gnnArch: "GNN", attackStrat: "Hyökkäys", attackRate: "Taso", proKey: "Avain", runSim: "Suorita", cleanAcc: "Puhdas", attackAcc: "Hyökätty", xaiScore: "XAI", logTitle: "Loki", exportPdf: "PDF", remedTitle: "Korjaus", copyPatch: "Kopioi", downloadSh: "Lataa", logInit: "Alustettu...", detTitle: "Yksityiskohtainen tekninen raportti", detSub: "Vie hiiri kortin päälle.", detailedReportHTML: massiveHoverContent, guidePrev: "Edellinen", guideNext: "Seuraava", guideFinish: "Valmis", steps: [{ title: "1. Asetukset", content: "Valitse topologia." }] },
-            no: { controls: "Kontroller", dataset: "Data", synGraph: "Graf", customFile: "Fil", nodeCount: "Noder", uploadTopo: "Last opp", gnnArch: "GNN", attackStrat: "Angrep", attackRate: "Rate", proKey: "Nøkkel", runSim: "Kjør", cleanAcc: "Ren", attackAcc: "Angrepet", xaiScore: "XAI", logTitle: "Logg", exportPdf: "PDF", remedTitle: "Utbedring", copyPatch: "Kopier", downloadSh: "Last ned", logInit: "Startet...", detTitle: "Detaljert Teknisk Rapport", detSub: "Hold markøren over et kort.", detailedReportHTML: massiveHoverContent, guidePrev: "Forrige", guideNext: "Neste", guideFinish: "Fullfør", steps: [{ title: "1. Konfigurasjon", content: "Velg topologi." }] },
-            hi: { controls: "नियंत्रण", dataset: "स्रोत", synGraph: "ग्राफ़", customFile: "फ़ाइल", nodeCount: "नोड्स", uploadTopo: "अपलोड", gnnArch: "GNN", attackStrat: "हमला", attackRate: "दर", proKey: "कुंजी", runSim: "चलाएं", cleanAcc: "स्वच्छ", attackAcc: "आक्रमण", xaiScore: "XAI", logTitle: "लॉग", exportPdf: "PDF", remedTitle: "सुधार", copyPatch: "कॉपी", downloadSh: "डाउनलोड", logInit: "तैयार...", detTitle: "विस्तृत तकनीकी रिपोर्ट", detSub: "कर्सर ले जाएं।", detailedReportHTML: massiveHoverContent, guidePrev: "पिछला", guideNext: "अगला", guideFinish: "समाप्त", steps: [{ title: "1. सेटअप", content: "टोपोलॉजी चुनें।" }] },
-            zh: { controls: "控制", dataset: "源", synGraph: "图", customFile: "文件", nodeCount: "节点", uploadTopo: "上传", gnnArch: "GNN", attackStrat: "攻击", attackRate: "率", proKey: "密钥", runSim: "运行", cleanAcc: "清洁", attackAcc: "受攻击", xaiScore: "XAI", logTitle: "日志", exportPdf: "PDF", remedTitle: "修复", copyPatch: "复制", downloadSh: "下载", logInit: "初始化...", detTitle: "详细技术报告与知识库", detSub: "将鼠标 悬停 在卡片上方。", detailedReportHTML: massiveHoverContent, guidePrev: "上一步", guideNext: "下一步", guideFinish: "完成", steps: [{ title: "1. 配置", content: "选择拓扑。" }] },
-            ja: { controls: "制御", dataset: "ソース", synGraph: "グラフ", customFile: "ファイル", nodeCount: "ノード", uploadTopo: "アップロード", gnnArch: "GNN", attackStrat: "攻撃", attackRate: "レート", proKey: "キー", runSim: "実行", cleanAcc: "クリーン", attackAcc: "攻撃時", xaiScore: "XAI", logTitle: "ログ", exportPdf: "PDF", remedTitle: "修復", copyPatch: "コピー", downloadSh: "ダウンロード", logInit: "初期化...", detTitle: "詳細テクニカルレポートとナレッジベース", detSub: "カードの上にカーソルを置きます。", detailedReportHTML: massiveHoverContent, guidePrev: "前へ", guideNext: "次へ", guideFinish: "完了", steps: [{ title: "1. 設定", content: "トポロジを選択します。" }] }
+            ru: {
+                controls: "⚙️ Управление симуляцией", dataset: "Источник данных", synGraph: "Синтетический граф", customFile: "Свой файл",
+                nodeCount: "Количество узлов IoT", uploadTopo: "Загрузить топологию (CSV/JSON)", gnnArch: "Архитектура GNN",
+                attackStrat: "Стратегия атаки", attackRate: "Интенсивность атаки (%)", proKey: "Pro Ключ (Необязательно)",
+                runSim: "🚀 Запустить симуляцию", cleanAcc: "Чистая точность", attackAcc: "Точность при атаке",
+                xaiScore: "Оценка XAI Fidelity", logTitle: "📊 Журнал угроз и защиты", exportPdf: "📄 Экспорт отчета (PDF)",
+                remedTitle: "⚡ Авто-исправление и аудит соответствия", copyPatch: "📋 Копировать патч", downloadSh: "💾 Скачать .sh",
+                logInit: "[Система] GraphGuard IoT инициализирован. Готов к симуляции...",
+                detTitle: "Подробный технический отчет и полная энциклопедия",
+                detSub: "Наведите курсор на карточку для открытия или нажмите для закрепления. Включает графы, математику, примеры и глоссарий.",
+                s1: "1. Фундаментальная теория: Графовое представление сетей IoT, математика и ИИ",
+                s1Text: "Сеть IoT математически представляет собой граф G = (V, E, X). Каждое устройство (датчик, ПЛК, маршрутизатор, шлюз) — это Узел (v ∈ V), а сеанс связи (TCP/IP, MQTT, Modbus) — Ребро (e_ij ∈ E). Каждый узел имеет вектор признаков x_i ∈ ℝ^D (размер пакета, частота, нагрузка ЦП). Связи хранятся в матрице смежности A размера N × N и матрице степеней D.",
+                s1Ex: "Пример: В умной электросети из 300 узлов датчик №14 отправляет 50 байт каждые 10 с на шлюз №1. Если хакер взломает его для сканирования 200 устройств, степень D_14 вырастет с 1 до 201, что мгновенно выявляется GNN.",
+                s2: "2. Математический и архитектурный разбор всех 5 моделей GNN",
+                m1: "GraphSAGE: Индуктивная модель, выбирающая фиксированное число соседей S_k и агрегирующая их через Mean/LSTM/Pooling. Классифицирует новые устройства за 12 мс без переобучения.",
+                m2: "GCN: Спектральная свертка с петлями (Ã = A + I) и симметричной нормализацией степеней. Идеально выявляет кластерные аномалии в стабильных ЦОД.",
+                m3: "GAT (Pro): Вычисляет коэффициенты внимания α_ij через LeakyReLU. При атаке вредоносного узла назначает ему вес α_ij ≈ 0.002, блокируя отравление соседних узлов.",
+                m4: "RGCN: Использует отдельные матрицы весов W_r для каждого протокола (MQTT, SSH, RTSP, Modbus), пресекая несанкционированные типы соединений.",
+                m5: "GIN: Обладает мощностью теста Вейсфейлера-Лемана (WL), разделяя сложные изоморфные структуры ботнетов.",
+                s3: "3. Подробный разбор всех 5 векторов состязательных атак (Красный уровень)",
+                a1: "Structural Edge Perturbation: Изменение матрицы смежности A → A' (добавление ложных связей или разрыв магистралей).",
+                a2: "Feature-Level Noise Attack: Инжекция ограниченного математического шума X' = X + η в телеметрию для обхода пороговых фильтров.",
+                a3: "Node Injection Attack: Подключение новых фальшивых узлов V_atk к коммутаторам для отравления агрегации соседей.",
+                a4: "Gradient-based Attack (FGSM/PGD): Использование градиентов функции потерь (∇_X L, ∇_A L) для максимального снижения точности ИИ.",
+                a5: "Attribute Masking Attack: Обнуление критических полей телеметрии через бинарную маску x'_i = x_i ⊙ m.",
+                s4: "4. Полный глоссарий терминов сайта, метрик и стандартов",
+                terms: [
+                    ["Узел (Node / v)", "Любое физическое или виртуальное устройство IoT в сети."],
+                    ["Ребро (Edge / e_ij)", "Канал передачи данных между двумя узлами."],
+                    ["Матрица смежности (A)", "Таблица N × N из 0 и 1, определяющая топологию связей."],
+                    ["Вектор признаков (x_i)", "Числовые параметры телеметрии устройства (байты, частота, ЦП)."],
+                    ["Передача сообщений (Message Passing)", "Обмен векторами признаков между соседними узлами."],
+                    ["Чистая и атакованная точность", "Точность классификации до атаки и во время активного штурма."],
+                    ["Интенсивность атаки (%)", "Доля измененных связей или признаков (0%–50%)."],
+                    ["Оценка XAI Fidelity (%)", "Показатель объяснимости решения ИИ через GNNExplainer."],
+                    ["Авто-исправление и ISO/NIST", "Скрипты изоляции iptables/Cisco ACL и соответствие ISO 27001 / NIST SP 800-53."]
+                ]
+            },
+            de: {
+                controls: "⚙️ Simulationssteuerung", dataset: "Datenquelle", synGraph: "Synthetischer Graph", customFile: "Eigene Datei",
+                nodeCount: "IoT-Knotenanzahl", uploadTopo: "Topologie hochladen", gnnArch: "GNN-Architektur",
+                attackStrat: "Angriffsstrategie", attackRate: "Angriffsintensität (%)", proKey: "Pro-Lizenzschlüssel",
+                runSim: "🚀 Simulation starten", cleanAcc: "Saubere Genauigkeit", attackAcc: "Genauigkeit unter Angriff",
+                xaiScore: "XAI-Fidelity-Wert", logTitle: "📊 Bedrohungs- & Verteidigungsprotokoll", exportPdf: "📄 PDF-Bericht exportieren",
+                remedTitle: "⚡ Auto-Remediation & Compliance-Audit", copyPatch: "📋 CLI-Patch kopieren", downloadSh: "💾 .sh herunterladen",
+                logInit: "[System] GraphGuard IoT initialisiert...",
+                detTitle: "Detaillierter Technischer Bericht & Enzyklopädie",
+                detSub: "Maus über eine Karte bewegen zum Öffnen oder klicken zum Anheften. Inklusive Graphen, Mathematik, Beispielen & Glossar.",
+                s1: "1. Grundlagentheorie: Graphendarstellung von IoT-Netzwerken, Mathematik & KI",
+                s1Text: "Ein IoT-Netzwerk ist mathematisch ein Graph G = (V, E, X). Jedes Gerät ist ein Knoten (v ∈ V), jede Verbindung eine Kante (e_ij ∈ E) mit Merkmalsvektor x_i ∈ ℝ^D und Adjazenzmatrix A (N × N).",
+                s1Ex: "Beispiel: In einem Smart Grid mit 300 Knoten steigt bei einem kompromittierten Sensor #14 der Knotengrad D_14 von 1 auf 201, was sofort durch GNN-Message-Passing erkannt wird.",
+                s2: "2. Mathematische Analyse aller 5 GNN-Modelle",
+                m1: "GraphSAGE: Induktives Sampling (Mean/LSTM/Pool) für dynamische IoT-Netze in Echtzeit (12ms).",
+                m2: "GCN: Spektrale Faltung (D̃^-1/2 Ã D̃^-1/2) zur Erkennung synchronisierter Cluster-Anomalien.",
+                m3: "GAT (Pro): Multi-Head Attention (α_ij)blendet bösartige Knoten durch Gewichtung nahe Null (α = 0.002) aus.",
+                m4: "RGCN: Separate Gewichtsmatrizen W_r für jedes Protokoll (MQTT, SSH, Modbus).",
+                m5: "GIN: Weisfeiler-Lehman-Isomorphie-Trennschärfe gegen getarnte Botnet-Topologien.",
+                s3: "3. Detaillierte Analyse aller 5 Angriffsvektoren (Rote Warnstufe)",
+                a1: "Structural Edge Perturbation: Manipulation der Adjazenzmatrix A → A' zum Trennen kritischer Gateways.",
+                a2: "Feature-Level Noise Attack: Injektion von begrenztem Rauschen X' = X + η in Gerätetelemetrie.",
+                a3: "Node Injection Attack: Einschleusen unautorisierter Knoten V_atk in zentrale Switches.",
+                a4: "Gradient-based Attack (FGSM/PGD): Nutzung der Verlustgradienten (∇_X L, ∇_A L) zur maximalen Täuschung.",
+                a5: "Attribute Masking Attack: Ausblenden kritischer Telemetriefelder mittels binärer Maske x'_i = x_i ⊙ m.",
+                s4: "4. Vollständiges Glossar aller Begriffe, Metriken & Standards",
+                terms: [
+                    ["Node (Knoten / v)", "Physisches oder virtuelles IoT-Gerät im Netzwerk."],
+                    ["Edge (Kante / e_ij)", "Kommunikationsverbindung zwischen zwei Geräten."],
+                    ["Adjacency Matrix (A)", "Mathematische N × N Verbindungsmatrix aus 0 und 1."],
+                    ["Feature Vector (x_i)", "Numerische Telemetriedaten eines Knotens."],
+                    ["Message Passing", "Nachbarschaftsbasierter Informationsaustausch im Graphen."],
+                    ["Clean / Attacked Accuracy", "Erkennungsrate vor und während eines Cyberangriffs."],
+                    ["Attack Intensity (%)", "Prozentsatz der manipulierten Kanten/Merkmale."],
+                    ["XAI Fidelity Score (%)", "Erklärbarkeitswert der KI-Entscheidung."],
+                    ["Auto-Remediation & ISO/NIST", "Automatische Firewall-Skripte (iptables/Cisco) nach ISO 27001 & NIST SP 800-53."]
+                ]
+            },
+            fr: {
+                controls: "⚙️ Contrôles de Simulation", dataset: "Source de Données", synGraph: "Graphe Synthétique", customFile: "Fichier Personnalisé",
+                nodeCount: "Nombre de Nœuds IoT", uploadTopo: "Télécharger la Topologie", gnnArch: "Architecture GNN",
+                attackStrat: "Stratégie d'Attaque", attackRate: "Intensité d'Attaque (%)", proKey: "Clé de Licence Pro",
+                runSim: "🚀 Lancer la Simulation", cleanAcc: "Précision Initiale", attackAcc: "Précision sous Attaque",
+                xaiScore: "Score de Fidélité XAI", logTitle: "📊 Journal des Menaces et Défenses", exportPdf: "📄 Exporter le Rapport (PDF)",
+                remedTitle: "⚡ Remédiation Automatique et Audit", copyPatch: "📋 Copier le Patch CLI", downloadSh: "💾 Télécharger .sh",
+                logInit: "[Système] GraphGuard IoT initialisé...",
+                detTitle: "Rapport Technique Détaillé et Encyclopédie Complète",
+                detSub: "Survolez une carte pour l'ouvrir ou cliquez pour l'épingler. Inclut graphes, formules mathématiques, exemples et glossaire.",
+                s1: "1. Théorie Fondamentale : Représentation Graphique des Réseaux IoT, Mathématiques et IA",
+                s1Text: "Un réseau IoT d'entreprise est un graphe topologique G = (V, E, X). Chaque appareil est un Nœud (v ∈ V) et chaque flux réseau est une Arête (e_ij ∈ E) avec un vecteur de caractéristiques x_i ∈ ℝ^D et une matrice d'adjacence A (N × N).",
+                s1Ex: "Exemple : Dans un réseau électrique de 300 nœuds, si le capteur #14 est piraté pour scanner 200 appareils, son degré D_14 passe de 1 à 201, détecté instantanément par le passage de messages GNN.",
+                s2: "2. Analyse Mathématique et Architecturale des 5 Modèles GNN",
+                m1: "GraphSAGE : Échantillonnage inductif permettant d'analyser de nouveaux appareils IoT en 12 ms sans réentraînement.",
+                m2: "GCN : Convolution spectrale normalisée (D̃^-1/2 Ã D̃^-1/2) idéale pour détecter les anomalies de cluster.",
+                m3: "GAT (Pro) : Attention multi-têtes (α_ij) qui réduit à zéro (α = 0.002) l'influence des nœuds malveillants injectés.",
+                m4: "RGCN : Matrices de poids distinctes W_r par protocole réseau (MQTT, SSH, RTSP, Modbus).",
+                m5: "GIN : Puissance du test d'isomorphisme de Weisfeiler-Lehman pour démasquer les botnets complexes.",
+                s3: "3. Analyse Exhaustive des 5 Vecteurs d'Attaque (Alerte Rouge)",
+                a1: "Structural Edge Perturbation : Modification de la matrice d'adjacence A → A' pour isoler les passerelles critiques.",
+                a2: "Feature-Level Noise Attack : Injection de bruit mathématique borné X' = X + η dans la télémétrie.",
+                a3: "Node Injection Attack : Ajout de nœuds pirates V_atk connectés aux commutateurs centraux.",
+                a4: "Gradient-based Attack (FGSM/PGD) : Exploitation des gradients de perte (∇_X L, ∇_A L) pour tromper le classifieur.",
+                a5: "Attribute Masking Attack : Masquage binaire x'_i = x_i ⊙ m des attributs critiques des paquets.",
+                s4: "4. Glossaire Complet des Termes, Métriques et Normes ISO/NIST",
+                terms: [
+                    ["Nœud (Node / v)", "Tout appareil IoT physique ou virtuel du réseau."],
+                    ["Arête (Edge / e_ij)", "Lien de communication entre deux appareils."],
+                    ["Matrice d'Adjacence (A)", "Grille N × N de 0 et 1 représentant les connexions."],
+                    ["Vecteur de Caractéristiques (x_i)", "Mesures télémétriques numériques d'un appareil."],
+                    ["Message Passing", "Agrégation itérative des caractéristiques des voisins."],
+                    ["Précision Propre vs Attaquée", "Taux de détection avant et pendant une cyberattaque."],
+                    ["Intensité d'Attaque (%)", "Pourcentage de liens ou d'attributs compromis."],
+                    ["Score XAI Fidelity (%)", "Mesure de transparence et d'explicabilité de l'IA."],
+                    ["Auto-Remédiation & ISO/NIST", "Scripts automatisés iptables/Cisco conformes aux normes ISO 27001 et NIST SP 800-53."]
+                ]
+            },
+            fi: {
+                controls: "⚙️ Simulaation ohjaus", dataset: "Tietolähde", synGraph: "Synteettinen graafi", customFile: "Oma tiedosto",
+                nodeCount: "IoT-solmujen määrä", uploadTopo: "Lataa topologia", gnnArch: "GNN-arkkitehtuuri",
+                attackStrat: "Hyökkäysstrategia", attackRate: "Hyökkäyksen voimakkuus (%)", proKey: "Pro-lisenssiavain",
+                runSim: "🚀 Suorita simulaatio", cleanAcc: "Puhdas tarkkuus", attackAcc: "Tarkkuus hyökkäyksessä",
+                xaiScore: "XAI-luotettavuus", logTitle: "📊 Uhka- ja puolustusloki", exportPdf: "📄 Vie PDF-raportti",
+                remedTitle: "⚡ Automaattinen korjaus ja auditointi", copyPatch: "📋 Kopioi CLI-korjaus", downloadSh: "💾 Lataa .sh",
+                logInit: "[Järjestelmä] GraphGuard IoT valmis...",
+                detTitle: "Yksityiskohtainen Tekninen Raportti & Tietosanakirja",
+                detSub: "Vie hiiri kortin päälle avataksesi tai napsauta kiinnittääksesi. Sisältää graafit, matematiikan, esimerkit ja sanaston.",
+                s1: "1. Perusteoria: IoT-verkkojen graafiesitys, matematiikka ja tekoäly",
+                s1Text: "IoT-verkko on matemaattinen graafi G = (V, E, X), jossa laitteet ovat solmuja (v ∈ V), yhteydet kaaria (e_ij ∈ E), telemetria piirrevektoreita x_i ∈ ℝ^D ja topologia vierusmatriisi A (N × N).",
+                s1Ex: "Esimerkki: 300 solmun sähköverkossa kaapatun anturin #14 aste D_14 nousee 1:stä 201:een, minkä GNN havaitsee välittömästi.",
+                s2: "2. Kaikkien 5 GNN-mallin matemaattinen ja arkkitehtoninen analyysi",
+                m1: "GraphSAGE: Induktiivinen otanta, joka luokittelee uudet IoT-laitteet 12 millisekunnissa.",
+                m2: "GCN: Spektraalinen konvoluutio (D̃^-1/2 Ã D̃^-1/2) klusteritason poikkeamien havaitsemiseen.",
+                m3: "GAT (Pro): Huomiokerroin α_ij vaimentaa haitalliset solmut (α = 0.002) ja suojaa verkon.",
+                m4: "RGCN: Erilliset painomatriisit W_r eri yhteyskäytännöille (MQTT, SSH, Modbus).",
+                m5: "GIN: Weisfeiler-Lehman-isomorfismitestin tarkkuus monimutkaisten bottiverkkojen paljastamiseen.",
+                s3: "3. Kaikkien 5 hyökkäysvektorin syväanalyysi (Punainen hälytys)",
+                a1: "Structural Edge Perturbation: Vierusmatriisin A → A' muokkaus kriittisten reitittimien eristämiseksi.",
+                a2: "Feature-Level Noise Attack: Matemaattisen kohinan X' = X + η lisääminen telemetriaan.",
+                a3: "Node Injection Attack: Luvattomien valesolmujen V_atk liittäminen verkkoon.",
+                a4: "Gradient-based Attack (FGSM/PGD): Häviöfunktion gradienttien (∇_X L, ∇_A L) hyödyntäminen.",
+                a5: "Attribute Masking Attack: Telemetriakenttien peittäminen binäärimaskilla x'_i = x_i ⊙ m.",
+                s4: "4. Täydellinen sanasto, mittarit ja ISO/NIST-standardit",
+                terms: [
+                    ["Solmu (Node / v)", "Fyysinen tai virtuaalinen IoT-laite verkossa."],
+                    ["Kaari (Edge / e_ij)", "Tietoliikenneyhteys kahden laitteen välillä."],
+                    ["Vierusmatriisi (A)", "N × N matriisi (0 ja 1), joka kuvaa verkon kytkennät."],
+                    ["Piirrevektori (x_i)", "Laitteen numeeriset telemetria-arvot."],
+                    ["Viestinvälitys (Message Passing)", "Naapurisolmujen tietojen yhdistäminen."],
+                    ["Puhdas vs. Hyökätty tarkkuus", "Tunnistustarkkuus normaalitilassa ja hyökkäyksen aikana."],
+                    ["Hyökkäyksen voimakkuus (%)", "Muokattujen yhteyksien tai piirteiden osuus."],
+                    ["XAI Fidelity Score (%)", "Tekoälyn päätöksen selitettävyysmittari."],
+                    ["Automaattinen korjaus & ISO/NIST", "Linux iptables / Cisco ACL -skriptit ja ISO 27001 / NIST SP 800-53 -yhteensopivuus."]
+                ]
+            },
+            no: {
+                controls: "⚙️ Simuleringskontroller", dataset: "Datakilde", synGraph: "Syntetisk Graf", customFile: "Egendefinert Fil",
+                nodeCount: "Antall IoT-noder", uploadTopo: "Last opp topologi", gnnArch: "GNN-arkitektur",
+                attackStrat: "Angrepsstrategi", attackRate: "Angrepsintensitet (%)", proKey: "Pro-lisensnøkkel",
+                runSim: "🚀 Kjør simulering", cleanAcc: "Ren nøyaktighet", attackAcc: "Nøyaktighet under angrep",
+                xaiScore: "XAI Fidelity-score", logTitle: "📊 Trussel- og forsvarslogg", exportPdf: "📄 Eksporter PDF-rapport",
+                remedTitle: "⚡ Automatisk utbedring og samsvar", copyPatch: "📋 Kopier CLI-patch", downloadSh: "💾 Last ned .sh",
+                logInit: "[System] GraphGuard IoT klar...",
+                detTitle: "Detaljert Teknisk Rapport og Komplett Leksikon",
+                detSub: "Hold musepekeren over et kort for å åpne, eller klikk for å feste. Inkluderer grafer, matematikk, eksempler og ordliste.",
+                s1: "1. Grunnleggende teori: Grafrepresentasjon av IoT-nettverk, matematikk og KI",
+                s1Text: "Et IoT-nettverk er matematisk en graf G = (V, E, X) der enheter er noder (v ∈ V), koblinger er kanter (e_ij ∈ E), telemetri er egenskapsvektorer x_i ∈ ℝ^D og nettverkstopologien lagres i nabomatrisen A (N × N).",
+                s1Ex: "Eksempel: I et strømnett med 300 noder øker graden D_14 fra 1 til 201 når en kompromittert sensor skanner 200 enheter, noe GNN oppdager umiddelbart.",
+                s2: "2. Matematisk og arkitektonisk gjennomgang av alle 5 GNN-modeller",
+                m1: "GraphSAGE: Induktiv prøvetaking som klassifiserer nye IoT-enheter på 12 ms uten ny trening.",
+                m2: "GCN: Spektral konvolusjon (D̃^-1/2 Ã D̃^-1/2) som fanger opp klyngeanomalier.",
+                m3: "GAT (Pro): Oppmerksomhetsvekter α_ij demper falske noder (α = 0.002) og beskytter nabolaget.",
+                m4: "RGCN: Egne vektmatriser W_r for hver kommunikasjonsprotokoll (MQTT, SSH, Modbus).",
+                m5: "GIN: Weisfeiler-Lehman-isomorfisme-presisjon som avslører skjulte botnett-strukturer.",
+                s3: "3. Grundig gjennomgang av alle 5 angrepsvektorer (Rødt varsel)",
+                a1: "Structural Edge Perturbation: Endrer nabomatrisen A → A' for å isolere viktige rutere.",
+                a2: "Feature-Level Noise Attack: Injiserer begrenset matematisk støy X' = X + η i telemetridata.",
+                a3: "Node Injection Attack: Kobler uautoriserte falske noder V_atk til sentrale svitsjer.",
+                a4: "Gradient-based Attack (FGSM/PGD): Utnytter tapsgradienter (∇_X L, ∇_A L) for maksimal feilklassifisering.",
+                a5: "Attribute Masking Attack: Nullstiller viktige telemetrifelt med en binær maske x'_i = x_i ⊙ m.",
+                s4: "4. Komplett ordliste over nettstedets termer, beregninger og ISO/NIST",
+                terms: [
+                    ["Node (v)", "Enhver fysisk eller virtuell IoT-enhet i nettverket."],
+                    ["Kant (Edge / e_ij)", "Kommunikasjonskanal mellom to enheter."],
+                    ["Nabomatrise (A)", "N × N tabell med 0 og 1 som viser direkte forbindelser."],
+                    ["Egenskapsvektor (x_i)", "Numeriske telemetriverdier for en enhet."],
+                    ["Message Passing", "Prosess der noder samler informasjon fra sine naboer."],
+                    ["Ren vs. Angrepet nøyaktighet", "Deteksjonsrate før og under et aktivt angrep."],
+                    ["Angrepsintensitet (%)", "Andel manipulerte koblinger eller egenskaper."],
+                    ["XAI Fidelity Score (%)", "Mål på hvor forklarbar KI-beslutningen er."],
+                    ["Auto-utbedring & ISO/NIST", "Automatiske iptables / Cisco ACL-skript i samsvar med ISO 27001 og NIST SP 800-53."]
+                ]
+            },
+            hi: {
+                controls: "⚙️ सिमुलेशन नियंत्रण", dataset: "डेटा स्रोत", synGraph: "सिंथेटिक ग्राफ़", customFile: "कस्टम फ़ाइल",
+                nodeCount: "IoT नोड्स की संख्या", uploadTopo: "टोपोलॉजी अपलोड करें", gnnArch: "GNN आर्किटेक्चर",
+                attackStrat: "हमले की रणनीति", attackRate: "हमले की तीव्रता (%)", proKey: "प्रो लाइसेंस कुंजी",
+                runSim: "🚀 सिमुलेशन चलाएं", cleanAcc: "स्वच्छ सटीकता", attackAcc: "हमले के दौरान सटीकता",
+                xaiScore: "XAI फिडेलिटी स्कोर", logTitle: "📊 खतरा और रक्षा लॉग", exportPdf: "📄 PDF रिपोर्ट निर्यात करें",
+                remedTitle: "⚡ ऑटो-रीमेडिएशन और अनुपालन ऑडिट", copyPatch: "📋 CLI पैच कॉपी करें", downloadSh: "💾 .sh डाउनलोड करें",
+                logInit: "[सिस्टम] GraphGuard IoT तैयार है...",
+                detTitle: "विस्तृत तकनीकी रिपोर्ट और संपूर्ण विश्वकोश",
+                detSub: "खोलने के लिए किसी भी कार्ड पर माउस ले जाएं या पिन करने के लिए क्लिक करें। इसमें ग्राफ़, गणित, उदाहरण और शब्दावली शामिल हैं।",
+                s1: "1. मौलिक सिद्धांत: IoT नेटवर्क का ग्राफ़ निरूपण, गणित और AI",
+                s1Text: "एक IoT नेटवर्क गणितीय रूप से एक ग्राफ़ G = (V, E, X) है। प्रत्येक उपकरण एक नोड (v ∈ V) है और प्रत्येक संचार लिंक एक एज (e_ij ∈ E) है। प्रत्येक नोड में फ़ीचर वेक्टर x_i ∈ ℝ^D होता है और कनेक्शन आसन्नता मैट्रिक्स A (N × N) में संग्रहीत होते हैं।",
+                s1Ex: "उदाहरण: 300 नोड्स के स्मार्ट ग्रिड में यदि सेंसर #14 हैक होकर 200 उपकरणों को स्कैन करता है, तो उसकी डिग्री D_14 1 से बढ़कर 201 हो जाती है, जिसे GNN तुरंत पकड़ लेता है।",
+                s2: "2. सभी 5 GNN मॉडलों का गणितीय और स्थापत्य विश्लेषण",
+                m1: "GraphSAGE: इंडक्टिव सैंपलिंग मॉडल जो बिना री-ट्रेनिंग के नए IoT उपकरणों को 12ms में वर्गीकृत करता है।",
+                m2: "GCN: स्पेक्ट्रल कन्वोल्यूशन (D̃^-1/2 Ã D̃^-1/2) जो क्लस्टर-स्तरीय विसंगतियों को पकड़ता है।",
+                m3: "GAT (Pro): मल्टी-हेड अटेंशन (α_ij) जो दुर्भावनापूर्ण नोड्स के प्रभाव को शून्य (α = 0.002) कर देता है।",
+                m4: "RGCN: प्रत्येक प्रोटोकॉल (MQTT, SSH, Modbus) के लिए अलग वेट मैट्रिक्स W_r का उपयोग करता है।",
+                m5: "GIN: वीसफेइलर-लेहमैन (WL) आइसोमोर्फिज्म परीक्षण जितना शक्तिशाली संरचनात्मक मॉडल।",
+                s3: "3. सभी 5 प्रतिकूल आक्रमण वैक्टरों का विस्तृत विश्लेषण (रेड अलर्ट)",
+                a1: "Structural Edge Perturbation: महत्वपूर्ण गेटवे को अलग करने के लिए मैट्रिक्स A → A' में बदलाव।",
+                a2: "Feature-Level Noise Attack: टेलीमेट्री डेटा में सूक्ष्म गणितीय शोर X' = X + η जोड़ना।",
+                a3: "Node Injection Attack: नेटवर्क में अनधिकृत नकली नोड्स V_atk जोड़ना।",
+                a4: "Gradient-based Attack (FGSM/PGD): वर्गीकरण त्रुटि बढ़ाने के लिए लॉस ग्रेडिएंट्स (∇_X L, ∇_A L) का उपयोग।",
+                a5: "Attribute Masking Attack: बाइनरी मास्क x'_i = x_i ⊙ m द्वारा महत्वपूर्ण टेलीमेट्री फ़ील्ड को छिपाना।",
+                s4: "4. संपूर्ण शब्दावली, मेट्रिक्स और ISO/NIST मानक",
+                terms: [
+                    ["नोड (Node / v)", "नेटवर्क में कोई भी भौतिक या आभासी IoT उपकरण।"],
+                    ["एज (Edge / e_ij)", "दो उपकरणों के बीच संचार लिंक।"],
+                    ["आसन्नता मैट्रिक्स (A)", "0 और 1 की N × N तालिका जो सीधे कनेक्शन दिखाती है।"],
+                    ["फ़ीचर वेक्टर (x_i)", "उपकरण के संख्यात्मक टेलीमेट्री मापदंड।"],
+                    ["मैसेज पासिंग (Message Passing)", "पड़ोसी नोड्स से डेटा एकत्र करने की प्रक्रिया।"],
+                    ["स्वच्छ बनाम आक्रमण सटीकता", "हमले से पहले और हमले के दौरान AI की पहचान दर।"],
+                    ["हमले की तीव्रता (%)", "प्रभावित लिंक या विशेषताओं का प्रतिशत (0%–50%)।"],
+                    ["XAI फिडेलिटी स्कोर (%)", "AI निर्णय की पारदर्शिता और व्याख्यात्मकता का माप।"],
+                    ["ऑटो-रीमेडिएशन और ISO/NIST", "स्वचालित iptables / Cisco ACL स्क्रिप्ट और ISO 27001 / NIST SP 800-53 अनुपालन।"]
+                ]
+            },
+            zh: {
+                controls: "⚙️ 仿真控制", dataset: "数据源", synGraph: "合成图拓扑", customFile: "自定义文件",
+                nodeCount: "IoT 节点数量", uploadTopo: "上传拓扑 (CSV/JSON)", gnnArch: "GNN 架构模型",
+                attackStrat: "攻击策略", attackRate: "攻击强度率 (%)", proKey: "专业版许可证密钥",
+                runSim: "🚀 运行对抗仿真", cleanAcc: "初始准确率", attackAcc: "受攻击后准确率",
+                xaiScore: "XAI 保真度得分", logTitle: "📊 企业威胁与防御日志", exportPdf: "📄 导出审计报告 (PDF)",
+                remedTitle: "⚡ 自动修复剧本与合规审计", copyPatch: "📋 复制 CLI 补丁", downloadSh: "💾 下载 .sh",
+                logInit: "[系统] GraphGuard IoT 已初始化，准备就绪...",
+                detTitle: "详细企业技术报告与完整百科全书",
+                detSub: "将鼠标悬停在卡片上即可展开，点击可固定。包含图论图示、数学公式、真实案例与完整术语表。",
+                s1: "1. 基础理论：IoT 网络的图表示、线性代数与人工智能",
+                s1Text: "企业级 IoT 网络在数学上是一个属性拓扑图 G = (V, E, X)。每个物理或虚拟设备（传感器、PLC 控制器、摄像头、网关）是一个节点 (v ∈ V)，每次通信会话（TCP/IP、MQTT、Modbus）是一条边 (e_ij ∈ E)。每个节点具有 D 维特征向量 x_i ∈ ℝ^D（数据包大小、频率、CPU 负载、延迟）。全网连接保存在 N × N 邻接矩阵 A 和度矩阵 D 中。",
+                s1Ex: "具体案例：在包含 300 个节点的智能电网中，14 号变电站传感器每 10 秒向 1 号 SCADA 网关发送 50 字节数据。若被黑客攻破并扫描内部 200 台设备，其节点度 D_14 将从 1 激增至 201，GNN 消息传递机制可在毫秒级内捕获该异常。",
+                s2: "2. 全部 5 种 GNN 模型的数学公式与架构深度解析",
+                m1: "GraphSAGE（采样与聚合）：归纳式学习框架，对 k 跳邻居进行固定数量 S_k 采样并通过 Mean/LSTM/Pooling 聚合。无需重新训练即可在 12ms 内识别新接入的 50 台仓库机器人。",
+                m2: "GCN（图卷积网络）：基于一阶切比雪夫多项式的谱图卷积，加入自环 (Ã = A + I) 并通过对称度矩阵 (D̃^-1/2 Ã D̃^-1/2) 归一化，精准捕捉数据中心同步 SYN 洪泛攻击。",
+                m3: "GAT（图注意力网络 - Pro）：利用 LeakyReLU 计算多头自注意力系数 α_ij。当黑客接入恶意树莓派连接 15 台医疗监护仪时，GAT 自动将其注意力权重降至 α_ij = 0.002，彻底屏蔽毒化信号。",
+                m4: "RGCN（关系图卷积）：为每种协议关系 r ∈ R（MQTT、SSH、RTSP、Modbus）分配独立权重矩阵 W_r，立即拦截摄像头向数据库发起的非法 SSH 连接。",
+                m5: "GIN（图同构网络）：具备 Weisfeiler-Lehman (WL) 图同构测试的最高判别力，通过单射求和 (1 + ε)h_v + ∑ h_u 识别伪装成星型网的环形僵尸网络。",
+                s3: "3. 全部 5 种对抗攻击向量的深度数学与实战解析（红色警报）",
+                a1: "Structural Edge Perturbation（结构边扰动）：在预算 ||A' - A||_0 ≤ 2Δ 内篡改邻接矩阵 A → A'，添加虚假连接或切断核心网关链路。",
+                a2: "Feature-Level Noise Attack（特征级噪声攻击）：保持物理连接 A 不变，向遥测矩阵注入有界数学噪声 X' = X + η (||η||_∞ ≤ ε) 以绕过静态阈值检测。",
+                a3: "Node Injection Attack（节点注入攻击 TDGIA）：向网络接入未授权恶意节点 V_atk，矩阵扩展为 (N + N_atk) 维，污染核心交换机邻居表征。",
+                a4: "Gradient-based Attack（FGSM/PGD 梯度攻击）：计算交叉熵损失对特征与结构的偏导数 (∇_X L, ∇_A L)，沿梯度符号方向制造最大分类误差。",
+                a5: "Attribute Masking Attack（属性掩码攻击）：通过二进制掩码 x'_i = x_i ⊙ m 抹除或加密关键数据包头部与遥测字段。",
+                s4: "4. 网站完整术语表、遥测指标与 ISO/NIST 合规字典",
+                terms: [
+                    ["节点 (Node / v)", "网络中的任何物理或虚拟 IoT 终端设备。"],
+                    ["边 (Edge / e_ij)", "两个设备之间的通信会话或网络流。"],
+                    ["邻接矩阵 (Adjacency Matrix A)", "表示设备间直接连接关系的 N × N 零一矩阵。"],
+                    ["特征向量 (Feature Vector x_i)", "输入给 AI 的设备数值遥测属性列表。"],
+                    ["消息传递 (Message Passing)", "节点收集并聚合邻居特征向量的核心数学过程。"],
+                    ["初始 vs 受攻击准确率", "攻击前的基准检测率与遭受对抗攻击时的剩余准确率。"],
+                    ["攻击强度率 (%)", "仿真中被篡改的边或特征百分比 (0%–50%)。"],
+                    ["XAI 保真度得分 (%)", "通过 GNNExplainer 衡量 AI 告警决策的可解释性与可信度。"],
+                    ["自动修复与 ISO/NIST", "自动生成 Linux iptables 和 Cisco IOS ACL 隔离脚本，符合 ISO 27001 与 NIST SP 800-53 标准。"]
+                ]
+            },
+            ja: {
+                controls: "⚙️ シミュレーション制御", dataset: "データソース", synGraph: "合成グラフ", customFile: "カスタムファイル",
+                nodeCount: "IoTノード数", uploadTopo: "トポロジのアップロード", gnnArch: "GNNアーキテクチャ",
+                attackStrat: "攻撃戦略", attackRate: "攻撃強度率 (%)", proKey: "Proライセンスキー",
+                runSim: "🚀 シミュレーション実行", cleanAcc: "クリーン精度", attackAcc: "攻撃時精度",
+                xaiScore: "XAI忠実度スコア", logTitle: "📊 脅威・防御ログ", exportPdf: "📄 監査レポート出力 (PDF)",
+                remedTitle: "⚡ 自動修復プレイブックとコンプライアンス監査", copyPatch: "📋 CLIパッチをコピー", downloadSh: "💾 .shをダウンロード",
+                logInit: "[システム] GraphGuard IoT 初期化完了...",
+                detTitle: "詳細技術レポート＆完全百科事典",
+                detSub: "カードにカーソルを合わせると展開し、クリックで固定されます。グラフ図、数式、実例、用語集を完備。",
+                s1: "1. 基礎理論：IoTネットワークのグラフ表現、線形代数とAI",
+                s1Text: "企業のIoTネットワークは数学的に位相グラフ G = (V, E, X) として表現されます。各デバイス（センサー、PLC、カメラ、ゲートウェイ）はノード (v ∈ V)、通信セッション（TCP/IP、MQTT、Modbus）はエッジ (e_ij ∈ E) です。各ノードは特徴ベクトル x_i ∈ ℝ^D を持ち、接続は N × N 隣接行列 A と次数行列 D に格納されます。",
+                s1Ex: "具体例：300ノードのスマートグリッドでセンサー#14が乗っ取られ200台をスキャンすると、次数 D_14 が1から201に急増し、GNNのメッセージパッシングが即座に異常を検知します。",
+                s2: "2. 全5種GNNモデルの数学的・構造的徹底解説",
+                m1: "GraphSAGE（サンプリング＆集約）：帰納的学習により近傍 S_k をサンプリングし Mean/LSTM/Pooling で集約。新規参加した50台の倉庫ロボットも再学習なしで12msで分類します。",
+                m2: "GCN（グラフ畳み込みネットワーク）：自己ループ (Ã = A + I) と対称次数正規化 (D̃^-1/2 Ã D̃^-1/2) によるスペクトル畳み込みで、データセンターの同期SYNフラッドを検知します。",
+                m3: "GAT（グラフ注意ネットワーク - Pro）：LeakyReLUで注意係数 α_ij を算出。不正なラズベリーパイが医療モニター15台に接続されても、重みを α_ij = 0.002 に下げて汚染を無力化します。",
+                m4: "RGCN（関係GCN）：プロトコル関係 r ∈ R（MQTT、SSH、RTSP、Modbus）ごとに重み行列 W_r を分離し、カメラからDBへの不正なSSH接続を即座に遮断します。",
+                m5: "GIN（グラフ同型ネットワーク）：Weisfeiler-Lehman (WL) 同型性テストと同等の識別力を持ち、星型トポロジを装ったリング型ボットネットを暴きます。",
+                s3: "3. 全5種敵対的攻撃ベクトルの数学的・実践的解説（赤色警報）",
+                a1: "Structural Edge Perturbation（構造的エッジ摂動）：予算 ||A' - A||_0 ≤ 2Δ 内で隣接行列 A → A' を改ざんし、重要ゲートウェイを孤立させます。",
+                a2: "Feature-Level Noise Attack（特徴量ノイズ攻撃）：物理接続 A は変えず、テレメトリに微小な数学的ノイズ X' = X + η を注入して静的閾値を回避します。",
+                a3: "Node Injection Attack（ノード注入攻撃 TDGIA）：未承認の不正ノード V_atk をコアスイッチに接続し、近傍の埋め込み表現を汚染します。",
+                a4: "Gradient-based Attack（FGSM/PGD 勾配攻撃）：損失関数の勾配 (∇_X L, ∇_A L) を計算し、最小の変更で最大の分類誤差を引き起こします。",
+                a5: "Attribute Masking Attack（属性マスキング攻撃）：バイナリマスク x'_i = x_i ⊙ m により重要なパケットヘッダやテレメトリ項目をゼロ化します。",
+                s4: "4. サイト用語集、テレメトリ指標、ISO/NISTコンプライアンス辞典",
+                terms: [
+                    ["ノード (Node / v)", "ネットワーク上の物理または仮想IoTデバイス。"],
+                    ["エッジ (Edge / e_ij)", "2つのデバイス間の通信リンクまたはフロー。"],
+                    ["隣接行列 (Adjacency Matrix A)", "デバイス間の直接接続を0と1で表す N × N 行列。"],
+                    ["特徴ベクトル (Feature Vector x_i)", "AIに入力されるデバイスの数値テレメトリ属性。"],
+                    ["メッセージパッシング", "近傍ノードから特徴ベクトルを集約する数学的プロセス。"],
+                    ["クリーン精度 vs 攻撃時精度", "攻撃前の基準精度と敵対的攻撃下の維持精度。"],
+                    ["攻撃強度率 (%)", "改ざんされたエッジや特徴量の割合 (0%–50%)。"],
+                    ["XAI忠実度スコア (%)", "GNNExplainerによるAI判断の説明可能性スコア。"],
+                    ["自動修復とISO/NIST", "Linux iptables / Cisco ACL 自動隔離スクリプトと ISO 27001 / NIST SP 800-53 準拠。"]
+                ]
+            }
         };
+
+        // Dynamic HTML Builder for the 10-Language Encyclopedia (Zero Duplication, Zero Lag)
+        function buildEncyclopediaHTML(lang) {
+            const t = L[lang] || L.en;
+            const glossaryRows = t.terms.map(([term, desc]) => `
+                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 hover:border-cyan-500/40 transition">
+                    <h6 class="text-cyan-400 font-bold text-sm mb-1">🔹 ${term}</h6>
+                    <p class="text-xs text-slate-300 leading-relaxed">${desc}</p>
+                </div>
+            `).join('');
+
+            return `
+                <!-- CARD 1: FUNDAMENTAL GRAPH THEORY & SVG DIAGRAM -->
+                <div class="kb-card border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer" onclick="this.classList.toggle('pinned')">
+                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition">
+                        <span class="text-base sm:text-lg">${t.s1}</span>
+                        <span class="kb-arrow text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="kb-body px-6 pb-6 space-y-5 border-t border-slate-800/80 pt-4">
+                        <p class="text-slate-300 leading-relaxed">${t.s1Text}</p>
+                        
+                        <!-- Interactive SVG Topological Graph Diagram -->
+                        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col lg:flex-row items-center justify-around gap-6">
+                            <svg width="320" height="170" viewBox="0 0 320 170" class="bg-slate-950 rounded-xl border border-slate-800 p-2">
+                                <line x1="60" y1="85" x2="150" y2="40" stroke="#10b981" stroke-width="2.5"/>
+                                <line x1="60" y1="85" x2="150" y2="130" stroke="#10b981" stroke-width="2.5"/>
+                                <line x1="150" y1="40" x2="150" y2="130" stroke="#06b6d4" stroke-width="2"/>
+                                <line x1="150" y1="40" x2="255" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5,5"/>
+                                <line x1="150" y1="130" x2="255" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5,5"/>
+                                <circle cx="60" cy="85" r="16" fill="#059669"/>
+                                <text x="60" y="89" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₁ (GW)</text>
+                                <circle cx="150" cy="40" r="14" fill="#0284c7"/>
+                                <text x="150" y="44" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₂</text>
+                                <circle cx="150" cy="130" r="14" fill="#0284c7"/>
+                                <text x="150" y="134" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₃</text>
+                                <circle cx="255" cy="85" r="16" fill="#dc2626"/>
+                                <text x="255" y="89" text-anchor="middle" fill="white" font-size="9" font-weight="bold">v₄ (Atk)</text>
+                            </svg>
+                            <div class="math-box p-4 rounded-xl text-xs text-cyan-300 space-y-1.5 flex-1">
+                                <div class="text-emerald-400 font-bold mb-1">📐 Graph Mathematical Representation:</div>
+                                <div>G = (V, E, X), &nbsp; |V| = N, &nbsp; X ∈ ℝ^(N × D)</div>
+                                <div>Adjacency Matrix A_ij = { 1 if (v_i, v_j) ∈ E, else 0 }</div>
+                                <div>Degree Matrix D_ii = ∑_j A_ij, &nbsp; Laplacian L = D - A</div>
+                                <div>Normalized Propagation: Â = D̃⁻¹/² (A + I) D̃⁻¹/²</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 text-xs text-amber-200">
+                            💡 <b>${t.s1Ex}</b>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2: ALL 5 GNN ARCHITECTURES + MATH + EXAMPLES -->
+                <div class="kb-card border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer" onclick="this.classList.toggle('pinned')">
+                    <div class="p-5 font-bold text-emerald-400 flex justify-between items-center hover:bg-slate-900 transition">
+                        <span class="text-base sm:text-lg">${t.s2}</span>
+                        <span class="kb-arrow text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="kb-body px-6 pb-6 space-y-4 border-t border-slate-800/80 pt-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <h5 class="text-emerald-400 font-bold text-base">A. GraphSAGE (Inductive Neighborhood Sampling)</h5>
+                            <p class="text-xs text-slate-300">${t.m1}</p>
+                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
+                                h_N(v)⁽ᵏ⁾ = AGGREGATE_k({ h_u⁽ᵏ⁻¹⁾, ∀u ∈ Sample(N(v), S_k) }) &nbsp;|&nbsp; h_v⁽ᵏ⁾ = σ(W⁽ᵏ⁾ · CONCAT(h_v⁽ᵏ⁻¹⁾, h_N(v)⁽ᵏ⁾))
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <h5 class="text-emerald-400 font-bold text-base">B. GCN (Spectral Graph Convolutional Network)</h5>
+                            <p class="text-xs text-slate-300">${t.m2}</p>
+                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
+                                H⁽ˡ⁺¹⁾ = σ( D̃⁻¹/² Ã D̃⁻¹/² H⁽ˡ⁾ W⁽ˡ⁾ ), &nbsp; where Ã = A + I_N, &nbsp; D̃_ii = ∑_j Ã_ij
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <h5 class="text-emerald-400 font-bold text-base">C. GAT (Graph Attention Network - Pro Tier)</h5>
+                            <p class="text-xs text-slate-300">${t.m3}</p>
+                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
+                                α_ij = softmax_j( LeakyReLU( aᵀ [W h_i || W h_j] ) ) &nbsp;|&nbsp; h_i' = σ( ∑_{j ∈ N(i)} α_ij W h_j )
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <h5 class="text-emerald-400 font-bold text-base">D. RGCN (Relational Multi-Protocol GCN)</h5>
+                            <p class="text-xs text-slate-300">${t.m4}</p>
+                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
+                                h_i⁽ˡ⁺¹⁾ = σ( W_0⁽ˡ⁾ h_i⁽ˡ⁾ + ∑_{r ∈ R} ∑_{j ∈ N_i^r} (1 / c_{i,r}) W_r⁽ˡ⁾ h_j⁽ˡ⁾ )
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <h5 class="text-emerald-400 font-bold text-base">E. GIN (Weisfeiler-Lehman Graph Isomorphism Network)</h5>
+                            <p class="text-xs text-slate-300">${t.m5}</p>
+                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
+                                h_v⁽ᵏ⁾ = MLP⁽ᵏ⁾( (1 + ε⁽ᵏ⁾) · h_v⁽ᵏ⁻¹⁾ + ∑_{u ∈ N(v)} h_u⁽ᵏ⁻¹⁾ )
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: ALL 5 ADVERSARIAL ATTACKS (RED ALERT HEADERS + MATH) -->
+                <div class="kb-card border border-red-900/60 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer" onclick="this.classList.toggle('pinned')">
+                    <div class="p-5 font-bold text-red-500 flex justify-between items-center hover:bg-slate-900 transition">
+                        <span class="text-base sm:text-lg">${t.s3}</span>
+                        <span class="kb-arrow text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="kb-body px-6 pb-6 space-y-4 border-t border-slate-800/80 pt-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
+                            <h5 class="text-red-500 font-bold text-base">🚨 1. Structural Edge Perturbation (Nettack / Metattack)</h5>
+                            <p class="text-xs text-slate-300">${t.a1}</p>
+                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
+                                argmax_{A'} L_atk( f_θ(A', X) ) &nbsp; subject to &nbsp; ||A' - A||_0 ≤ 2Δ, &nbsp; A' ∈ {0, 1}^(N × N)
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
+                            <h5 class="text-red-500 font-bold text-base">🚨 2. Feature-Level Noise Attack</h5>
+                            <p class="text-xs text-slate-300">${t.a2}</p>
+                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
+                                X' = X + η, &nbsp; ||η||_∞ ≤ ε &nbsp;⇒&nbsp; argmax_y P_θ(y | A, X + η) ≠ y_true
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
+                            <h5 class="text-red-500 font-bold text-base">🚨 3. Node Injection Attack (TDGIA)</h5>
+                            <p class="text-xs text-slate-300">${t.a3}</p>
+                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
+                                V' = V ∪ V_atk, &nbsp; A' = [ A , A_atk ; A_atkᵀ , O ] ∈ {0,1}^((N+N_atk)×(N+N_atk))
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
+                            <h5 class="text-red-500 font-bold text-base">🚨 4. Gradient-based Adversarial Attack (FGSM / PGD)</h5>
+                            <p class="text-xs text-slate-300">${t.a4}</p>
+                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
+                                X^(t+1) = Π_{X+S}( X^(t) + α · sign( ∇_X L(f_θ(A, X^(t)), Y) ) )
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
+                            <h5 class="text-red-500 font-bold text-base">🚨 5. Attribute Masking Attack</h5>
+                            <p class="text-xs text-slate-300">${t.a5}</p>
+                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
+                                x'_i = x_i ⊙ m_i, &nbsp; where m_i ∈ {0, 1}^D &nbsp; (Hadamard Element-wise Zeroing)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 4: COMPLETE SITE GLOSSARY, METRICS & COMPLIANCE -->
+                <div class="kb-card border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer" onclick="this.classList.toggle('pinned')">
+                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition">
+                        <span class="text-base sm:text-lg">${t.s4}</span>
+                        <span class="kb-arrow text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="kb-body px-6 pb-6 border-t border-slate-800/80 pt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            ${glossaryRows}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function expandAllKB(open) {
+            document.querySelectorAll('.kb-card').forEach(card => {
+                if (open) card.classList.add('pinned');
+                else card.classList.remove('pinned');
+            });
+        }
 
         function changeLanguage(lang) {
             currentLang = lang;
-            const t = translations[lang] || translations.en;
-            
+            const t = L[lang] || L.en;
             document.getElementById('txtControlsTitle').innerText = t.controls;
             document.getElementById('txtDatasetSource').innerText = t.dataset;
             document.getElementById('btnSynthetic').innerText = t.synGraph;
@@ -496,16 +847,15 @@
 
             document.getElementById('detRepTitle').innerText = t.detTitle;
             document.getElementById('detRepSub').innerText = t.detSub;
-            document.getElementById('detRepContent').innerHTML = t.detailedReportHTML;
-
+            document.getElementById('detRepContent').innerHTML = buildEncyclopediaHTML(lang);
             updateGuideModal();
         }
 
         function openDetailedReportModal() {
-            const t = translations[currentLang] || translations.en;
+            const t = L[currentLang] || L.en;
             document.getElementById('detRepTitle').innerText = t.detTitle;
             document.getElementById('detRepSub').innerText = t.detSub;
-            document.getElementById('detRepContent').innerHTML = t.detailedReportHTML;
+            document.getElementById('detRepContent').innerHTML = buildEncyclopediaHTML(currentLang);
             document.getElementById('detailedReportModal').classList.remove('hidden');
         }
 
@@ -513,82 +863,40 @@
             document.getElementById('detailedReportModal').classList.add('hidden');
         }
 
-        function startPlatformGuide() {
-            currentGuideStep = 0;
-            updateGuideModal();
-            document.getElementById('guideModal').classList.remove('hidden');
-        }
+        const guideSteps = [
+            { title: "1. Network Topology Source", content: "<p>Select <b>Synthetic Graph</b> to simulate 50–1000 IoT nodes, or choose <b>Custom File</b> to upload your enterprise CSV/JSON edge & feature matrices.</p>" },
+            { title: "2. GNN Architecture Selection", content: "<p>Choose between <b>GraphSAGE</b>, <b>GCN</b>, <b>GAT (Pro)</b>, <b>RGCN</b>, and <b>GIN</b> to evaluate how each neural architecture defends your topology.</p>" },
+            { title: "3. Adversarial Attack Strategy", content: "<p>Simulate Structural Perturbations, Feature Noise, Node Injection, Gradient FGSM/PGD, or Attribute Masking at 0%–50% intensity.</p>" },
+            { title: "4. Telemetry & XAI Fidelity", content: "<p>Compare <b>Clean Accuracy</b> vs. <b>Attacked Accuracy</b> and inspect the <b>XAI Fidelity Score</b> for decision transparency.</p>" },
+            { title: "5. Auto-Remediation & ISO/NIST Audit", content: "<p>Copy automated Linux <code>iptables</code> and Cisco IOS ACL patches, or export a formal PDF compliance audit report.</p>" }
+        ];
 
-        function closePlatformGuide() {
-            document.getElementById('guideModal').classList.add('hidden');
-        }
-
+        function startPlatformGuide() { currentGuideStep = 0; updateGuideModal(); document.getElementById('guideModal').classList.remove('hidden'); }
+        function closePlatformGuide() { document.getElementById('guideModal').classList.add('hidden'); }
         function updateGuideModal() {
-            const t = translations[currentLang] || translations.en;
-            const steps = t.steps;
-            const step = steps[currentGuideStep] || steps[0];
-
+            const step = guideSteps[currentGuideStep];
             document.getElementById('guideStepTitle').innerText = step.title;
-            document.getElementById('guideStepCounter').innerText = `Step ${currentGuideStep + 1} of ${steps.length}`;
+            document.getElementById('guideStepCounter').innerText = `Step ${currentGuideStep + 1} of ${guideSteps.length}`;
             document.getElementById('guideStepContent').innerHTML = step.content;
-
-            document.getElementById('guidePrevBtn').innerText = t.guidePrev;
             document.getElementById('guidePrevBtn').disabled = currentGuideStep === 0;
-            document.getElementById('guideNextBtn').innerText = currentGuideStep === steps.length - 1 ? t.guideFinish : t.guideNext;
-
-            const dotsContainer = document.getElementById('guideDots');
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < steps.length; i++) {
-                const dot = document.createElement('button');
-                dot.className = `w-3 h-3 rounded-full cursor-pointer transition-all ${i === currentGuideStep ? 'bg-emerald-500 scale-125' : 'bg-slate-700 hover:bg-slate-500'}`;
-                dot.onclick = () => goToGuideStep(i);
-                dotsContainer.appendChild(dot);
-            }
+            const dots = document.getElementById('guideDots');
+            dots.innerHTML = '';
+            guideSteps.forEach((_, i) => {
+                const d = document.createElement('button');
+                d.className = `w-3 h-3 rounded-full cursor-pointer ${i === currentGuideStep ? 'bg-emerald-500 scale-125' : 'bg-slate-700'}`;
+                d.onclick = () => { currentGuideStep = i; updateGuideModal(); };
+                dots.appendChild(d);
+            });
         }
-
-        function goToGuideStep(stepIndex) {
-            const t = translations[currentLang] || translations.en;
-            if (stepIndex >= 0 && stepIndex < t.steps.length) {
-                currentGuideStep = stepIndex;
-                updateGuideModal();
-            }
-        }
-
-        function nextGuideStep() {
-            const t = translations[currentLang] || translations.en;
-            if (currentGuideStep < t.steps.length - 1) {
-                currentGuideStep++;
-                updateGuideModal();
-            } else {
-                closePlatformGuide();
-            }
-        }
-
-        function prevGuideStep() {
-            if (currentGuideStep > 0) {
-                currentGuideStep--;
-                updateGuideModal();
-            }
-        }
+        function nextGuideStep() { if (currentGuideStep < guideSteps.length - 1) { currentGuideStep++; updateGuideModal(); } else closePlatformGuide(); }
+        function prevGuideStep() { if (currentGuideStep > 0) { currentGuideStep--; updateGuideModal(); } }
 
         function switchDataMode(mode) {
             activeDataMode = mode;
-            const btnSynthetic = document.getElementById('btnSynthetic');
-            const btnCustom = document.getElementById('btnCustom');
-            const syntheticContainer = document.getElementById('syntheticContainer');
-            const customFileContainer = document.getElementById('customFileContainer');
-
-            if (mode === 'synthetic') {
-                btnSynthetic.className = "py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950 transition";
-                btnCustom.className = "py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition";
-                syntheticContainer.classList.remove('hidden');
-                customFileContainer.classList.add('hidden');
-            } else {
-                btnCustom.className = "py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950 transition";
-                btnSynthetic.className = "py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition";
-                syntheticContainer.classList.add('hidden');
-                customFileContainer.classList.remove('hidden');
-            }
+            document.getElementById('btnSynthetic').className = mode === 'synthetic' ? "py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950 transition" : "py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition";
+            document.getElementById('btnCustom').className = mode === 'custom' ? "py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950 transition" : "py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition";
+            document.getElementById('syntheticContainer').classList.toggle('hidden', mode !== 'synthetic');
+            document.getElementById('customFileContainer').classList.toggle('hidden', mode !== 'custom');
         }
 
         function handleFileSelect(event) {
@@ -619,72 +927,34 @@
                 return;
             }
 
-            logBox.innerHTML += `<p class="text-cyan-400">[Simulation] Running ${modelType.toUpperCase()} under ${attackType} (${activeDataMode} mode)...</p>`;
+            logBox.innerHTML += `<p class="text-cyan-400">[Simulation] Running ${modelType.toUpperCase()} under ${attackType}...</p>`;
             logBox.scrollTop = logBox.scrollHeight;
-
-            const payload = {
-                node_count: nodeCount,
-                model_type: modelType,
-                attack_type: attackType,
-                perturbation_rate: perturbRate,
-                api_key: apiKey,
-                is_custom: activeDataMode === 'custom',
-                custom_file_data: activeDataMode === 'custom' ? uploadedFileRawData : null
-            };
 
             try {
                 const response = await fetch(`${API_BASE_URL}/api/v1/analyze`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        node_count: nodeCount, model_type: modelType, attack_type: attackType,
+                        perturbation_rate: perturbRate, api_key: apiKey,
+                        is_custom: activeDataMode === 'custom',
+                        custom_file_data: activeDataMode === 'custom' ? uploadedFileRawData : null
+                    })
                 });
-
                 const data = await response.json();
-
                 if (response.ok) {
                     lastSimulationResults = data;
                     document.getElementById('cleanAcc').innerText = data.clean_accuracy + '%';
                     document.getElementById('attackAcc').innerText = data.attacked_accuracy + '%';
                     document.getElementById('xaiScore').innerText = data.xai_fidelity_score + '%';
-
-                    logBox.innerHTML += `<p class="text-emerald-400">[Success] Clean Acc: ${data.clean_accuracy}% | Attacked Acc: ${data.attacked_accuracy}%</p>`;
-                    if (data.remediation_advice) {
-                        logBox.innerHTML += `<p class="text-amber-300">[AI Remediation] ${data.remediation_advice}</p>`;
-                    }
-
-                    if (data.threat_detected) {
-                        logBox.innerHTML += `<p class="text-red-400 font-bold">[CRITICAL] High adversarial vulnerability detected! Auto-Remediation script generated.</p>`;
-                    } else {
-                        logBox.innerHTML += `<p class="text-teal-400">[Secure] Model maintained robust defensive posture against attack.</p>`;
-                    }
-
-                    const compBadge = document.getElementById('complianceBadge');
-                    const remBox = document.getElementById('remediationBox');
-                    const compText = data.compliance_status || "COMPLIANT (ISO/IEC 27001:2022 & NIST SP 800-53)";
-                    
-                    if (data.threat_detected) {
-                        compBadge.innerHTML = `Regulatory Status: <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30 font-bold">${compText}</span>`;
-                        remBox.className = "bg-slate-950 border border-red-900/60 rounded-xl p-4 font-mono text-xs text-amber-300 overflow-x-auto leading-relaxed";
-                    } else {
-                        compBadge.innerHTML = `Regulatory Status: <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold">${compText}</span>`;
-                        remBox.className = "bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-x-auto leading-relaxed";
-                    }
-
-                    remBox.innerText = data.remediation_script || "# Optimal network state verified. No emergency patch required.";
-
-                    const pdfBtn = document.getElementById('pdfBtn');
-                    pdfBtn.disabled = false;
-                    pdfBtn.className = "bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 cursor-pointer transition shadow-md shadow-emerald-600/30";
-
-                    const copyBtn = document.getElementById('copyPatchBtn');
-                    copyBtn.disabled = false;
-                    copyBtn.className = "bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition";
-
-                    const dlBtn = document.getElementById('downloadPatchBtn');
-                    dlBtn.disabled = false;
-                    dlBtn.className = "bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition";
-                } else {
-                    logBox.innerHTML += `<p class="text-red-400">[Error] API execution failed: ${data.detail || 'Unknown error'}</p>`;
+                    logBox.innerHTML += `<p class="text-emerald-400">[Success] Clean: ${data.clean_accuracy}% | Attacked: ${data.attacked_accuracy}%</p>`;
+                    document.getElementById('remediationBox').innerText = data.remediation_script || "# Optimal state verified.";
+                    document.getElementById('pdfBtn').disabled = false;
+                    document.getElementById('pdfBtn').className = "bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs cursor-pointer transition";
+                    document.getElementById('copyPatchBtn').disabled = false;
+                    document.getElementById('copyPatchBtn').className = "bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer";
+                    document.getElementById('downloadPatchBtn').disabled = false;
+                    document.getElementById('downloadPatchBtn').className = "bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs cursor-pointer";
                 }
             } catch (err) {
                 logBox.innerHTML += `<p class="text-red-400">[Network Error] Could not connect to FastAPI backend.</p>`;
@@ -695,73 +965,45 @@
         function copyRemediationScript() {
             if (!lastSimulationResults || !lastSimulationResults.remediation_script) return;
             navigator.clipboard.writeText(lastSimulationResults.remediation_script);
-            const copyBtn = document.getElementById('copyPatchBtn');
-            const oldText = copyBtn.innerText;
-            copyBtn.innerText = "✅ Copied!";
-            setTimeout(() => { copyBtn.innerText = oldText; }, 2000);
         }
 
         function downloadRemediationScript() {
             if (!lastSimulationResults || !lastSimulationResults.remediation_script) return;
             const blob = new Blob([lastSimulationResults.remediation_script], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = url;
-            a.download = `graphguard_remediation_patch_${Date.now()}.sh`;
-            document.body.appendChild(a);
+            a.href = window.URL.createObjectURL(blob);
+            a.download = `graphguard_patch_${Date.now()}.sh`;
             a.click();
-            a.remove();
         }
 
         async function exportPDFReport() {
             if (!lastSimulationResults) return;
-            const logBox = document.getElementById('logBox');
-            logBox.innerHTML += `<p class="text-cyan-400">[Report] Requesting automated ISO/NIST Compliance PDF report...</p>`;
-            logBox.scrollTop = logBox.scrollHeight;
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/v1/export-pdf`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(lastSimulationResults)
-                });
-
-                if (response.ok) {
-                    const blob = await response.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `GraphGuard_Enterprise_Audit_${Date.now()}.pdf`;
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                    logBox.innerHTML += `<p class="text-emerald-400">[Downloaded] Enterprise Compliance & Playbook PDF generated successfully!</p>`;
-                } else {
-                    logBox.innerHTML += `<p class="text-red-400">[Error] PDF generation endpoint not ready on backend.</p>`;
-                }
-            } catch (err) {
-                logBox.innerHTML += `<p class="text-red-400">[Error] Failed to connect to PDF service.</p>`;
+            const response = await fetch(`${API_BASE_URL}/api/v1/export-pdf`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(lastSimulationResults)
+            });
+            if (response.ok) {
+                const blob = await response.blob();
+                const a = document.createElement('a');
+                a.href = window.URL.createObjectURL(blob);
+                a.download = `GraphGuard_Audit_${Date.now()}.pdf`;
+                a.click();
             }
-            logBox.scrollTop = logBox.scrollHeight;
         }
 
         function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
         function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
-
         async function handleStripeCheckout() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/v1/create-checkout-session`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: "user@graphguard.io" })
-                });
-                const data = await response.json();
-                if (data.checkout_url) window.location.href = data.checkout_url;
-            } catch (error) { alert("Could not connect to payment server."); }
+            const res = await fetch(`${API_BASE_URL}/api/v1/create-checkout-session`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: "user@graphguard.io" })
+            });
+            const data = await res.json();
+            if (data.checkout_url) window.location.href = data.checkout_url;
         }
 
         window.onload = function() {
-            document.getElementById('detRepContent').innerHTML = massiveHoverContent;
+            document.getElementById('detRepContent').innerHTML = buildEncyclopediaHTML('en');
         };
     </script>
 </body>
