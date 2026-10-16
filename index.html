@@ -29,10 +29,28 @@
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">🛡️</span>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v1.3</span>
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">Enterprise Edition v1.4</span>
                 </h1>
             </div>
             <div class="flex items-center space-x-4 text-sm text-slate-400">
+                <!-- Multi-Language Selector -->
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-emerald-500 cursor-pointer">
+                    <option value="en">🇬🇧 English</option>
+                    <option value="az">🇦🇿 Azərbaycan</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="fi">🇫🇮 Suomi</option>
+                    <option value="no">🇳🇴 Norsk</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                    <option value="zh">🇨🇳 中文</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                </select>
+
+                <button onclick="startPlatformGuide()" class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1">
+                    📖 Platform Guide
+                </button>
+
                 <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>API Active</span>
                 <button onclick="openPricingModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg font-semibold cursor-pointer transition">
                     Pro Plans
@@ -47,39 +65,38 @@
         <!-- Left Panel: Controls -->
         <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
             <div>
-                <h2 class="text-lg font-semibold mb-4 text-emerald-400 flex items-center">
+                <h2 id="txtControlsTitle" class="text-lg font-semibold mb-4 text-emerald-400 flex items-center">
                     ⚙️ Simulation Controls
                 </h2>
                 
                 <div class="space-y-4">
                     <!-- Data Input Source Mode Toggle -->
                     <div>
-                        <label class="block text-sm text-slate-400 mb-1 font-medium">Dataset Source</label>
+                        <label id="txtDatasetSource" class="block text-sm text-slate-400 mb-1 font-medium">Dataset Source</label>
                         <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1 rounded-xl border border-slate-800">
                             <button id="btnSynthetic" onclick="switchDataMode('synthetic')" class="py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950 transition">Synthetic Graph</button>
-                            <button id="btnCustom" onclick="switchDataMode('custom')" class="py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">Custom File (CSV/JSON)</button>
+                            <button id="btnCustom" onclick="switchDataMode('custom')" class="py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">Custom File</button>
                         </div>
                     </div>
 
                     <!-- Synthetic Node Count Input -->
                     <div id="syntheticContainer">
-                        <label class="block text-sm text-slate-400 mb-1">IoT Node Count</label>
+                        <label id="txtNodeCount" class="block text-sm text-slate-400 mb-1">IoT Node Count</label>
                         <input id="nodeCount" type="number" value="300" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
                     </div>
 
                     <!-- Custom File Upload Container (Hidden by default) -->
                     <div id="customFileContainer" class="hidden">
-                        <label class="block text-sm text-slate-400 mb-1">Upload Topology (Edges/Features)</label>
+                        <label id="txtUploadTopo" class="block text-sm text-slate-400 mb-1">Upload Topology (Edges/Features)</label>
                         <div class="border-2 border-dashed border-slate-700 hover:border-emerald-500 rounded-xl p-4 text-center cursor-pointer bg-slate-900/50 transition" onclick="document.getElementById('fileInput').click()">
                             <p class="text-2xl mb-1">📁</p>
                             <p class="text-xs text-slate-300 font-medium" id="fileNameLabel">Click or Drag & Drop CSV / JSON</p>
-                            <p class="text-[10px] text-slate-500 mt-1">Supports edge_list.csv, features.json</p>
                             <input id="fileInput" type="file" accept=".csv,.json" class="hidden" onchange="handleFileSelect(event)">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm text-slate-400 mb-1">GNN Architecture</label>
+                        <label id="txtGnnArch" class="block text-sm text-slate-400 mb-1">GNN Architecture</label>
                         <select id="modelType" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
                             <option value="graphsage">GraphSAGE (Recommended)</option>
                             <option value="gcn">GCN (Graph Convolutional)</option>
@@ -90,7 +107,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm text-slate-400 mb-1">Attack Strategy</label>
+                        <label id="txtAttackStrat" class="block text-sm text-slate-400 mb-1">Attack Strategy</label>
                         <select id="attackType" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
                             <option value="structural">Structural Edge Perturbation</option>
                             <option value="feature">Feature-Level Noise Attack</option>
@@ -101,19 +118,19 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm text-slate-400 mb-1">Attack Intensity Rate (%)</label>
+                        <label id="txtAttackRate" class="block text-sm text-slate-400 mb-1">Attack Intensity Rate (%)</label>
                         <input id="perturbRate" type="range" min="0" max="50" value="30" class="w-full accent-emerald-500" oninput="document.getElementById('rateVal').innerText = this.value + '%'">
                         <span id="rateVal" class="text-xs text-emerald-400 font-bold">30%</span>
                     </div>
 
                     <div>
-                        <label class="block text-sm text-slate-400 mb-1">Pro License Key (Optional)</label>
+                        <label id="txtProKey" class="block text-sm text-slate-400 mb-1">Pro License Key (Optional)</label>
                         <input id="apiKeyInput" type="text" placeholder="PRO-GRAPHGUARD-XXXX" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
                     </div>
                 </div>
             </div>
 
-            <button onclick="runSimulation()" class="mt-8 w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-emerald-500/20 active:scale-[0.99] cursor-pointer">
+            <button id="btnRunSim" onclick="runSimulation()" class="mt-8 w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-emerald-500/20 active:scale-[0.99] cursor-pointer">
                 🚀 Run Adversarial Simulation
             </button>
         </div>
@@ -124,15 +141,15 @@
             <!-- Metrics Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-cardbg border border-slate-800 rounded-2xl p-5 shadow-lg">
-                    <p class="text-xs text-slate-400 uppercase tracking-wider">Clean Accuracy</p>
+                    <p id="txtCleanAcc" class="text-xs text-slate-400 uppercase tracking-wider">Clean Accuracy</p>
                     <h3 id="cleanAcc" class="text-3xl font-extrabold text-slate-200 mt-2">--</h3>
                 </div>
                 <div class="bg-cardbg border border-slate-800 rounded-2xl p-5 shadow-lg">
-                    <p class="text-xs text-slate-400 uppercase tracking-wider">Attacked Accuracy</p>
+                    <p id="txtAttackAcc" class="text-xs text-slate-400 uppercase tracking-wider">Attacked Accuracy</p>
                     <h3 id="attackAcc" class="text-3xl font-extrabold text-danger mt-2">--</h3>
                 </div>
                 <div class="bg-cardbg border border-slate-800 rounded-2xl p-5 shadow-lg">
-                    <p class="text-xs text-slate-400 uppercase tracking-wider">XAI Fidelity Score</p>
+                    <p id="txtXaiScore" class="text-xs text-slate-400 uppercase tracking-wider">XAI Fidelity Score</p>
                     <h3 id="xaiScore" class="text-3xl font-extrabold text-cyan-400 mt-2">--</h3>
                 </div>
             </div>
@@ -141,22 +158,22 @@
             <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold text-emerald-400">📊 Enterprise Threat & Defense Log</h3>
+                        <h3 id="txtLogTitle" class="text-lg font-semibold text-emerald-400">📊 Enterprise Threat & Defense Log</h3>
                         <button id="pdfBtn" onclick="exportPDFReport()" disabled class="bg-slate-800 text-slate-500 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 cursor-not-allowed transition">
                             📄 Export Audit Report (PDF)
                         </button>
                     </div>
                     <div id="logBox" class="bg-slate-900 border border-slate-800 rounded-xl p-4 h-44 overflow-y-auto font-mono text-xs text-slate-300 space-y-2">
-                        <p class="text-slate-500">[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...</p>
+                        <p id="txtLogInit" class="text-slate-500">[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend...</p>
                     </div>
                 </div>
             </div>
 
-            <!-- NEW: Auto-Remediation CLI Playbook & ISO/NIST Compliance Panel -->
+            <!-- Auto-Remediation CLI Playbook & ISO/NIST Compliance Panel -->
             <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl">
                 <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4">
                     <div>
-                        <h3 class="text-lg font-semibold text-cyan-400 flex items-center gap-2">
+                        <h3 id="txtRemediationTitle" class="text-lg font-semibold text-cyan-400 flex items-center gap-2">
                             ⚡ Auto-Remediation Playbook & Compliance Audit
                         </h3>
                         <p id="complianceBadge" class="text-xs text-slate-400 mt-1">
@@ -179,12 +196,38 @@
 
     </main>
 
+    <!-- PLATFORM GUIDE OVERLAY MODAL -->
+    <div id="guideModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
+        <div class="bg-slate-900 border border-emerald-500/40 rounded-2xl max-w-2xl w-full p-6 text-white shadow-2xl relative">
+            <button onclick="closePlatformGuide()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold p-2 cursor-pointer">✕</button>
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="text-3xl">📘</span>
+                <div>
+                    <h3 id="guideStepTitle" class="text-xl font-bold text-emerald-400">Welcome to GraphGuard IoT Guide</h3>
+                    <p id="guideStepCounter" class="text-xs text-slate-400">Step 1 of 5</p>
+                </div>
+            </div>
+            <div id="guideStepContent" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-300 mb-6 leading-relaxed">
+                GraphGuard IoT is an enterprise-grade GNN intrusion detection and automated remediation platform. Let's walk through how to use this platform effectively.
+            </div>
+            <div class="flex justify-between items-center">
+                <button id="guidePrevBtn" onclick="prevGuideStep()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer transition disabled:opacity-50" disabled>Previous</button>
+                <div class="flex space-x-1" id="guideDots">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+                </div>
+                <button id="guideNextBtn" onclick="nextGuideStep()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-5 py-2 rounded-xl text-xs font-bold cursor-pointer transition">Next Step</button>
+            </div>
+        </div>
+    </div>
+
     <!-- STRIPE PRICING MODAL -->
     <div id="pricingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full p-6 text-white shadow-2xl relative max-h-[90vh] overflow-y-auto">
         <button onclick="closePricingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold p-2 cursor-pointer">✕</button>
-        
-        <!-- Pricing Table -->
         <div id="pricingView">
           <div class="text-center mb-8">
             <h2 class="text-3xl font-extrabold text-blue-400">GraphGuard IoT Pricing</h2>
@@ -196,7 +239,7 @@
               <div>
                 <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-700 text-gray-300">Base</span>
                 <h3 class="text-xl font-bold mt-3">Researcher / Free</h3>
-                <div class="my-4"><span class="text-3xl font-extrabold">\$0</span><span class="text-slate-400 text-sm"> / forever</span></div>
+                <div class="my-4"><span class="text-3xl font-extrabold">$0</span><span class="text-slate-400 text-sm"> / forever</span></div>
                 <ul class="space-y-2 text-sm text-slate-300 mb-6">
                   <li>✓ GCN Standard Analysis</li>
                   <li>✓ 50 Requests/Day Limit</li>
@@ -205,7 +248,6 @@
               </div>
               <button disabled class="w-full py-2.5 rounded-lg font-semibold bg-slate-800 text-slate-500 cursor-not-allowed">Current Plan</button>
             </div>
-            
             <!-- Pro Plan -->
             <div class="rounded-xl p-5 flex flex-col justify-between border border-blue-500 bg-slate-800/80 shadow-blue-500/10 shadow-lg">
               <div>
@@ -221,7 +263,6 @@
               </div>
               <button onclick="handleStripeCheckout()" class="w-full py-2.5 rounded-lg font-semibold bg-blue-600 hover:bg-blue-500 text-white transition shadow-lg shadow-blue-600/30 cursor-pointer">Upgrade to Pro</button>
             </div>
-
             <!-- Enterprise Plan -->
             <div class="rounded-xl p-5 flex flex-col justify-between border border-slate-800 bg-slate-950/50">
               <div>
@@ -238,16 +279,335 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- JavaScript Execution Logic -->
+    <!-- JavaScript Execution Logic & Localization -->
     <script>
         const API_BASE_URL = 'https://gnn-nids-robustt.onrender.com';
-        let activeDataMode = 'synthetic'; // 'synthetic' or 'custom'
+        let activeDataMode = 'synthetic';
         let uploadedFileRawData = null;
         let lastSimulationResults = null;
+        let currentGuideStep = 0;
+        let currentLang = 'en';
+
+        // Translations Dictionary (10 Languages)
+        const translations = {
+            en: {
+                controls: "⚙️ Simulation Controls",
+                dataset: "Dataset Source",
+                synGraph: "Synthetic Graph",
+                customFile: "Custom File",
+                nodeCount: "IoT Node Count",
+                uploadTopo: "Upload Topology (Edges/Features)",
+                gnnArch: "GNN Architecture",
+                attackStrat: "Attack Strategy",
+                attackRate: "Attack Intensity Rate (%)",
+                proKey: "Pro License Key (Optional)",
+                runSim: "🚀 Run Adversarial Simulation",
+                cleanAcc: "Clean Accuracy",
+                attackAcc: "Attacked Accuracy",
+                xaiScore: "XAI Fidelity Score",
+                logTitle: "📊 Enterprise Threat & Defense Log",
+                exportPdf: "📄 Export Audit Report (PDF)",
+                remedTitle: "⚡ Auto-Remediation Playbook & Compliance Audit",
+                copyPatch: "📋 Copy CLI Patch",
+                downloadSh: "💾 Download .sh",
+                logInit: "[System] GraphGuard IoT frontend initialized. Ready to execute adversarial simulation against FastAPI backend..."
+            },
+            az: {
+                controls: "⚙️ Simulyasiya İdarəetməsi",
+                dataset: "Məlumat Mənbəyi",
+                synGraph: "Sintetik Qraf",
+                customFile: "Xüsusi Fayl",
+                nodeCount: "IoT Qovşaq Sayı",
+                uploadTopo: "Topologiya Yüklə (Edge/Feature)",
+                gnnArch: "GNN Arxitekturası",
+                attackStrat: "Hücum Strategiyası",
+                attackRate: "Hücum İntensivliyi (%)",
+                proKey: "Pro Lisenziya Açar (İstəyə bağlı)",
+                runSim: "🚀 Adversarial Simulyasiyanı Başlat",
+                cleanAcc: "Təmiz Dəqiqlik",
+                attackAcc: "Hücuma Məruz Dəqiqlik",
+                xaiScore: "XAI Uyğunluq Hesabı",
+                logTitle: "📊 Korporativ Təhlükə və Müdafiə Jurnalı",
+                exportPdf: "📄 Audit Hesabatını Endir (PDF)",
+                remedTitle: "⚡ Avtomatik Bərpa Skripti və Uyğunluq Auditi",
+                copyPatch: "📋 CLI Yamasını Kopyala",
+                downloadSh: "💾 .sh Faylını Endir",
+                logInit: "[Sistem] GraphGuard IoT interfeysi işə düşdü. FastAPI backend ilə simulyasiyaya hazırdır..."
+            },
+            ru: {
+                controls: "⚙️ Управление симуляцией",
+                dataset: "Источник данных",
+                synGraph: "Синтетический граф",
+                customFile: "Свой файл",
+                nodeCount: "Количество IoT узлов",
+                uploadTopo: "Загрузить топологию",
+                gnnArch: "Архитектура GNN",
+                attackStrat: "Стратегия атаки",
+                attackRate: "Интенсивность атаки (%)",
+                proKey: "Pro Ключ (Необязательно)",
+                runSim: "🚀 Запустить симуляцию атаки",
+                cleanAcc: "Чистая точность",
+                attackAcc: "Точность при атаке",
+                xaiScore: "Оценка достоверности XAI",
+                logTitle: "📊 Журнал угроз и защиты",
+                exportPdf: "📄 Экспорт отчета (PDF)",
+                remedTitle: "⚡ Авто-исправление и аудит соответствия",
+                copyPatch: "📋 Копировать патч CLI",
+                downloadSh: "💾 Скачать .sh",
+                logInit: "[Система] Интерфейс инициализирован. Готов к симуляции..."
+            },
+            de: {
+                controls: "⚙️ Simulationssteuerung",
+                dataset: "Datenquellen-Modus",
+                synGraph: "Synthetischer Graph",
+                customFile: "Benutzerdefiniert",
+                nodeCount: "IoT-Knotenanzahl",
+                uploadTopo: "Topologie hochladen",
+                gnnArch: "GNN-Architektur",
+                attackStrat: "Angriffsstrategie",
+                attackRate: "Angriffsintensität (%)",
+                proKey: "Pro Lizenzschlüssel (Optional)",
+                runSim: "🚀 Adversarial Simulation starten",
+                cleanAcc: "Saubere Genauigkeit",
+                attackAcc: "Angriffsgenauigkeit",
+                xaiScore: "XAI-Treuebewertung",
+                logTitle: "📊 Enterprise Bedrohungs- und Verteidigungsprotokoll",
+                exportPdf: "📄 Audit-Bericht exportieren (PDF)",
+                remedTitle: "⚡ Auto-Remediation Playbook & Compliance Audit",
+                copyPatch: "📋 CLI-Patch kopieren",
+                downloadSh: "💾 .sh Herunterladen",
+                logInit: "[System] GraphGuard IoT Frontend initialisiert..."
+            },
+            fr: {
+                controls: "⚙️ Contrôles de Simulation",
+                dataset: "Source de Données",
+                synGraph: "Graphe Synthétique",
+                customFile: "Fichier Personnalisé",
+                nodeCount: "Nombre de Nœuds IoT",
+                uploadTopo: "Télécharger la Topologie",
+                gnnArch: "Architecture GNN",
+                attackStrat: "Stratégie d'Attaque",
+                attackRate: "Taux d'Intensité (%)",
+                proKey: "Clé Pro (Optionnel)",
+                runSim: "🚀 Lancer la Simulation",
+                cleanAcc: "Précision Propre",
+                attackAcc: "Précision Attaquée",
+                xaiScore: "Score de Fidélité XAI",
+                logTitle: "📊 Journal des Menaces et Défenses",
+                exportPdf: "📄 Exporter le Rapport (PDF)",
+                remedTitle: "⚡ Guide de Correction et Audit de Conformité",
+                copyPatch: "📋 Copier le Patch CLI",
+                downloadSh: "💾 Télécharger .sh",
+                logInit: "[Système] Interface GraphGuard initialisée..."
+            },
+            fi: {
+                controls: "⚙️ Simulaation Hallinta",
+                dataset: "Datalähde",
+                synGraph: "Synteettinen Graafi",
+                customFile: "Mukautettu Tiedosto",
+                nodeCount: "IoT-solmujen määrä",
+                uploadTopo: "Lataa Topologia",
+                gnnArch: "GNN Arkkitehtuuri",
+                attackStrat: "Hyökkäysstrategia",
+                attackRate: "Hyökkäysintensiteetti (%)",
+                proKey: "Pro Avain (Valinnainen)",
+                runSim: "🚀 Suorita Simulaatio",
+                cleanAcc: "Puhdas Tarkkuus",
+                attackAcc: "Hyökätty Tarkkuus",
+                xaiScore: "XAI Pisteet",
+                logTitle: "📊 Uhka- ja Puolustusloki",
+                exportPdf: "📄 Vie Raportti (PDF)",
+                remedTitle: "⚡ Automaattinen Korjaus ja Vaatimustenmukaisuus",
+                copyPatch: "📋 Kopioi CLI Patch",
+                downloadSh: "💾 Lataa .sh",
+                logInit: "[Järjestelmä] GraphGuard IoT alustettu..."
+            },
+            no: {
+                controls: "⚙️ Simuleringskontroller",
+                dataset: "Datakilde",
+                synGraph: "Syntetisk Graf",
+                customFile: "Egendefinert Fil",
+                nodeCount: "IoT Node Antall",
+                uploadTopo: "Last opp Topologi",
+                gnnArch: "GNN Arkitektur",
+                attackStrat: "Angrepsstrategi",
+                attackRate: "Angrepsintensitet (%)",
+                proKey: "Pro Lisensnøkkel (Valgfritt)",
+                runSim: "🚀 Kjør Simulering",
+                cleanAcc: "Ren Nøyaktighet",
+                attackAcc: "Angrepet Nøyaktighet",
+                xaiScore: "XAI Poengsum",
+                logTitle: "📊 Trussel- og Forsvarslogg",
+                exportPdf: "📄 Eksporter Rapport (PDF)",
+                remedTitle: "⚡ Auto-Utbedring og Samsvarsrevisjon",
+                copyPatch: "📋 Kopier CLI Patch",
+                downloadSh: "💾 Last ned .sh",
+                logInit: "[System] GraphGuard IoT initialisert..."
+            },
+            hi: {
+                controls: "⚙️ सिमुलेशन नियंत्रण",
+                dataset: "डेटासेट स्रोत",
+                synGraph: "सिंथेटिक ग्राफ़",
+                customFile: "कस्टम फ़ाइल",
+                nodeCount: "IoT नोड संख्या",
+                uploadTopo: "टोपोलॉजी अपलोड करें",
+                gnnArch: "GNN आर्किटेक्चर",
+                attackStrat: "हमला रणनीति",
+                attackRate: "हमला तीव्रता दर (%)",
+                proKey: "प्रो लाइसेंस कुंजी",
+                runSim: "🚀 सिमुलेशन चलाएं",
+                cleanAcc: "स्वच्छ सटीकता",
+                attackAcc: "आक्रमण सटीकता",
+                xaiScore: "XAI फिडेलिटी स्कोर",
+                logTitle: "📊 एंटरप्राइज लॉग",
+                exportPdf: "📄 रिपोर्ट निर्यात करें (PDF)",
+                remedTitle: "⚡ ऑटो-रेमेडिएशन और अनुपालन ऑडिट",
+                copyPatch: "📋 CLI पैच कॉपी करें",
+                downloadSh: "💾 .sh डाउनलोड करें",
+                logInit: "[सिस्टम] GraphGuard IoT तैयार है..."
+            },
+            zh: {
+                controls: "⚙️ 仿真控制",
+                dataset: "数据集来源",
+                synGraph: "合成图",
+                customFile: "自定义文件",
+                nodeCount: "IoT 节点数",
+                uploadTopo: "上传拓扑结构",
+                gnnArch: "GNN 架构",
+                attackStrat: "攻击策略",
+                attackRate: "攻击强度率 (%)",
+                proKey: "Pro 许可证密钥",
+                runSim: "🚀 运行对抗仿真",
+                cleanAcc: "清洁准确率",
+                attackAcc: "受攻击准确率",
+                xaiScore: "XAI 保真度评分",
+                logTitle: "📊 企业威胁与防御日志",
+                exportPdf: "📄 导出审计报告 (PDF)",
+                remedTitle: "⚡ 自动修复与合规审计",
+                copyPatch: "📋 复制 CLI 补丁",
+                downloadSh: "💾 下载 .sh",
+                logInit: "[系统] GraphGuard IoT 初始化完成..."
+            },
+            ja: {
+                controls: "⚙️ シミュレーション制御",
+                dataset: "データセットソース",
+                synGraph: "合成グラフ",
+                customFile: "カスタムファイル",
+                nodeCount: "IoTノード数",
+                uploadTopo: "トポロジのアップロード",
+                gnnArch: "GNNアーキテクチャ",
+                attackStrat: "攻撃戦略",
+                attackRate: "攻撃強度 (%)",
+                proKey: "Proライセンスキー",
+                runSim: "🚀 敵対的シミュレーションを実行",
+                cleanAcc: "クリーン精度",
+                attackAcc: "攻撃時精度",
+                xaiScore: "XAI忠実度スコア",
+                logTitle: "📊 企業脅威および防御ログ",
+                exportPdf: "📄 監査レポートのエクスポート (PDF)",
+                remedTitle: "⚡ 自動修復プレイブック & コンプライアンス監査",
+                copyPatch: "📋 CLIパッチをコピー",
+                downloadSh: "💾 .shをダウンロード",
+                logInit: "[システム] GraphGuard IoTフロントエンドが初期化されました..."
+            }
+        };
+
+        const guideSteps = [
+            {
+                title: "1. Dataset & Topology Configuration",
+                content: "Choose between a generated Synthetic IoT Network graph or upload your own enterprise CSV/JSON network edge and feature topology files."
+            },
+            {
+                title: "2. GNN Architecture Selection",
+                content: "Select state-of-the-art Graph Neural Networks including GraphSAGE, GCN, GAT, RGCN, or GIN models to inspect IoT intrusion detection capabilities."
+            },
+            {
+                title: "3. Adversarial Simulation",
+                content: "Configure adversarial attack types (Structural, Node Injection, Feature Noise, Gradient, Masking) and set intensity rates, then click 'Run Adversarial Simulation'."
+            },
+            {
+                title: "4. Live Telemetry & Metrics",
+                content: "Evaluate Clean Accuracy vs. Attacked Accuracy degradation and XAI fidelity scores instantly on enterprise metric cards and threat logs."
+            },
+            {
+                title: "5. Auto-Remediation & ISO/NIST Audit",
+                content: "Instantly review automated Cisco IOS & Linux iptables security patches, check ISO 27001 / NIST compliance status, and download formal PDF audit reports."
+            }
+        ];
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang] || translations.en;
+            
+            document.getElementById('txtControlsTitle').innerText = t.controls;
+            document.getElementById('txtDatasetSource').innerText = t.dataset;
+            document.getElementById('btnSynthetic').innerText = t.synGraph;
+            document.getElementById('btnCustom').innerText = t.customFile;
+            document.getElementById('txtNodeCount').innerText = t.nodeCount;
+            document.getElementById('txtUploadTopo').innerText = t.uploadTopo;
+            document.getElementById('txtGnnArch').innerText = t.gnnArch;
+            document.getElementById('txtAttackStrat').innerText = t.attackStrat;
+            document.getElementById('txtAttackRate').innerText = t.attackRate;
+            document.getElementById('txtProKey').innerText = t.proKey;
+            document.getElementById('btnRunSim').innerText = t.runSim;
+            document.getElementById('txtCleanAcc').innerText = t.cleanAcc;
+            document.getElementById('txtAttackAcc').innerText = t.attackAcc;
+            document.getElementById('txtXaiScore').innerText = t.xaiScore;
+            document.getElementById('txtLogTitle').innerText = t.logTitle;
+            document.getElementById('pdfBtn').innerText = t.exportPdf;
+            document.getElementById('txtRemediationTitle').innerText = t.remedTitle;
+            document.getElementById('copyPatchBtn').innerText = t.copyPatch;
+            document.getElementById('downloadPatchBtn').innerText = t.downloadSh;
+            document.getElementById('txtLogInit').innerText = t.logInit;
+        }
+
+        function startPlatformGuide() {
+            currentGuideStep = 0;
+            updateGuideModal();
+            document.getElementById('guideModal').classList.remove('hidden');
+        }
+
+        function closePlatformGuide() {
+            document.getElementById('guideModal').classList.add('hidden');
+        }
+
+        function updateGuideModal() {
+            const step = guideSteps[currentGuideStep];
+            document.getElementById('guideStepTitle').innerText = step.title;
+            document.getElementById('guideStepCounter').innerText = `Step ${currentGuideStep + 1} of ${guideSteps.length}`;
+            document.getElementById('guideStepContent').innerText = step.content;
+
+            document.getElementById('guidePrevBtn').disabled = currentGuideStep === 0;
+            document.getElementById('guideNextBtn').innerText = currentGuideStep === guideSteps.length - 1 ? "Finish Guide" : "Next Step";
+
+            // Update dots
+            const dotsContainer = document.getElementById('guideDots');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < guideSteps.length; i++) {
+                const dot = document.createElement('span');
+                dot.className = `w-2.5 h-2.5 rounded-full ${i === currentGuideStep ? 'bg-emerald-500' : 'bg-slate-700'}`;
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function nextGuideStep() {
+            if (currentGuideStep < guideSteps.length - 1) {
+                currentGuideStep++;
+                updateGuideModal();
+            } else {
+                closePlatformGuide();
+            }
+        }
+
+        function prevGuideStep() {
+            if (currentGuideStep > 0) {
+                currentGuideStep--;
+                updateGuideModal();
+            }
+        }
 
         function switchDataMode(mode) {
             activeDataMode = mode;
@@ -336,7 +696,6 @@
                         logBox.innerHTML += `<p class="text-teal-400">[Secure] Model maintained robust defensive posture against attack.</p>`;
                     }
 
-                    // Update Compliance Badge & Remediation Script Box
                     const compBadge = document.getElementById('complianceBadge');
                     const remBox = document.getElementById('remediationBox');
                     const compText = data.compliance_status || "COMPLIANT (ISO/IEC 27001:2022 & NIST SP 800-53)";
@@ -351,7 +710,6 @@
 
                     remBox.innerText = data.remediation_script || "# Optimal network state verified. No emergency patch required.";
 
-                    // Enable Action Buttons
                     const pdfBtn = document.getElementById('pdfBtn');
                     pdfBtn.disabled = false;
                     pdfBtn.className = "bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 cursor-pointer transition shadow-md shadow-emerald-600/30";
@@ -395,7 +753,6 @@
 
         async function exportPDFReport() {
             if (!lastSimulationResults) return;
-            
             const logBox = document.getElementById('logBox');
             logBox.innerHTML += `<p class="text-cyan-400">[Report] Requesting automated ISO/NIST Compliance PDF report...</p>`;
             logBox.scrollTop = logBox.scrollHeight;
