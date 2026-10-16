@@ -3,33 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GraphGuard IoT - Enterprise GNN Security Platform v6.0</title>
+    <title>GraphGuard IoT - Enterprise GNN Security Platform v7.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 9px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 5px; }
         ::-webkit-scrollbar-thumb:hover { background: #10b981; }
 
         .kb-card { transition: all 0.25s ease; }
-        .kb-body { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.45s ease, opacity 0.3s ease; }
-        .kb-card:hover .kb-body, .kb-card.pinned .kb-body { max-height: 6000px; opacity: 1; }
+        .kb-body { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.3s ease; }
+        .kb-card:hover .kb-body, .kb-card.pinned .kb-body { max-height: 35000px; opacity: 1; }
         .kb-card:hover .kb-arrow, .kb-card.pinned .kb-arrow { transform: rotate(180deg); }
-        .kb-card.pinned { border-color: #06b6d4; box-shadow: 0 0 20px rgba(6, 182, 212, 0.15); }
+        .kb-card.pinned { border-color: #06b6d4; box-shadow: 0 0 25px rgba(6, 182, 212, 0.2); }
 
-        .math-box { background: #020617; border-left: 4px solid #06b6d4; font-family: monospace; }
-        .math-box-danger { background: #1a0505; border-left: 4px solid #ef4444; font-family: monospace; }
+        .math-box { background: #020617; border-left: 4px solid #06b6d4; font-family: 'Courier New', monospace; }
+        .math-box-danger { background: #1a0505; border-left: 4px solid #ef4444; font-family: 'Courier New', monospace; }
+        .matrix-box { background: #090d16; border: 1px solid #1e293b; font-family: 'Courier New', monospace; }
     </style>
 </head>
 <body class="bg-[#0f172a] text-slate-100 min-h-screen font-sans">
     
     <!-- Navigation Bar -->
-    <nav class="border-b border-slate-800 bg-[#1e293b]/70 backdrop-blur sticky top-0 z-50">
+    <nav class="border-b border-slate-800 bg-[#1e293b]/80 backdrop-blur sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-3">
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">🛡️</span>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">v6.0.0 Encyclopedia</span>
+                    GraphGuard IoT <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">v7.0.0 Magnum Opus</span>
                 </h1>
             </div>
             <div class="flex flex-wrap items-center gap-3 text-sm text-slate-400">
@@ -47,7 +48,7 @@
                 </select>
 
                 <button onclick="openDetailedReportModal()" class="bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/40 px-3.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition flex items-center gap-1.5 shadow-lg shadow-cyan-500/10">
-                    📚 Detailed Report (10-Lang Encyclopedia)
+                    📚 Detailed Report (Full 20-Page Textbook)
                 </button>
 
                 <button onclick="startPlatformGuide()" class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition flex items-center gap-1">
@@ -178,30 +179,30 @@
         </div>
     </main>
 
-    <!-- DETAILED TECHNICAL REPORT MODAL -->
-    <div id="detailedReportModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/95 backdrop-blur-md p-4">
-        <div class="bg-slate-900 border border-cyan-500/60 rounded-2xl max-w-6xl w-full p-6 sm:p-8 text-white shadow-2xl relative max-h-[92vh] overflow-y-auto">
+    <!-- DETAILED TECHNICAL REPORT MODAL (20-PAGE TEXTBOOK EDITION) -->
+    <div id="detailedReportModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/95 backdrop-blur-md p-3 sm:p-6">
+        <div class="bg-slate-900 border border-cyan-500/60 rounded-2xl max-w-7xl w-full p-5 sm:p-8 text-white shadow-2xl relative max-h-[94vh] overflow-y-auto">
             <button onclick="closeDetailedReportModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-2xl font-bold p-2 cursor-pointer">✕</button>
             
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-slate-800 pb-4 pr-10">
                 <div class="flex items-center space-x-3">
                     <span class="text-4xl">📚</span>
                     <div>
-                        <h2 id="detRepTitle" class="text-xl sm:text-2xl font-extrabold text-cyan-400">Detailed Enterprise Technical Report & Encyclopedia</h2>
-                        <p id="detRepSub" class="text-xs text-slate-400 mt-1">Hover over any topic card to open, or click to pin it open.</p>
+                        <h2 id="detRepTitle" class="text-xl sm:text-2xl font-extrabold text-cyan-400">Detailed Enterprise Technical Report & Complete Textbook</h2>
+                        <p id="detRepSub" class="text-xs text-slate-400 mt-1">Each individual GNN model and Attack Vector below contains a full 1.5-page academic monograph (Theory, Step-by-Step Math, Matrix Calculations, SVG Diagrams & 3 Case Studies).</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="expandAllKB(true)" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer">➕ Expand All</button>
+                    <button onclick="expandAllKB(true)" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer">➕ Expand All Chapters</button>
                     <button onclick="expandAllKB(false)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer">➖ Collapse All</button>
                 </div>
             </div>
             
-            <div id="detRepContent" class="space-y-4 text-slate-300 text-sm leading-relaxed"></div>
+            <div id="detRepContent" class="space-y-5 text-slate-300 text-sm leading-relaxed"></div>
 
             <div class="mt-10 pt-6 border-t border-slate-800 flex justify-between items-center">
-                <span class="text-xs text-slate-500">GraphGuard IoT v6.0.0 — 10-Language Mathematical & Topological Encyclopedia</span>
-                <button onclick="closeDetailedReportModal()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs cursor-pointer">Close</button>
+                <span class="text-xs text-slate-500">GraphGuard IoT v7.0.0 — Complete 10-Language Academic Textbook & Mathematical Reference</span>
+                <button onclick="closeDetailedReportModal()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs cursor-pointer">Close Textbook</button>
             </div>
         </div>
     </div>
@@ -265,8 +266,8 @@
         let currentGuideStep = 0;
         let currentLang = 'en';
 
-        // 10-Language Localization Data
-        const L = {
+        // 10-Language Core Localization Dictionary
+        const UI = {
             en: {
                 controls: "⚙️ Simulation Controls", dataset: "Dataset Source", synGraph: "Synthetic Graph", customFile: "Custom File",
                 nodeCount: "IoT Node Count", uploadTopo: "Upload Topology (CSV/JSON)", gnnArch: "GNN Architecture",
@@ -275,35 +276,21 @@
                 xaiScore: "XAI Fidelity Score", logTitle: "📊 Enterprise Threat & Defense Log", exportPdf: "📄 Export Audit Report (PDF)",
                 remedTitle: "⚡ Auto-Remediation Playbook & Compliance Audit", copyPatch: "📋 Copy CLI Patch", downloadSh: "💾 Download .sh",
                 logInit: "[System] GraphGuard IoT initialized. Ready for adversarial GNN simulation...",
-                detTitle: "Detailed Enterprise Technical Report & Complete Encyclopedia",
-                detSub: "Hover over any topic card to expand, or click to pin open. Includes Graph Diagrams, Math Operations, Real Examples & Full Glossary.",
-                s1: "1. Fundamental Theory: Graph Representation of IoT Networks, Math & AI",
-                s1Text: "An enterprise IoT network is mathematically a living topological graph G = (V, E, X). Every physical or virtual device (sensors, PLC controllers, cameras, routers, cloud gateways) is a Node (v ∈ V), and every communication session (TCP/IP, MQTT, Modbus) is an Edge (e_ij ∈ E). Each node holds a D-dimensional Feature Vector x_i ∈ ℝ^D (packet size, frequency, CPU load, latency, port entropy). Network connections are stored in an N × N Adjacency Matrix A (A_ij = 1 if linked, 0 otherwise) and Degree Matrix D_ii = ∑_j A_ij.",
-                s1Ex: "Concrete Example: In a Smart Grid of N = 300 nodes, Node #14 (Substation Sensor) sends 50 bytes every 10s to Node #1 (SCADA Gateway): x_14 = [50B, 0.1Hz, 2% CPU, Port 1883]. If compromised to scan 200 internal devices, its degree D_14 jumps from 1 to 201 and its feature vector shifts—instantly caught by GNN message passing.",
-                s2: "2. Deep Mathematical & Architectural Breakdown of All 5 GNN Models",
-                m1: "GraphSAGE (Sample & Aggregate): Inductive model that samples a fixed neighborhood size S_k at hop depth k and aggregates features via Mean, LSTM, or Max-Pooling. Ideal for dynamic IoT networks where new devices join without retraining the whole graph. Example: 50 warehouse robots joining Wi-Fi zones are classified in 12ms.",
-                m2: "GCN (Graph Convolutional Network): Spectral model using first-order Chebyshev polynomial approximation. Adds self-loops (Ã = A + I) and normalizes by symmetric node degrees (D̃^-1/2 Ã D̃^-1/2). Smooths neighborhood telemetry to catch cluster-wide anomalies like synchronized SYN-floods across data-center switches.",
-                m3: "GAT (Graph Attention Network - Pro): Computes learnable Multi-Head Self-Attention weights α_ij via LeakyReLU before aggregating neighbors. Example: If a hacker connects a rogue Raspberry Pi to 15 hospital monitors, GAT assigns α_ij = 0.002 to the rogue node, muting the poison while keeping α = 0.95 on legitimate traffic.",
-                m4: "RGCN (Relational GCN): Assigns distinct weight matrices W_r per protocol relation r ∈ R (r_1 = MQTT, r_2 = SSH, r_3 = RTSP, r_4 = Modbus). Example: Immediately flags an IoT camera that normally sends RTSP video (r_3) if it suddenly opens an SSH shell (r_2) to a database server.",
-                m5: "GIN (Graph Isomorphism Network): Mathematically as powerful as the Weisfeiler-Lehman (WL) isomorphism test using injective summation (1 + ε)h_v + ∑ h_u. Distinguishes subtle structural topologies (e.g., peer-to-peer botnet rings disguised as star subnets) that standard averaging models miss.",
-                s3: "3. Exhaustive Breakdown of All 5 Adversarial Attack Vectors (Red Alert Reference)",
-                a1: "Structural Edge Perturbation (Nettack / Metattack): Modifies the Adjacency Matrix A → A' within budget ||A' - A||_0 ≤ 2Δ. Adds fake links between dissimilar devices (breaking homophily) or severs critical gateway links. Example: At 30% intensity on 300 nodes, 90 edges are flipped to isolate security collectors.",
-                a2: "Feature-Level Noise Attack: Leaves physical topology A intact but injects bounded mathematical noise η into telemetry X' = X + η (||η||_∞ ≤ ε). Example: A compromised pump masks 50MB data exfiltration by adding subtle noise (+0.03ms jitter, -1.2% CPU) to cross the neural boundary undetected by static thresholds.",
-                a3: "Node Injection Attack (TDGIA): Connects brand-new unauthorized rogue nodes V_atk to the graph, expanding A to (N + N_atk) × (N + N_atk). Example: Spawning 15 rogue containers connected to core hub switches to poison 2-hop embeddings of 120 innocent sensors.",
-                a4: "Gradient-based Adversarial Attack (FGSM / PGD): Computes partial derivatives of Cross-Entropy Loss (∇_X L, ∇_A L) and perturbs features/edges in the exact gradient sign direction to maximize classification error with minimal modification.",
-                a5: "Attribute Masking Attack: Multiplies node features by a binary mask x'_i = x_i ⊙ m (m ∈ {0,1}^D), zeroing out critical telemetry fields (like TCP window size or payload entropy) via packet header stripping or encryption.",
-                s4: "4. Complete Site Terminology Glossary, Metrics & Compliance Dictionary",
-                terms: [
-                    ["Node (Vertex / v)", "Any physical or virtual IoT device (sensor, camera, router, server) represented as a point in the graph."],
-                    ["Edge (Link / e_ij)", "A communication session or network flow connecting two nodes (TCP, UDP, MQTT, Modbus)."],
-                    ["Adjacency Matrix (A)", "An N × N grid of 0s and 1s defining which devices communicate directly."],
-                    ["Feature Vector (x_i)", "Numerical list of device telemetry attributes (bytes, packet rate, CPU, latency) analyzed by the GNN."],
-                    ["Message Passing", "Iterative process where each node aggregates feature vectors from its k-hop neighbors."],
-                    ["Clean vs. Attacked Accuracy", "Model classification rate before attack vs. remaining accuracy during active adversarial assault."],
-                    ["Attack Intensity Rate (%)", "Percentage of topological edges or feature dimensions perturbed during simulation (0%–50%)."],
-                    ["XAI Fidelity Score (%)", "GNNExplainer metric measuring how accurately the highlighted subgraph explains the AI's decision."],
-                    ["Auto-Remediation CLI & ISO/NIST", "Automated Linux iptables & Cisco IOS ACL isolation scripts mapped to ISO/IEC 27001:2022 & NIST SP 800-53."]
-                ]
+                detTitle: "Detailed Enterprise Technical Report & Complete 20-Page Textbook",
+                detSub: "Each GNN Architecture and Attack Vector below contains a full 1.5-page academic monograph: Deep Theory, 6-Step Math Derivations, Concrete Numerical Matrix Walkthroughs, SVG Diagrams & 3 Industrial Case Studies.",
+                lblTheory: "📖 I. Comprehensive Theoretical Foundation & Architectural Mechanics",
+                lblMath: "📐 II. Complete 6-Stage Mathematical Formulation & Linear Algebra Derivation",
+                lblNum: "🔢 III. Step-by-Step Numerical Matrix Calculation Walkthrough (Concrete IoT Numbers)",
+                lblCases: "🏭 IV. Three Real-World Industrial IoT Case Studies (SCADA, Hospital ICU, Smart Factory)",
+                lblTable: "📊 V. Computational Complexity, Hyperparameters & Adversarial Resilience Matrix",
+                lblDefense: "🛡️ VI. Enterprise Defense Engineering & Automated Kernel/Cisco Mitigation",
+                ch1: "CHAPTER 1: Fundamental Graph Theory, Linear Algebra of IoT Topologies & AI Intrusion Detection",
+                ch2: "CHAPTER 2: Complete 1.5-Page Monographs on All 5 Graph Neural Network (GNN) Architectures",
+                ch3: "CHAPTER 3: Complete 1.5-Page Monographs on All 5 Adversarial Cyberattack Vectors (Red Alert)",
+                ch4: "CHAPTER 4: Complete Encyclopedia Glossary of All Platform Terms, Metrics & ISO/NIST Standards",
+                scadaLabel: "1. Smart Power Grid (IEC 61850 SCADA):",
+                icuLabel: "2. Hospital ICU Medical Telemetry (HL7 / MQTT):",
+                plcLabel: "3. Automated Manufacturing Plant (Modbus TCP / PROFINET):"
             },
             az: {
                 controls: "⚙️ Simulyasiya İdarəetməsi", dataset: "Məlumat Mənbəyi", synGraph: "Sintetik Qraf", customFile: "Xüsusi Fayl",
@@ -313,501 +300,803 @@
                 xaiScore: "XAI İzaholunma Dəqiqliyi", logTitle: "📊 Korporativ Təhlükə və Müdafiə Jurnalı", exportPdf: "📄 Audit Hesabatını Endir (PDF)",
                 remedTitle: "⚡ Avtomatik Bərpa Skripti və Uyğunluq Auditi", copyPatch: "📋 CLI Yamasını Kopyala", downloadSh: "💾 .sh Faylını Endir",
                 logInit: "[Sistem] GraphGuard IoT işə düşdü. FastAPI backend ilə simulyasiyaya hazırdır...",
-                detTitle: "Detallı Korporativ Texniki Hesabat və Tam Ensiklopediya",
-                detSub: "Mövzunun üzərinə gəlin (hover) açılıb genişlənsin, və ya klikləyin sabit qalsın. Qraflar, Riyazi Düsturlar, Nümunələr və Lüğət daxildir.",
-                s1: "1. Fundamental Nəzəriyyə: IoT Şəbəkələrinin Qraf Təsviri, Riyaziyyat və Süni İntellekt",
-                s1Text: "Korporativ IoT şəbəkəsi riyazi olaraq canlı topoloji qrafdır: G = (V, E, X). Hər bir fiziki və ya virtual cihaz (sensorlar, PLC kontrollerlər, kameralar, şlüzlər) bir Qovşaq (Node: v ∈ V), onların arasındakı hər bir rabitə sessiyası (TCP/IP, MQTT, Modbus) isə bir Til / Əlaqədir (Edge: e_ij ∈ E). Hər qovşağın D-ölçülü Xüsusiyyət Vektoru x_i ∈ ℝ^D var (paket ölçüsü, tezlik, CPU yükü, gecikmə). Bütün əlaqələr N × N ölçülü Qonşuluq Matrisində (A_ij = 1 və ya 0) və Dərəcə Matrisində (D_ii = ∑_j A_ij) saxlanılır.",
-                s1Ex: "Konkret Nümunə: N = 300 cihazlı Ağıllı Elektrik Şəbəkəsində Qovşaq #14 (Yarımstansiya Sensoru) hər 10 saniyədə Qovşaq #1-ə (SCADA Mərkəzi) 50 bayt göndərir: x_14 = [50B, 0.1Hs, 2% CPU, Port 1883]. Haker onu ələ keçirib 200 cihaza sorğu göndərsə, dərəcəsi D_14 = 1-dən 201-ə qalxır və GNN mesaj ötürməsi ilə bunu dərhal tutur!",
-                s2: "2. Bütün 5 GNN (Qraf Neyron Şəbəkəsi) Modelinin Riyazi və Arxitektur Təhlili",
-                m1: "GraphSAGE (Sample & Aggregate): İnduktiv modeldir. Bütün qrafı yenidən öyrətmədən k-addımlıq məsafədən sabit S_k sayda qonşu seçir və Ortalama (Mean), LSTM və ya Max-Pooling ilə birləşdirir. Nümunə: Anbarda Wi-Fi-a yeni qoşulan 50 avtomatlaşdırılmış robot-yükdaşıyan cəmi 12 millisaniyədə analiz edilir.",
-                m2: "GCN (Graph Convolutional Network): Çebışev polinomlarının 1-ci dərəcəli spektral yaxınlaşmasını işlədir. Öz-özünə əlaqə (Ã = A + I) əlavə edir və simmetrik dərəcə matrisi (D̃^-1/2 Ã D̃^-1/2) ilə qonşu xüsusiyyətlərini hamarlayır. Nümunə: Data-mərkəzdə 3 qonşu kommutatorda başlayan sinxron SYN-flood hücumunu 98.4% dəqiqliklə tutur.",
-                m3: "GAT (Graph Attention Network - Pro): Qonşuları birləşdirməzdən əvvəl LeakyReLU ilə hər qonşunun nə qədər etibarlı olduğunu ölçən Diqqət Əmsalı (α_ij) hesablayır. Nümunə: Xəstəxana şəbəkəsinə qoşulan saxta Raspberry Pi cihazına α_ij = 0.002 çəki verərək hakerin zəhərli siqnalını sıfırlayır, sağlam tibbi trafikdə isə α = 0.95 saxlayır.",
-                m4: "RGCN (Relational GCN): Hər rabitə protokolu üçün (r_1 = MQTT, r_2 = SSH, r_3 = RTSP, r_4 = Modbus) ayrıca W_r çəki matrisi ayırır. Nümunə: Normalda RTSP video (r_3) göndərən kamera birdən məlumat bazasına SSH (r_2) əlaqəsi açarsa, RGCN bu qeyri-qanuni əlaqəni dərhal bloklayır.",
-                m5: "GIN (Graph Isomorphism Network): Weisfeiler-Lehman (WL) qraf izomorfizm testi qədər güclüdür. İnyektiv cəmləmə (1 + ε)h_v + ∑ h_u sayəsində digər modellərin eyni saydığı fərqli qraf həndəsələrini (məsələn, ulduz topologiyası kimi maskalanmış halqavari botnet şəbəkəsini) dəqiq ayırd edir.",
-                s3: "3. Bütün 5 Adversarial Hücum Vektorunun Dərin Riyazi və Praktiki Təhlili",
-                a1: "Structural Edge Perturbation (Struktur Til Pozulması): Qonşuluq Matrisini ||A' - A||_0 ≤ 2Δ büdcəsi daxilində dəyişir. Fərqli cihazlar arasında saxta əlaqələr açır və ya şlüz xətlərini kəsir. Nümunə: 300 qovşaqda 30% intensivliklə 90 əlaqə dəyişdirilir, yoluxmuş termostat birbaşa maliyyə serverinə bağlanır.",
-                a2: "Feature-Level Noise Attack (Xüsusiyyət Səs-küyü Hücumu): Fiziki əlaqələrə (A) toxunmur, lakin telemetriya matrisinə X' = X + η (||η||_∞ ≤ ε) səs-küyü qatır. Nümunə: Nasos 50MB məlumat oğurlayarkən gecikməyə +0.03ms, CPU-ya -1.2% səs-küy qatır ki, adi hədd yoxlamaları bunu normal saysın.",
-                a3: "Node Injection Attack (Qovşaq İnyeksiyası - TDGIA): Şəbəkəyə tamamilə yeni saxta qovşaqlar (V_atk) qoşaraq matrisi (N + N_atk) ölçüsünə böyüdür. Nümunə: 15 icazəsiz konteyner əsas kommutatorlara qoşularaq 120 sağlam sensorun qonşuluq vektorlarını zəhərləyir.",
-                a4: "Gradient-based Adversarial Attack (FGSM / PGD): İtki funksiyasının (Cross-Entropy Loss) qradientini (∇_X L, ∇_A L) hesablayır və təsnifat xətasını maksimuma çatdıran ən həssas istiqamətdə paket parametrlərini dəyişdirir.",
-                a5: "Attribute Masking Attack (Atributların Maskalanması): Xüsusiyyət vektorunu ikilik maskaya vurur (x'_i = x_i ⊙ m, m ∈ {0,1}^D). Paket başlıqlarını gizlədərək və ya şifrələyərək vacib telemetriya sütunlarını sıfırlayır.",
-                s4: "4. Saytdakı Bütün Terminlərin Lüğəti, Metrikalar və Beynəlxalq Standartlar",
-                terms: [
-                    ["Node (Qovşaq / v)", "Şəbəkədəki hər hansı fiziki və ya virtual IoT cihazı (sensor, kamera, marşrutlayıcı, server)."],
-                    ["Edge (Til / Əlaqə / e_ij)", "İki qovşaq arasındakı rabitə kanalı və ya məlumat axını (TCP, MQTT, Modbus)."],
-                    ["Adjacency Matrix (Qonşuluq Matrisi A)", "Hansı cihazların bir-biri ilə əlaqədə olduğunu 0 və 1-lərlə göstərən N × N cədvəl."],
-                    ["Feature Vector (Xüsusiyyət Vektoru x_i)", "Cihazın süni intellektə ötürülən rəqəmsal göstəriciləri (bayt sayı, tezlik, CPU yükü, gecikmə)."],
-                    ["Message Passing (Mesaj Ötürmə)", "Hər qovşağın öz qonşularından xüsusiyyət vektorlarını toplayıb yeniləməsi prosesi."],
-                    ["Clean vs. Attacked Accuracy", "Hücumdan əvvəlki təmiz dəqiqlik ilə aktiv hücum altındakı dayanıqlılıq dəqiqliyinin müqayisəsi."],
-                    ["Attack Intensity Rate (%)", "Simulyasiya zamanı dəyişdirilən əlaqələrin və ya atributların faiz dərəcəsi (0%–50%)."],
-                    ["XAI Fidelity Score (%)", "GNNExplainer vasitəsilə süni intellektin qərarının nə qədər şəffaf və izaholunan olduğunu ölçən bal."],
-                    ["Auto-Remediation & ISO/NIST", "Zərərli qovşaqları təcrid edən avtomatik Linux iptables / Cisco IOS skriptləri və ISO 27001 / NIST uyğunluğu."]
-                ]
+                detTitle: "Detallı Korporativ Texniki Hesabat və Tam 20 Səhifəlik Akademik Dərslik",
+                detSub: "Aşağıdakı HƏR BİR GNN Modeli və HƏR BİR Hücum Vektoru ayrı-ayrılıqda 1.5 səhifəlik elmi monoqrafiyadır: Dərin Nəzəriyyə, 6 Mərhələli Riyazi Düstur Çıxarılışı, Rəqəmlərlə Matris Hesablaması, Qraf Sxemləri və 3 Sənaye Nümunəsi.",
+                lblTheory: "📖 I. Fundamental Elmi Nəzəriyyə, Arxitektura Fəlsəfəsi və İşləmə Mexanizmi",
+                lblMath: "📐 II. Tam 6 Mərhələli Riyazi Düstur Çıxarılışı və Xətti Cəbr Aparatı",
+                lblNum: "🔢 III. Konkret Rəqəmlərlə Addım-Addım Matris Hesablaması Nümunəsi (Numerical Walkthrough)",
+                lblCases: "🏭 IV. Real Həyatdan 3 Müfəssəl Sənaye Nümunəsi (Elektrik Şəbəkəsi, Xəstəxana ICU, Zavod PLC)",
+                lblTable: "📊 V. Hesablama Mürəkkəbliyi, Hiperparametrlər və Hücuma Dayanıqlılıq Cədvəli",
+                lblDefense: "🛡️ VI. Müdafiə Mühəndisliyi və Avtomatik Cisco IOS / Linux iptables Təcrid Protokolu",
+                ch1: "FƏSİL 1: Fundamental Qraf Nəzəriyyəsi, IoT Topologiyalarının Xətti Cəbri və Süni İntellekt",
+                ch2: "FƏSİL 2: Bütün 5 GNN Arxitekturasının Hər Biri Üçün 1.5 Səhifəlik Elmi Monoqrafiya",
+                ch3: "FƏSİL 3: Bütün 5 Adversarial Hücum Vektorunun Hər Biri Üçün 1.5 Səhifəlik Elmi Monoqrafiya (Qırmızı Həyəcan)",
+                ch4: "FƏSİL 4: Saytdakı Bütün Terminlərin, Metrikaların və ISO/NIST Standartlarının Tam Ensiklopedik Lüğəti",
+                scadaLabel: "1. Ağıllı Elektrik Şəbəkəsi (Smart Grid SCADA - IEC 61850):",
+                icuLabel: "2. Xəstəxana Reanimasiya Şəbəkəsi (ICU Tibbi Моnitorlar - MQTT):",
+                plcLabel: "3. Avtomatlaşdırılmış Sənaye Zavodu (PLC / Modbus TCP):"
             },
             ru: {
                 controls: "⚙️ Управление симуляцией", dataset: "Источник данных", synGraph: "Синтетический граф", customFile: "Свой файл",
-                nodeCount: "Количество узлов IoT", uploadTopo: "Загрузить топологию (CSV/JSON)", gnnArch: "Архитектура GNN",
-                attackStrat: "Стратегия атаки", attackRate: "Интенсивность атаки (%)", proKey: "Pro Ключ (Необязательно)",
+                nodeCount: "Количество узлов IoT", uploadTopo: "Загрузить топологию", gnnArch: "Архитектура GNN",
+                attackStrat: "Стратегия атаки", attackRate: "Интенсивность атаки (%)", proKey: "Pro Ключ",
                 runSim: "🚀 Запустить симуляцию", cleanAcc: "Чистая точность", attackAcc: "Точность при атаке",
                 xaiScore: "Оценка XAI Fidelity", logTitle: "📊 Журнал угроз и защиты", exportPdf: "📄 Экспорт отчета (PDF)",
-                remedTitle: "⚡ Авто-исправление и аудит соответствия", copyPatch: "📋 Копировать патч", downloadSh: "💾 Скачать .sh",
-                logInit: "[Система] GraphGuard IoT инициализирован. Готов к симуляции...",
-                detTitle: "Подробный технический отчет и полная энциклопедия",
-                detSub: "Наведите курсор на карточку для открытия или нажмите для закрепления. Включает графы, математику, примеры и глоссарий.",
-                s1: "1. Фундаментальная теория: Графовое представление сетей IoT, математика и ИИ",
-                s1Text: "Сеть IoT математически представляет собой граф G = (V, E, X). Каждое устройство (датчик, ПЛК, маршрутизатор, шлюз) — это Узел (v ∈ V), а сеанс связи (TCP/IP, MQTT, Modbus) — Ребро (e_ij ∈ E). Каждый узел имеет вектор признаков x_i ∈ ℝ^D (размер пакета, частота, нагрузка ЦП). Связи хранятся в матрице смежности A размера N × N и матрице степеней D.",
-                s1Ex: "Пример: В умной электросети из 300 узлов датчик №14 отправляет 50 байт каждые 10 с на шлюз №1. Если хакер взломает его для сканирования 200 устройств, степень D_14 вырастет с 1 до 201, что мгновенно выявляется GNN.",
-                s2: "2. Математический и архитектурный разбор всех 5 моделей GNN",
-                m1: "GraphSAGE: Индуктивная модель, выбирающая фиксированное число соседей S_k и агрегирующая их через Mean/LSTM/Pooling. Классифицирует новые устройства за 12 мс без переобучения.",
-                m2: "GCN: Спектральная свертка с петлями (Ã = A + I) и симметричной нормализацией степеней. Идеально выявляет кластерные аномалии в стабильных ЦОД.",
-                m3: "GAT (Pro): Вычисляет коэффициенты внимания α_ij через LeakyReLU. При атаке вредоносного узла назначает ему вес α_ij ≈ 0.002, блокируя отравление соседних узлов.",
-                m4: "RGCN: Использует отдельные матрицы весов W_r для каждого протокола (MQTT, SSH, RTSP, Modbus), пресекая несанкционированные типы соединений.",
-                m5: "GIN: Обладает мощностью теста Вейсфейлера-Лемана (WL), разделяя сложные изоморфные структуры ботнетов.",
-                s3: "3. Подробный разбор всех 5 векторов состязательных атак (Красный уровень)",
-                a1: "Structural Edge Perturbation: Изменение матрицы смежности A → A' (добавление ложных связей или разрыв магистралей).",
-                a2: "Feature-Level Noise Attack: Инжекция ограниченного математического шума X' = X + η в телеметрию для обхода пороговых фильтров.",
-                a3: "Node Injection Attack: Подключение новых фальшивых узлов V_atk к коммутаторам для отравления агрегации соседей.",
-                a4: "Gradient-based Attack (FGSM/PGD): Использование градиентов функции потерь (∇_X L, ∇_A L) для максимального снижения точности ИИ.",
-                a5: "Attribute Masking Attack: Обнуление критических полей телеметрии через бинарную маску x'_i = x_i ⊙ m.",
-                s4: "4. Полный глоссарий терминов сайта, метрик и стандартов",
-                terms: [
-                    ["Узел (Node / v)", "Любое физическое или виртуальное устройство IoT в сети."],
-                    ["Ребро (Edge / e_ij)", "Канал передачи данных между двумя узлами."],
-                    ["Матрица смежности (A)", "Таблица N × N из 0 и 1, определяющая топологию связей."],
-                    ["Вектор признаков (x_i)", "Числовые параметры телеметрии устройства (байты, частота, ЦП)."],
-                    ["Передача сообщений (Message Passing)", "Обмен векторами признаков между соседними узлами."],
-                    ["Чистая и атакованная точность", "Точность классификации до атаки и во время активного штурма."],
-                    ["Интенсивность атаки (%)", "Доля измененных связей или признаков (0%–50%)."],
-                    ["Оценка XAI Fidelity (%)", "Показатель объяснимости решения ИИ через GNNExplainer."],
-                    ["Авто-исправление и ISO/NIST", "Скрипты изоляции iptables/Cisco ACL и соответствие ISO 27001 / NIST SP 800-53."]
-                ]
+                remedTitle: "⚡ Авто-исправление и аудит", copyPatch: "📋 Копировать патч", downloadSh: "💾 Скачать .sh",
+                logInit: "[Система] GraphGuard IoT готов...",
+                detTitle: "Подробный технический отчет и полный 20-страничный учебник",
+                detSub: "Каждая модель GNN и каждый вектор атаки ниже содержат 1.5 страницы глубокой теории, 6-шаговый вывод формул, матричные расчеты с числами и 3 промышленных кейса.",
+                lblTheory: "📖 I. Фундаментальная научная теория и архитектурная механика",
+                lblMath: "📐 II. Полный 6-шаговый математический вывод и линейная алгебра",
+                lblNum: "🔢 III. Пошаговый численный расчет матриц на конкретных числах IoT",
+                lblCases: "🏭 IV. Три реальных промышленных примера (SCADA, Больница, Завод ПЛК)",
+                lblTable: "📊 V. Вычислительная сложность, гиперпараметры и таблица устойчивости",
+                lblDefense: "🛡️ VI. Инженерия защиты и автоматическая изоляция Cisco IOS / Linux iptables",
+                ch1: "ГЛАВА 1: Фундаментальная теория графов, линейная алгебра топологий IoT и ИИ",
+                ch2: "ГЛАВА 2: Полные монографии (по 1.5 страницы) для всех 5 архитектур GNN",
+                ch3: "ГЛАВА 3: Полные монографии (по 1.5 страницы) для всех 5 векторов атак (Красный уровень)",
+                ch4: "ГЛАВА 4: Полный энциклопедический глоссарий всех терминов, метрик и стандартов ISO/NIST",
+                scadaLabel: "1. Умная электросеть (Smart Grid SCADA):",
+                icuLabel: "2. Реанимационное отделение больницы (ICU IoT):",
+                plcLabel: "3. Автоматизированный завод (ПЛК / Modbus TCP):"
             },
             de: {
                 controls: "⚙️ Simulationssteuerung", dataset: "Datenquelle", synGraph: "Synthetischer Graph", customFile: "Eigene Datei",
                 nodeCount: "IoT-Knotenanzahl", uploadTopo: "Topologie hochladen", gnnArch: "GNN-Architektur",
                 attackStrat: "Angriffsstrategie", attackRate: "Angriffsintensität (%)", proKey: "Pro-Lizenzschlüssel",
                 runSim: "🚀 Simulation starten", cleanAcc: "Saubere Genauigkeit", attackAcc: "Genauigkeit unter Angriff",
-                xaiScore: "XAI-Fidelity-Wert", logTitle: "📊 Bedrohungs- & Verteidigungsprotokoll", exportPdf: "📄 PDF-Bericht exportieren",
-                remedTitle: "⚡ Auto-Remediation & Compliance-Audit", copyPatch: "📋 CLI-Patch kopieren", downloadSh: "💾 .sh herunterladen",
+                xaiScore: "XAI-Fidelity-Wert", logTitle: "📊 Bedrohungs- & Verteidigungsprotokoll", exportPdf: "📄 PDF exportieren",
+                remedTitle: "⚡ Auto-Remediation & Compliance", copyPatch: "📋 CLI-Patch kopieren", downloadSh: "💾 .sh herunterladen",
                 logInit: "[System] GraphGuard IoT initialisiert...",
-                detTitle: "Detaillierter Technischer Bericht & Enzyklopädie",
-                detSub: "Maus über eine Karte bewegen zum Öffnen oder klicken zum Anheften. Inklusive Graphen, Mathematik, Beispielen & Glossar.",
-                s1: "1. Grundlagentheorie: Graphendarstellung von IoT-Netzwerken, Mathematik & KI",
-                s1Text: "Ein IoT-Netzwerk ist mathematisch ein Graph G = (V, E, X). Jedes Gerät ist ein Knoten (v ∈ V), jede Verbindung eine Kante (e_ij ∈ E) mit Merkmalsvektor x_i ∈ ℝ^D und Adjazenzmatrix A (N × N).",
-                s1Ex: "Beispiel: In einem Smart Grid mit 300 Knoten steigt bei einem kompromittierten Sensor #14 der Knotengrad D_14 von 1 auf 201, was sofort durch GNN-Message-Passing erkannt wird.",
-                s2: "2. Mathematische Analyse aller 5 GNN-Modelle",
-                m1: "GraphSAGE: Induktives Sampling (Mean/LSTM/Pool) für dynamische IoT-Netze in Echtzeit (12ms).",
-                m2: "GCN: Spektrale Faltung (D̃^-1/2 Ã D̃^-1/2) zur Erkennung synchronisierter Cluster-Anomalien.",
-                m3: "GAT (Pro): Multi-Head Attention (α_ij)blendet bösartige Knoten durch Gewichtung nahe Null (α = 0.002) aus.",
-                m4: "RGCN: Separate Gewichtsmatrizen W_r für jedes Protokoll (MQTT, SSH, Modbus).",
-                m5: "GIN: Weisfeiler-Lehman-Isomorphie-Trennschärfe gegen getarnte Botnet-Topologien.",
-                s3: "3. Detaillierte Analyse aller 5 Angriffsvektoren (Rote Warnstufe)",
-                a1: "Structural Edge Perturbation: Manipulation der Adjazenzmatrix A → A' zum Trennen kritischer Gateways.",
-                a2: "Feature-Level Noise Attack: Injektion von begrenztem Rauschen X' = X + η in Gerätetelemetrie.",
-                a3: "Node Injection Attack: Einschleusen unautorisierter Knoten V_atk in zentrale Switches.",
-                a4: "Gradient-based Attack (FGSM/PGD): Nutzung der Verlustgradienten (∇_X L, ∇_A L) zur maximalen Täuschung.",
-                a5: "Attribute Masking Attack: Ausblenden kritischer Telemetriefelder mittels binärer Maske x'_i = x_i ⊙ m.",
-                s4: "4. Vollständiges Glossar aller Begriffe, Metriken & Standards",
-                terms: [
-                    ["Node (Knoten / v)", "Physisches oder virtuelles IoT-Gerät im Netzwerk."],
-                    ["Edge (Kante / e_ij)", "Kommunikationsverbindung zwischen zwei Geräten."],
-                    ["Adjacency Matrix (A)", "Mathematische N × N Verbindungsmatrix aus 0 und 1."],
-                    ["Feature Vector (x_i)", "Numerische Telemetriedaten eines Knotens."],
-                    ["Message Passing", "Nachbarschaftsbasierter Informationsaustausch im Graphen."],
-                    ["Clean / Attacked Accuracy", "Erkennungsrate vor und während eines Cyberangriffs."],
-                    ["Attack Intensity (%)", "Prozentsatz der manipulierten Kanten/Merkmale."],
-                    ["XAI Fidelity Score (%)", "Erklärbarkeitswert der KI-Entscheidung."],
-                    ["Auto-Remediation & ISO/NIST", "Automatische Firewall-Skripte (iptables/Cisco) nach ISO 27001 & NIST SP 800-53."]
-                ]
+                detTitle: "Detaillierter Technischer Bericht & 20-Seiten-Lehrbuch",
+                detSub: "Jedes GNN-Modell und jeder Angriffsvektor umfasst 1.5 Seiten tiefe Theorie, 6-stufige mathematische Herleitungen, numerische Matrizenrechnungen und 3 Fallstudien.",
+                lblTheory: "📖 I. Umfassende theoretische Grundlage & Architekturmechanik",
+                lblMath: "📐 II. Vollständige 6-stufige mathematische Herleitung & Lineare Algebra",
+                lblNum: "🔢 III. Schritt-für-Schritt numerische Matrizenberechnung mit konkreten Zahlen",
+                lblCases: "🏭 IV. Drei reale industrielle IoT-Fallstudien (SCADA, Krankenhaus, Fabrik)",
+                lblTable: "📊 V. Komplexität, Hyperparameter & Resilienz-Matrix",
+                lblDefense: "🛡️ VI. Verteidigungstechnik & automatische Cisco/iptables-Isolierung",
+                ch1: "KAPITEL 1: Graphentheorie, Lineare Algebra von IoT-Topologien & KI-Erkennung",
+                ch2: "KAPITEL 2: Vollständige 1.5-Seiten-Monographien zu allen 5 GNN-Architekturen",
+                ch3: "KAPITEL 3: Vollständige 1.5-Seiten-Monographien zu allen 5 Angriffsvektoren",
+                ch4: "KAPITEL 4: Vollständiges Enzyklopädie-Glossar aller Begriffe & ISO/NIST-Standards",
+                scadaLabel: "1. Intelligentes Stromnetz (Smart Grid SCADA):",
+                icuLabel: "2. Intensivstation im Krankenhaus (ICU IoT):",
+                plcLabel: "3. Automatisierte Fertigungsanlage (SPS / Modbus):"
             },
             fr: {
                 controls: "⚙️ Contrôles de Simulation", dataset: "Source de Données", synGraph: "Graphe Synthétique", customFile: "Fichier Personnalisé",
                 nodeCount: "Nombre de Nœuds IoT", uploadTopo: "Télécharger la Topologie", gnnArch: "Architecture GNN",
-                attackStrat: "Stratégie d'Attaque", attackRate: "Intensité d'Attaque (%)", proKey: "Clé de Licence Pro",
+                attackStrat: "Stratégie d'Attaque", attackRate: "Intensité d'Attaque (%)", proKey: "Clé Pro",
                 runSim: "🚀 Lancer la Simulation", cleanAcc: "Précision Initiale", attackAcc: "Précision sous Attaque",
-                xaiScore: "Score de Fidélité XAI", logTitle: "📊 Journal des Menaces et Défenses", exportPdf: "📄 Exporter le Rapport (PDF)",
-                remedTitle: "⚡ Remédiation Automatique et Audit", copyPatch: "📋 Copier le Patch CLI", downloadSh: "💾 Télécharger .sh",
-                logInit: "[Système] GraphGuard IoT initialisé...",
-                detTitle: "Rapport Technique Détaillé et Encyclopédie Complète",
-                detSub: "Survolez une carte pour l'ouvrir ou cliquez pour l'épingler. Inclut graphes, formules mathématiques, exemples et glossaire.",
-                s1: "1. Théorie Fondamentale : Représentation Graphique des Réseaux IoT, Mathématiques et IA",
-                s1Text: "Un réseau IoT d'entreprise est un graphe topologique G = (V, E, X). Chaque appareil est un Nœud (v ∈ V) et chaque flux réseau est une Arête (e_ij ∈ E) avec un vecteur de caractéristiques x_i ∈ ℝ^D et une matrice d'adjacence A (N × N).",
-                s1Ex: "Exemple : Dans un réseau électrique de 300 nœuds, si le capteur #14 est piraté pour scanner 200 appareils, son degré D_14 passe de 1 à 201, détecté instantanément par le passage de messages GNN.",
-                s2: "2. Analyse Mathématique et Architecturale des 5 Modèles GNN",
-                m1: "GraphSAGE : Échantillonnage inductif permettant d'analyser de nouveaux appareils IoT en 12 ms sans réentraînement.",
-                m2: "GCN : Convolution spectrale normalisée (D̃^-1/2 Ã D̃^-1/2) idéale pour détecter les anomalies de cluster.",
-                m3: "GAT (Pro) : Attention multi-têtes (α_ij) qui réduit à zéro (α = 0.002) l'influence des nœuds malveillants injectés.",
-                m4: "RGCN : Matrices de poids distinctes W_r par protocole réseau (MQTT, SSH, RTSP, Modbus).",
-                m5: "GIN : Puissance du test d'isomorphisme de Weisfeiler-Lehman pour démasquer les botnets complexes.",
-                s3: "3. Analyse Exhaustive des 5 Vecteurs d'Attaque (Alerte Rouge)",
-                a1: "Structural Edge Perturbation : Modification de la matrice d'adjacence A → A' pour isoler les passerelles critiques.",
-                a2: "Feature-Level Noise Attack : Injection de bruit mathématique borné X' = X + η dans la télémétrie.",
-                a3: "Node Injection Attack : Ajout de nœuds pirates V_atk connectés aux commutateurs centraux.",
-                a4: "Gradient-based Attack (FGSM/PGD) : Exploitation des gradients de perte (∇_X L, ∇_A L) pour tromper le classifieur.",
-                a5: "Attribute Masking Attack : Masquage binaire x'_i = x_i ⊙ m des attributs critiques des paquets.",
-                s4: "4. Glossaire Complet des Termes, Métriques et Normes ISO/NIST",
-                terms: [
-                    ["Nœud (Node / v)", "Tout appareil IoT physique ou virtuel du réseau."],
-                    ["Arête (Edge / e_ij)", "Lien de communication entre deux appareils."],
-                    ["Matrice d'Adjacence (A)", "Grille N × N de 0 et 1 représentant les connexions."],
-                    ["Vecteur de Caractéristiques (x_i)", "Mesures télémétriques numériques d'un appareil."],
-                    ["Message Passing", "Agrégation itérative des caractéristiques des voisins."],
-                    ["Précision Propre vs Attaquée", "Taux de détection avant et pendant une cyberattaque."],
-                    ["Intensité d'Attaque (%)", "Pourcentage de liens ou d'attributs compromis."],
-                    ["Score XAI Fidelity (%)", "Mesure de transparence et d'explicabilité de l'IA."],
-                    ["Auto-Remédiation & ISO/NIST", "Scripts automatisés iptables/Cisco conformes aux normes ISO 27001 et NIST SP 800-53."]
-                ]
+                xaiScore: "Score XAI Fidelity", logTitle: "📊 Journal des Menaces", exportPdf: "📄 Exporter PDF",
+                remedTitle: "⚡ Remédiation Automatique", copyPatch: "📋 Copier CLI", downloadSh: "💾 Télécharger .sh",
+                logInit: "[Système] GraphGuard IoT prêt...",
+                detTitle: "Rapport Technique Détaillé et Manuel Complet de 20 Pages",
+                detSub: "Chaque modèle GNN et chaque attaque contient une monographie de 1,5 page : théorie profonde, dérivations mathématiques en 6 étapes, calculs matriciels numériques et 3 études de cas.",
+                lblTheory: "📖 I. Fondements Théoriques Complets et Mécanique Architecturale",
+                lblMath: "📐 II. Formulation Mathématique en 6 Étapes et Algèbre Linéaire",
+                lblNum: "🔢 III. Calcul Matriciel Numérique Pas à Pas (Nombres IoT Concrets)",
+                lblCases: "🏭 IV. Trois Études de Cas Industrielles Réelles (SCADA, Hôpital USI, Usine)",
+                lblTable: "📊 V. Complexité Computationnelle, Hyperparamètres et Résilience",
+                lblDefense: "🛡️ VI. Ingénierie de Défense et Isolation Automatisée Cisco/iptables",
+                ch1: "CHAPITRE 1 : Théorie des Graphes, Algèbre Linéaire des Topologies IoT et IA",
+                ch2: "CHAPITRE 2 : Monographies Complètes (1,5 Page chacune) des 5 Modèles GNN",
+                ch3: "CHAPITRE 3 : Monographies Complètes (1,5 Page chacune) des 5 Vecteurs d'Attaque",
+                ch4: "CHAPITRE 4 : Glossaire Encyclopédique Complet des Termes et Normes ISO/NIST",
+                scadaLabel: "1. Réseau Électrique Intelligent (SCADA):",
+                icuLabel: "2. Soins Intensifs Hospitaliers (IoT Médical):",
+                plcLabel: "3. Usine Automatisée (Automates PLC / Modbus):"
             },
             fi: {
                 controls: "⚙️ Simulaation ohjaus", dataset: "Tietolähde", synGraph: "Synteettinen graafi", customFile: "Oma tiedosto",
                 nodeCount: "IoT-solmujen määrä", uploadTopo: "Lataa topologia", gnnArch: "GNN-arkkitehtuuri",
-                attackStrat: "Hyökkäysstrategia", attackRate: "Hyökkäyksen voimakkuus (%)", proKey: "Pro-lisenssiavain",
-                runSim: "🚀 Suorita simulaatio", cleanAcc: "Puhdas tarkkuus", attackAcc: "Tarkkuus hyökkäyksessä",
-                xaiScore: "XAI-luotettavuus", logTitle: "📊 Uhka- ja puolustusloki", exportPdf: "📄 Vie PDF-raportti",
-                remedTitle: "⚡ Automaattinen korjaus ja auditointi", copyPatch: "📋 Kopioi CLI-korjaus", downloadSh: "💾 Lataa .sh",
+                attackStrat: "Hyökkäysstrategia", attackRate: "Hyökkäyksen voimakkuus (%)", proKey: "Pro-avain",
+                runSim: "🚀 Suorita simulaatio", cleanAcc: "Puhdas tarkkuus", attackAcc: "Hyökätty tarkkuus",
+                xaiScore: "XAI-luotettavuus", logTitle: "📊 Uhka- ja puolustusloki", exportPdf: "📄 Vie PDF",
+                remedTitle: "⚡ Automaattinen korjaus", copyPatch: "📋 Kopioi CLI", downloadSh: "💾 Lataa .sh",
                 logInit: "[Järjestelmä] GraphGuard IoT valmis...",
-                detTitle: "Yksityiskohtainen Tekninen Raportti & Tietosanakirja",
-                detSub: "Vie hiiri kortin päälle avataksesi tai napsauta kiinnittääksesi. Sisältää graafit, matematiikan, esimerkit ja sanaston.",
-                s1: "1. Perusteoria: IoT-verkkojen graafiesitys, matematiikka ja tekoäly",
-                s1Text: "IoT-verkko on matemaattinen graafi G = (V, E, X), jossa laitteet ovat solmuja (v ∈ V), yhteydet kaaria (e_ij ∈ E), telemetria piirrevektoreita x_i ∈ ℝ^D ja topologia vierusmatriisi A (N × N).",
-                s1Ex: "Esimerkki: 300 solmun sähköverkossa kaapatun anturin #14 aste D_14 nousee 1:stä 201:een, minkä GNN havaitsee välittömästi.",
-                s2: "2. Kaikkien 5 GNN-mallin matemaattinen ja arkkitehtoninen analyysi",
-                m1: "GraphSAGE: Induktiivinen otanta, joka luokittelee uudet IoT-laitteet 12 millisekunnissa.",
-                m2: "GCN: Spektraalinen konvoluutio (D̃^-1/2 Ã D̃^-1/2) klusteritason poikkeamien havaitsemiseen.",
-                m3: "GAT (Pro): Huomiokerroin α_ij vaimentaa haitalliset solmut (α = 0.002) ja suojaa verkon.",
-                m4: "RGCN: Erilliset painomatriisit W_r eri yhteyskäytännöille (MQTT, SSH, Modbus).",
-                m5: "GIN: Weisfeiler-Lehman-isomorfismitestin tarkkuus monimutkaisten bottiverkkojen paljastamiseen.",
-                s3: "3. Kaikkien 5 hyökkäysvektorin syväanalyysi (Punainen hälytys)",
-                a1: "Structural Edge Perturbation: Vierusmatriisin A → A' muokkaus kriittisten reitittimien eristämiseksi.",
-                a2: "Feature-Level Noise Attack: Matemaattisen kohinan X' = X + η lisääminen telemetriaan.",
-                a3: "Node Injection Attack: Luvattomien valesolmujen V_atk liittäminen verkkoon.",
-                a4: "Gradient-based Attack (FGSM/PGD): Häviöfunktion gradienttien (∇_X L, ∇_A L) hyödyntäminen.",
-                a5: "Attribute Masking Attack: Telemetriakenttien peittäminen binäärimaskilla x'_i = x_i ⊙ m.",
-                s4: "4. Täydellinen sanasto, mittarit ja ISO/NIST-standardit",
-                terms: [
-                    ["Solmu (Node / v)", "Fyysinen tai virtuaalinen IoT-laite verkossa."],
-                    ["Kaari (Edge / e_ij)", "Tietoliikenneyhteys kahden laitteen välillä."],
-                    ["Vierusmatriisi (A)", "N × N matriisi (0 ja 1), joka kuvaa verkon kytkennät."],
-                    ["Piirrevektori (x_i)", "Laitteen numeeriset telemetria-arvot."],
-                    ["Viestinvälitys (Message Passing)", "Naapurisolmujen tietojen yhdistäminen."],
-                    ["Puhdas vs. Hyökätty tarkkuus", "Tunnistustarkkuus normaalitilassa ja hyökkäyksen aikana."],
-                    ["Hyökkäyksen voimakkuus (%)", "Muokattujen yhteyksien tai piirteiden osuus."],
-                    ["XAI Fidelity Score (%)", "Tekoälyn päätöksen selitettävyysmittari."],
-                    ["Automaattinen korjaus & ISO/NIST", "Linux iptables / Cisco ACL -skriptit ja ISO 27001 / NIST SP 800-53 -yhteensopivuus."]
-                ]
+                detTitle: "Yksityiskohtainen Tekninen Raportti ja 20-Sivuinen Oppikirja",
+                detSub: "Jokainen GNN-malli ja hyökkäysvektori sisältää 1,5 sivun tieteellisen tutkielman: syvä teoria, 6-vaiheiset matemaattiset kaavat, numeeriset matriisilaskut ja 3 tapaustutkimusta.",
+                lblTheory: "📖 I. Kattava teoreettinen perusta ja arkkitehtoninen mekaniikka",
+                lblMath: "📐 II. Täydellinen 6-vaiheinen matemaattinen johto ja lineaarialgebra",
+                lblNum: "🔢 III. Vaiheittainen numeerinen matriisilaskenta konkreettisilla IoT-luvuilla",
+                lblCases: "🏭 IV. Kolme todellista teollista IoT-tapaustutkimusta (SCADA, Sairaala, Tehdas)",
+                lblTable: "📊 V. Laskennallinen vaativuus, hyperparametrit ja kestävyysmatriisi",
+                lblDefense: "🛡️ VI. Puolustustekniikka ja automaattinen Cisco/iptables-eristys",
+                ch1: "LUKU 1: Graafiteoria, IoT-topologioiden lineaarialgebra ja tekoäly",
+                ch2: "LUKU 2: Laajat 1,5 sivun tutkielmat kaikista 5 GNN-mallista",
+                ch3: "LUKU 3: Laajat 1,5 sivun tutkielmat kaikista 5 hyökkäysvektorista",
+                ch4: "LUKU 4: Täydellinen tietosanakirjasanasto ja ISO/NIST-standardit",
+                scadaLabel: "1. Älykäs sähköverkko (SCADA):",
+                icuLabel: "2. Sairaalan teho-osasto (ICU IoT):",
+                plcLabel: "3. Automatisoitu tehdas (PLC / Modbus):"
             },
             no: {
                 controls: "⚙️ Simuleringskontroller", dataset: "Datakilde", synGraph: "Syntetisk Graf", customFile: "Egendefinert Fil",
                 nodeCount: "Antall IoT-noder", uploadTopo: "Last opp topologi", gnnArch: "GNN-arkitektur",
-                attackStrat: "Angrepsstrategi", attackRate: "Angrepsintensitet (%)", proKey: "Pro-lisensnøkkel",
-                runSim: "🚀 Kjør simulering", cleanAcc: "Ren nøyaktighet", attackAcc: "Nøyaktighet under angrep",
-                xaiScore: "XAI Fidelity-score", logTitle: "📊 Trussel- og forsvarslogg", exportPdf: "📄 Eksporter PDF-rapport",
-                remedTitle: "⚡ Automatisk utbedring og samsvar", copyPatch: "📋 Kopier CLI-patch", downloadSh: "💾 Last ned .sh",
+                attackStrat: "Angrepsstrategi", attackRate: "Angrepsintensitet (%)", proKey: "Pro-nøkkel",
+                runSim: "🚀 Kjør simulering", cleanAcc: "Ren nøyaktighet", attackAcc: "Angrepet nøyaktighet",
+                xaiScore: "XAI Fidelity-score", logTitle: "📊 Trussel- og forsvarslogg", exportPdf: "📄 Eksporter PDF",
+                remedTitle: "⚡ Automatisk utbedring", copyPatch: "📋 Kopier CLI", downloadSh: "💾 Last ned .sh",
                 logInit: "[System] GraphGuard IoT klar...",
-                detTitle: "Detaljert Teknisk Rapport og Komplett Leksikon",
-                detSub: "Hold musepekeren over et kort for å åpne, eller klikk for å feste. Inkluderer grafer, matematikk, eksempler og ordliste.",
-                s1: "1. Grunnleggende teori: Grafrepresentasjon av IoT-nettverk, matematikk og KI",
-                s1Text: "Et IoT-nettverk er matematisk en graf G = (V, E, X) der enheter er noder (v ∈ V), koblinger er kanter (e_ij ∈ E), telemetri er egenskapsvektorer x_i ∈ ℝ^D og nettverkstopologien lagres i nabomatrisen A (N × N).",
-                s1Ex: "Eksempel: I et strømnett med 300 noder øker graden D_14 fra 1 til 201 når en kompromittert sensor skanner 200 enheter, noe GNN oppdager umiddelbart.",
-                s2: "2. Matematisk og arkitektonisk gjennomgang av alle 5 GNN-modeller",
-                m1: "GraphSAGE: Induktiv prøvetaking som klassifiserer nye IoT-enheter på 12 ms uten ny trening.",
-                m2: "GCN: Spektral konvolusjon (D̃^-1/2 Ã D̃^-1/2) som fanger opp klyngeanomalier.",
-                m3: "GAT (Pro): Oppmerksomhetsvekter α_ij demper falske noder (α = 0.002) og beskytter nabolaget.",
-                m4: "RGCN: Egne vektmatriser W_r for hver kommunikasjonsprotokoll (MQTT, SSH, Modbus).",
-                m5: "GIN: Weisfeiler-Lehman-isomorfisme-presisjon som avslører skjulte botnett-strukturer.",
-                s3: "3. Grundig gjennomgang av alle 5 angrepsvektorer (Rødt varsel)",
-                a1: "Structural Edge Perturbation: Endrer nabomatrisen A → A' for å isolere viktige rutere.",
-                a2: "Feature-Level Noise Attack: Injiserer begrenset matematisk støy X' = X + η i telemetridata.",
-                a3: "Node Injection Attack: Kobler uautoriserte falske noder V_atk til sentrale svitsjer.",
-                a4: "Gradient-based Attack (FGSM/PGD): Utnytter tapsgradienter (∇_X L, ∇_A L) for maksimal feilklassifisering.",
-                a5: "Attribute Masking Attack: Nullstiller viktige telemetrifelt med en binær maske x'_i = x_i ⊙ m.",
-                s4: "4. Komplett ordliste over nettstedets termer, beregninger og ISO/NIST",
-                terms: [
-                    ["Node (v)", "Enhver fysisk eller virtuell IoT-enhet i nettverket."],
-                    ["Kant (Edge / e_ij)", "Kommunikasjonskanal mellom to enheter."],
-                    ["Nabomatrise (A)", "N × N tabell med 0 og 1 som viser direkte forbindelser."],
-                    ["Egenskapsvektor (x_i)", "Numeriske telemetriverdier for en enhet."],
-                    ["Message Passing", "Prosess der noder samler informasjon fra sine naboer."],
-                    ["Ren vs. Angrepet nøyaktighet", "Deteksjonsrate før og under et aktivt angrep."],
-                    ["Angrepsintensitet (%)", "Andel manipulerte koblinger eller egenskaper."],
-                    ["XAI Fidelity Score (%)", "Mål på hvor forklarbar KI-beslutningen er."],
-                    ["Auto-utbedring & ISO/NIST", "Automatiske iptables / Cisco ACL-skript i samsvar med ISO 27001 og NIST SP 800-53."]
-                ]
+                detTitle: "Detaljert Teknisk Rapport og Komplett 20-Siders Lærebok",
+                detSub: "Hver GNN-modell og angrepsvektor inneholder en 1,5-siders akademisk avhandling: dyp teori, 6-trinns matematiske utledninger, numeriske matriseberegninger og 3 casestudier.",
+                lblTheory: "📖 I. Omfattende teoretisk grunnlag og arkitektonisk mekanikk",
+                lblMath: "📐 II. Komplett 6-trinns matematisk utledning og lineær algebra",
+                lblNum: "🔢 III. Trinnvis numerisk matriseberegning med konkrete IoT-tall",
+                lblCases: "🏭 IV. Tre industrielle IoT-casestudier (SCADA, Sykehus, Fabrikk)",
+                lblTable: "📊 V. Beregningskompleksitet, hyperparametere og motstandsdyktighet",
+                lblDefense: "🛡️ VI. Forsvarsteknikk og automatisk Cisco/iptables-isolering",
+                ch1: "KAPITTEL 1: Grafteori, lineær algebra for IoT-topologier og KI",
+                ch2: "KAPITTEL 2: Komplette 1,5-siders avhandlinger om alle 5 GNN-modeller",
+                ch3: "KAPITTEL 3: Komplette 1,5-siders avhandlinger om alle 5 angrepsvektorer",
+                ch4: "KAPITTEL 4: Komplett leksikonordliste over alle termer og ISO/NIST-standarder",
+                scadaLabel: "1. Smart strømnett (SCADA):",
+                icuLabel: "2. Sykehus intensivavdeling (ICU IoT):",
+                plcLabel: "3. Automatisert fabrikk (PLS / Modbus):"
             },
             hi: {
                 controls: "⚙️ सिमुलेशन नियंत्रण", dataset: "डेटा स्रोत", synGraph: "सिंथेटिक ग्राफ़", customFile: "कस्टम फ़ाइल",
                 nodeCount: "IoT नोड्स की संख्या", uploadTopo: "टोपोलॉजी अपलोड करें", gnnArch: "GNN आर्किटेक्चर",
-                attackStrat: "हमले की रणनीति", attackRate: "हमले की तीव्रता (%)", proKey: "प्रो लाइसेंस कुंजी",
+                attackStrat: "हमले की रणनीति", attackRate: "हमले की तीव्रता (%)", proKey: "प्रो कुंजी",
                 runSim: "🚀 सिमुलेशन चलाएं", cleanAcc: "स्वच्छ सटीकता", attackAcc: "हमले के दौरान सटीकता",
-                xaiScore: "XAI फिडेलिटी स्कोर", logTitle: "📊 खतरा और रक्षा लॉग", exportPdf: "📄 PDF रिपोर्ट निर्यात करें",
-                remedTitle: "⚡ ऑटो-रीमेडिएशन और अनुपालन ऑडिट", copyPatch: "📋 CLI पैच कॉपी करें", downloadSh: "💾 .sh डाउनलोड करें",
+                xaiScore: "XAI फिडेलिटी स्कोर", logTitle: "📊 खतरा और रक्षा लॉग", exportPdf: "📄 PDF निर्यात करें",
+                remedTitle: "⚡ ऑटो-रीमेडिएशन और ऑडिट", copyPatch: "📋 CLI कॉपी करें", downloadSh: "💾 .sh डाउनलोड करें",
                 logInit: "[सिस्टम] GraphGuard IoT तैयार है...",
-                detTitle: "विस्तृत तकनीकी रिपोर्ट और संपूर्ण विश्वकोश",
-                detSub: "खोलने के लिए किसी भी कार्ड पर माउस ले जाएं या पिन करने के लिए क्लिक करें। इसमें ग्राफ़, गणित, उदाहरण और शब्दावली शामिल हैं।",
-                s1: "1. मौलिक सिद्धांत: IoT नेटवर्क का ग्राफ़ निरूपण, गणित और AI",
-                s1Text: "एक IoT नेटवर्क गणितीय रूप से एक ग्राफ़ G = (V, E, X) है। प्रत्येक उपकरण एक नोड (v ∈ V) है और प्रत्येक संचार लिंक एक एज (e_ij ∈ E) है। प्रत्येक नोड में फ़ीचर वेक्टर x_i ∈ ℝ^D होता है और कनेक्शन आसन्नता मैट्रिक्स A (N × N) में संग्रहीत होते हैं।",
-                s1Ex: "उदाहरण: 300 नोड्स के स्मार्ट ग्रिड में यदि सेंसर #14 हैक होकर 200 उपकरणों को स्कैन करता है, तो उसकी डिग्री D_14 1 से बढ़कर 201 हो जाती है, जिसे GNN तुरंत पकड़ लेता है।",
-                s2: "2. सभी 5 GNN मॉडलों का गणितीय और स्थापत्य विश्लेषण",
-                m1: "GraphSAGE: इंडक्टिव सैंपलिंग मॉडल जो बिना री-ट्रेनिंग के नए IoT उपकरणों को 12ms में वर्गीकृत करता है।",
-                m2: "GCN: स्पेक्ट्रल कन्वोल्यूशन (D̃^-1/2 Ã D̃^-1/2) जो क्लस्टर-स्तरीय विसंगतियों को पकड़ता है।",
-                m3: "GAT (Pro): मल्टी-हेड अटेंशन (α_ij) जो दुर्भावनापूर्ण नोड्स के प्रभाव को शून्य (α = 0.002) कर देता है।",
-                m4: "RGCN: प्रत्येक प्रोटोकॉल (MQTT, SSH, Modbus) के लिए अलग वेट मैट्रिक्स W_r का उपयोग करता है।",
-                m5: "GIN: वीसफेइलर-लेहमैन (WL) आइसोमोर्फिज्म परीक्षण जितना शक्तिशाली संरचनात्मक मॉडल।",
-                s3: "3. सभी 5 प्रतिकूल आक्रमण वैक्टरों का विस्तृत विश्लेषण (रेड अलर्ट)",
-                a1: "Structural Edge Perturbation: महत्वपूर्ण गेटवे को अलग करने के लिए मैट्रिक्स A → A' में बदलाव।",
-                a2: "Feature-Level Noise Attack: टेलीमेट्री डेटा में सूक्ष्म गणितीय शोर X' = X + η जोड़ना।",
-                a3: "Node Injection Attack: नेटवर्क में अनधिकृत नकली नोड्स V_atk जोड़ना।",
-                a4: "Gradient-based Attack (FGSM/PGD): वर्गीकरण त्रुटि बढ़ाने के लिए लॉस ग्रेडिएंट्स (∇_X L, ∇_A L) का उपयोग।",
-                a5: "Attribute Masking Attack: बाइनरी मास्क x'_i = x_i ⊙ m द्वारा महत्वपूर्ण टेलीमेट्री फ़ील्ड को छिपाना।",
-                s4: "4. संपूर्ण शब्दावली, मेट्रिक्स और ISO/NIST मानक",
-                terms: [
-                    ["नोड (Node / v)", "नेटवर्क में कोई भी भौतिक या आभासी IoT उपकरण।"],
-                    ["एज (Edge / e_ij)", "दो उपकरणों के बीच संचार लिंक।"],
-                    ["आसन्नता मैट्रिक्स (A)", "0 और 1 की N × N तालिका जो सीधे कनेक्शन दिखाती है।"],
-                    ["फ़ीचर वेक्टर (x_i)", "उपकरण के संख्यात्मक टेलीमेट्री मापदंड।"],
-                    ["मैसेज पासिंग (Message Passing)", "पड़ोसी नोड्स से डेटा एकत्र करने की प्रक्रिया।"],
-                    ["स्वच्छ बनाम आक्रमण सटीकता", "हमले से पहले और हमले के दौरान AI की पहचान दर।"],
-                    ["हमले की तीव्रता (%)", "प्रभावित लिंक या विशेषताओं का प्रतिशत (0%–50%)।"],
-                    ["XAI फिडेलिटी स्कोर (%)", "AI निर्णय की पारदर्शिता और व्याख्यात्मकता का माप।"],
-                    ["ऑटो-रीमेडिएशन और ISO/NIST", "स्वचालित iptables / Cisco ACL स्क्रिप्ट और ISO 27001 / NIST SP 800-53 अनुपालन।"]
-                ]
+                detTitle: "विस्तृत तकनीकी रिपोर्ट और संपूर्ण 20-पृष्ठ पाठ्यपुस्तक",
+                detSub: "प्रत्येक GNN मॉडल और प्रत्येक हमले के नीचे 1.5 पृष्ठ का विस्तृत शैक्षणिक प्रबंध है: गहन सिद्धांत, 6-चरणीय गणितीय सूत्र, संख्यात्मक मैट्रिक्स गणना और 3 औद्योगिक केस स्टडी।",
+                lblTheory: "📖 I. व्यापक सैद्धांतिक आधार और स्थापत्य तंत्र",
+                lblMath: "📐 II. संपूर्ण 6-चरणीय गणितीय सूत्र और रैखिक बीजगणित",
+                lblNum: "🔢 III. ठोस IoT संख्याओं के साथ चरण-दर-चरण मैट्रिक्स गणना",
+                lblCases: "🏭 IV. तीन वास्तविक औद्योगिक IoT केस स्टडी (SCADA, अस्पताल ICU, स्मार्ट फैक्ट्री)",
+                lblTable: "📊 V. कम्प्यूटेशनल जटिलता, हाइपरपैरामीटर और लचीलापन तालिका",
+                lblDefense: "🛡️ VI. रक्षा इंजीनियरिंग और स्वचालित Cisco/iptables आइसोलेशन",
+                ch1: "अध्याय 1: मौलिक ग्राफ़ सिद्धांत, IoT टोपोलॉजी का रैखिक बीजगणित और AI",
+                ch2: "अध्याय 2: सभी 5 GNN मॉडलों पर 1.5-पृष्ठ के विस्तृत शैक्षणिक प्रबंध",
+                ch3: "अध्याय 3: सभी 5 प्रतिकूल आक्रमण वैक्टरों पर 1.5-पृष्ठ के विस्तृत प्रबंध (रेड अलर्ट)",
+                ch4: "अध्याय 4: संपूर्ण शब्दावली, मेट्रिक्स और ISO/NIST मानक विश्वकोश",
+                scadaLabel: "1. स्मार्ट पावर ग्रिड (SCADA):",
+                icuLabel: "2. अस्पताल आईसीयू टेलीमेट्री (ICU IoT):",
+                plcLabel: "3. स्वचालित विनिर्माण संयंत्र (PLC / Modbus):"
             },
             zh: {
                 controls: "⚙️ 仿真控制", dataset: "数据源", synGraph: "合成图拓扑", customFile: "自定义文件",
                 nodeCount: "IoT 节点数量", uploadTopo: "上传拓扑 (CSV/JSON)", gnnArch: "GNN 架构模型",
-                attackStrat: "攻击策略", attackRate: "攻击强度率 (%)", proKey: "专业版许可证密钥",
+                attackStrat: "攻击策略", attackRate: "攻击强度率 (%)", proKey: "专业版密钥",
                 runSim: "🚀 运行对抗仿真", cleanAcc: "初始准确率", attackAcc: "受攻击后准确率",
                 xaiScore: "XAI 保真度得分", logTitle: "📊 企业威胁与防御日志", exportPdf: "📄 导出审计报告 (PDF)",
                 remedTitle: "⚡ 自动修复剧本与合规审计", copyPatch: "📋 复制 CLI 补丁", downloadSh: "💾 下载 .sh",
-                logInit: "[系统] GraphGuard IoT 已初始化，准备就绪...",
-                detTitle: "详细企业技术报告与完整百科全书",
-                detSub: "将鼠标悬停在卡片上即可展开，点击可固定。包含图论图示、数学公式、真实案例与完整术语表。",
-                s1: "1. 基础理论：IoT 网络的图表示、线性代数与人工智能",
-                s1Text: "企业级 IoT 网络在数学上是一个属性拓扑图 G = (V, E, X)。每个物理或虚拟设备（传感器、PLC 控制器、摄像头、网关）是一个节点 (v ∈ V)，每次通信会话（TCP/IP、MQTT、Modbus）是一条边 (e_ij ∈ E)。每个节点具有 D 维特征向量 x_i ∈ ℝ^D（数据包大小、频率、CPU 负载、延迟）。全网连接保存在 N × N 邻接矩阵 A 和度矩阵 D 中。",
-                s1Ex: "具体案例：在包含 300 个节点的智能电网中，14 号变电站传感器每 10 秒向 1 号 SCADA 网关发送 50 字节数据。若被黑客攻破并扫描内部 200 台设备，其节点度 D_14 将从 1 激增至 201，GNN 消息传递机制可在毫秒级内捕获该异常。",
-                s2: "2. 全部 5 种 GNN 模型的数学公式与架构深度解析",
-                m1: "GraphSAGE（采样与聚合）：归纳式学习框架，对 k 跳邻居进行固定数量 S_k 采样并通过 Mean/LSTM/Pooling 聚合。无需重新训练即可在 12ms 内识别新接入的 50 台仓库机器人。",
-                m2: "GCN（图卷积网络）：基于一阶切比雪夫多项式的谱图卷积，加入自环 (Ã = A + I) 并通过对称度矩阵 (D̃^-1/2 Ã D̃^-1/2) 归一化，精准捕捉数据中心同步 SYN 洪泛攻击。",
-                m3: "GAT（图注意力网络 - Pro）：利用 LeakyReLU 计算多头自注意力系数 α_ij。当黑客接入恶意树莓派连接 15 台医疗监护仪时，GAT 自动将其注意力权重降至 α_ij = 0.002，彻底屏蔽毒化信号。",
-                m4: "RGCN（关系图卷积）：为每种协议关系 r ∈ R（MQTT、SSH、RTSP、Modbus）分配独立权重矩阵 W_r，立即拦截摄像头向数据库发起的非法 SSH 连接。",
-                m5: "GIN（图同构网络）：具备 Weisfeiler-Lehman (WL) 图同构测试的最高判别力，通过单射求和 (1 + ε)h_v + ∑ h_u 识别伪装成星型网的环形僵尸网络。",
-                s3: "3. 全部 5 种对抗攻击向量的深度数学与实战解析（红色警报）",
-                a1: "Structural Edge Perturbation（结构边扰动）：在预算 ||A' - A||_0 ≤ 2Δ 内篡改邻接矩阵 A → A'，添加虚假连接或切断核心网关链路。",
-                a2: "Feature-Level Noise Attack（特征级噪声攻击）：保持物理连接 A 不变，向遥测矩阵注入有界数学噪声 X' = X + η (||η||_∞ ≤ ε) 以绕过静态阈值检测。",
-                a3: "Node Injection Attack（节点注入攻击 TDGIA）：向网络接入未授权恶意节点 V_atk，矩阵扩展为 (N + N_atk) 维，污染核心交换机邻居表征。",
-                a4: "Gradient-based Attack（FGSM/PGD 梯度攻击）：计算交叉熵损失对特征与结构的偏导数 (∇_X L, ∇_A L)，沿梯度符号方向制造最大分类误差。",
-                a5: "Attribute Masking Attack（属性掩码攻击）：通过二进制掩码 x'_i = x_i ⊙ m 抹除或加密关键数据包头部与遥测字段。",
-                s4: "4. 网站完整术语表、遥测指标与 ISO/NIST 合规字典",
-                terms: [
-                    ["节点 (Node / v)", "网络中的任何物理或虚拟 IoT 终端设备。"],
-                    ["边 (Edge / e_ij)", "两个设备之间的通信会话或网络流。"],
-                    ["邻接矩阵 (Adjacency Matrix A)", "表示设备间直接连接关系的 N × N 零一矩阵。"],
-                    ["特征向量 (Feature Vector x_i)", "输入给 AI 的设备数值遥测属性列表。"],
-                    ["消息传递 (Message Passing)", "节点收集并聚合邻居特征向量的核心数学过程。"],
-                    ["初始 vs 受攻击准确率", "攻击前的基准检测率与遭受对抗攻击时的剩余准确率。"],
-                    ["攻击强度率 (%)", "仿真中被篡改的边或特征百分比 (0%–50%)。"],
-                    ["XAI 保真度得分 (%)", "通过 GNNExplainer 衡量 AI 告警决策的可解释性与可信度。"],
-                    ["自动修复与 ISO/NIST", "自动生成 Linux iptables 和 Cisco IOS ACL 隔离脚本，符合 ISO 27001 与 NIST SP 800-53 标准。"]
-                ]
+                logInit: "[系统] GraphGuard IoT 已初始化...",
+                detTitle: "详细企业技术报告与完整 20 页学术教科书",
+                detSub: "下方每一个 GNN 模型与每一种攻击向量均包含整整 1.5 页的深度学术专著：深度理论、6 步数学公式推导、具体数值矩阵演算、SVG 拓扑图与 3 个工业级实战案例。",
+                lblTheory: "📖 I. 深度理论基础、非欧几里得图空间哲学与架构机制",
+                lblMath: "📐 II. 完整 6 步数学公式推导与线性代数算子分解",
+                lblNum: "🔢 III. 具体 IoT 数值矩阵逐步演算实例 (Numerical Walkthrough)",
+                lblCases: "🏭 IV. 三个真实工业级 IoT 实战案例 (智能电网 SCADA、医院 ICU、智能制造 PLC)",
+                lblTable: "📊 V. 计算复杂度、超参数配置与对抗鲁棒性矩阵表",
+                lblDefense: "🛡️ VI. 企业级防御工程与自动化 Cisco IOS / Linux iptables 隔离剧本",
+                ch1: "第一章：基础图论、IoT 拓扑线性代数表示与 AI 入侵检测原理",
+                ch2: "第二章：全部 5 种图神经网络 (GNN) 模型的 1.5 页深度学术专著",
+                ch3: "第三章：全部 5 种对抗性网络攻击向量的 1.5 页深度专著（红色警报）",
+                ch4: "第四章：平台全部术语、遥测指标与 ISO/NIST 合规标准完整百科词典",
+                scadaLabel: "1. 智能电网变电站 (IEC 61850 SCADA)：",
+                icuLabel: "2. 医院重症监护室医疗遥测 (HL7 / MQTT)：",
+                plcLabel: "3. 自动化智能制造工厂 (Modbus TCP / PROFINET)："
             },
             ja: {
                 controls: "⚙️ シミュレーション制御", dataset: "データソース", synGraph: "合成グラフ", customFile: "カスタムファイル",
                 nodeCount: "IoTノード数", uploadTopo: "トポロジのアップロード", gnnArch: "GNNアーキテクチャ",
-                attackStrat: "攻撃戦略", attackRate: "攻撃強度率 (%)", proKey: "Proライセンスキー",
+                attackStrat: "攻撃戦略", attackRate: "攻撃強度率 (%)", proKey: "Proキー",
                 runSim: "🚀 シミュレーション実行", cleanAcc: "クリーン精度", attackAcc: "攻撃時精度",
-                xaiScore: "XAI忠実度スコア", logTitle: "📊 脅威・防御ログ", exportPdf: "📄 監査レポート出力 (PDF)",
-                remedTitle: "⚡ 自動修復プレイブックとコンプライアンス監査", copyPatch: "📋 CLIパッチをコピー", downloadSh: "💾 .shをダウンロード",
-                logInit: "[システム] GraphGuard IoT 初期化完了...",
-                detTitle: "詳細技術レポート＆完全百科事典",
-                detSub: "カードにカーソルを合わせると展開し、クリックで固定されます。グラフ図、数式、実例、用語集を完備。",
-                s1: "1. 基礎理論：IoTネットワークのグラフ表現、線形代数とAI",
-                s1Text: "企業のIoTネットワークは数学的に位相グラフ G = (V, E, X) として表現されます。各デバイス（センサー、PLC、カメラ、ゲートウェイ）はノード (v ∈ V)、通信セッション（TCP/IP、MQTT、Modbus）はエッジ (e_ij ∈ E) です。各ノードは特徴ベクトル x_i ∈ ℝ^D を持ち、接続は N × N 隣接行列 A と次数行列 D に格納されます。",
-                s1Ex: "具体例：300ノードのスマートグリッドでセンサー#14が乗っ取られ200台をスキャンすると、次数 D_14 が1から201に急増し、GNNのメッセージパッシングが即座に異常を検知します。",
-                s2: "2. 全5種GNNモデルの数学的・構造的徹底解説",
-                m1: "GraphSAGE（サンプリング＆集約）：帰納的学習により近傍 S_k をサンプリングし Mean/LSTM/Pooling で集約。新規参加した50台の倉庫ロボットも再学習なしで12msで分類します。",
-                m2: "GCN（グラフ畳み込みネットワーク）：自己ループ (Ã = A + I) と対称次数正規化 (D̃^-1/2 Ã D̃^-1/2) によるスペクトル畳み込みで、データセンターの同期SYNフラッドを検知します。",
-                m3: "GAT（グラフ注意ネットワーク - Pro）：LeakyReLUで注意係数 α_ij を算出。不正なラズベリーパイが医療モニター15台に接続されても、重みを α_ij = 0.002 に下げて汚染を無力化します。",
-                m4: "RGCN（関係GCN）：プロトコル関係 r ∈ R（MQTT、SSH、RTSP、Modbus）ごとに重み行列 W_r を分離し、カメラからDBへの不正なSSH接続を即座に遮断します。",
-                m5: "GIN（グラフ同型ネットワーク）：Weisfeiler-Lehman (WL) 同型性テストと同等の識別力を持ち、星型トポロジを装ったリング型ボットネットを暴きます。",
-                s3: "3. 全5種敵対的攻撃ベクトルの数学的・実践的解説（赤色警報）",
-                a1: "Structural Edge Perturbation（構造的エッジ摂動）：予算 ||A' - A||_0 ≤ 2Δ 内で隣接行列 A → A' を改ざんし、重要ゲートウェイを孤立させます。",
-                a2: "Feature-Level Noise Attack（特徴量ノイズ攻撃）：物理接続 A は変えず、テレメトリに微小な数学的ノイズ X' = X + η を注入して静的閾値を回避します。",
-                a3: "Node Injection Attack（ノード注入攻撃 TDGIA）：未承認の不正ノード V_atk をコアスイッチに接続し、近傍の埋め込み表現を汚染します。",
-                a4: "Gradient-based Attack（FGSM/PGD 勾配攻撃）：損失関数の勾配 (∇_X L, ∇_A L) を計算し、最小の変更で最大の分類誤差を引き起こします。",
-                a5: "Attribute Masking Attack（属性マスキング攻撃）：バイナリマスク x'_i = x_i ⊙ m により重要なパケットヘッダやテレメトリ項目をゼロ化します。",
-                s4: "4. サイト用語集、テレメトリ指標、ISO/NISTコンプライアンス辞典",
-                terms: [
-                    ["ノード (Node / v)", "ネットワーク上の物理または仮想IoTデバイス。"],
-                    ["エッジ (Edge / e_ij)", "2つのデバイス間の通信リンクまたはフロー。"],
-                    ["隣接行列 (Adjacency Matrix A)", "デバイス間の直接接続を0と1で表す N × N 行列。"],
-                    ["特徴ベクトル (Feature Vector x_i)", "AIに入力されるデバイスの数値テレメトリ属性。"],
-                    ["メッセージパッシング", "近傍ノードから特徴ベクトルを集約する数学的プロセス。"],
-                    ["クリーン精度 vs 攻撃時精度", "攻撃前の基準精度と敵対的攻撃下の維持精度。"],
-                    ["攻撃強度率 (%)", "改ざんされたエッジや特徴量の割合 (0%–50%)。"],
-                    ["XAI忠実度スコア (%)", "GNNExplainerによるAI判断の説明可能性スコア。"],
-                    ["自動修復とISO/NIST", "Linux iptables / Cisco ACL 自動隔離スクリプトと ISO 27001 / NIST SP 800-53 準拠。"]
-                ]
+                xaiScore: "XAI忠実度スコア", logTitle: "📊 脅威・防御ログ", exportPdf: "📄 PDF監査出力",
+                remedTitle: "⚡ 自動修復とコンプライアンス", copyPatch: "📋 CLIコピー", downloadSh: "💾 .sh保存",
+                logInit: "[システム] GraphGuard IoT 準備完了...",
+                detTitle: "詳細技術レポート＆完全20ページ学術教科書",
+                detSub: "以下の各GNNモデルおよび各攻撃ベクトルは、それぞれ1.5ページの学術論文レベルの解説（深層理論、6段階の数式導出、具体的な数値行列計算、SVG図解、3つの産業事例）を含みます。",
+                lblTheory: "📖 I. 包括的な理論的基礎と非ユークリッド空間アーキテクチャ機構",
+                lblMath: "📐 II. 完全6段階の数式導出と線形代数オペレータ",
+                lblNum: "🔢 III. 具体的なIoT数値を用いたステップバイステップ行列計算",
+                lblCases: "🏭 IV. 3つの産業用IoT実例（スマートグリッドSCADA、病院ICU、工場PLC）",
+                lblTable: "📊 V. 計算量、ハイパーパラメータ、および敵対的耐性マトリックス表",
+                lblDefense: "🛡️ VI. 防御エンジニアリングと自動 Cisco IOS / Linux iptables 隔離プロトコル",
+                ch1: "第1章：基礎グラフ理論、IoTトポロジの線形代数表現とAI侵入検知",
+                ch2: "第2章：全5種GNNモデルの1.5ページ徹底学術モノグラフ",
+                ch3: "第3章：全5種敵対的攻撃ベクトルの1.5ページ徹底モノグラフ（赤色警報）",
+                ch4: "第4章：全プラットフォーム用語、指標、ISO/NIST規格の完全百科事典",
+                scadaLabel: "1. スマートグリッド変電所 (IEC 61850 SCADA)：",
+                icuLabel: "2. 病院ICU医療テレメトリ (HL7 / MQTT)：",
+                plcLabel: "3. 自動化スマート工場 (Modbus TCP / PROFINET)："
             }
         };
 
-        // Dynamic HTML Builder for the 10-Language Encyclopedia (Zero Duplication, Zero Lag)
+        // Deep Academic Monograph Data for Every Single Model (5 Models x 1.5 Pages Each)
+        function getModelsData(lang) {
+            const isAz = lang === 'az';
+            return [
+                {
+                    id: "A. GraphSAGE (Inductive Sample and Aggregate Architecture)",
+                    badge: "INDUCTIVE LEARNING | O(|V| · S₁ · S₂ · D²)",
+                    p1: isAz
+                        ? "GraphSAGE (Hamilton və b. tərəfindən təklif edilmiş Sample and Aggregate arxitekturası) böyük miqyaslı və dinamik dəyişən Əşyaların İnterneti (IoT) şəbəkələrində transduktiv öyrənmənin fundamental məhdudiyyətini aradan qaldırmaq üçün yaradılmışdır. Klassik spektral modellər (məsələn, ilkin GCN) təlim zamanı bütün N × N Qonşuluq Matrisinin (A) tam olaraq məlum olmasını tələb edir; yəni korporativ şəbəkəyə cəmi 1 yeni ağıllı sensor, IP-kamera və ya sənaye kontrolleri (PLC) əlavə edildikdə matrisin ölçüsü (N+1) × (N+1) olur və bütün neyron şəbəkəsi sıfırdan yenidən öyrədilməlidir. GraphSAGE isə fərdi qovşaqlar üçün sabit vektorlar əzbərləmək əvəzinə, qovşağın yerli topoloji ətrafından məlumatları necə seçib toplamağı öyrənən universal 'Aqreqasiya Funksiyaları' (Aggregation Functions) qurur."
+                        : "GraphSAGE (Sample and Aggregate, pioneered by Hamilton et al.) was engineered to overcome the fundamental limitation of transductive graph learning in massive, dynamically evolving Internet of Things (IoT) ecosystems. Classical spectral architectures require the complete N × N Adjacency Matrix (A) to remain fixed during both training and inference; if a single new smart sensor, IP camera, or industrial PLC controller joins the enterprise VLAN, the matrix dimension shifts to (N+1) × (N+1), invalidating transductive embeddings. GraphSAGE solves this by learning parameterized 'Aggregator Functions' that inductively generate low-dimensional embeddings for previously unseen nodes in real time.",
+                    p2: isAz
+                        ? "İşləmə mexanizmi iki əsas mərhələyə bölünür: 1) Qonşuluq Seçimi (Neighborhood Uniform Sampling) və 2) Xüsusiyyətlərin Aqreqasiyası (Feature Aggregation). Korporativ kommutator (core switch) kimi yüksək dərəcəli 'hub' qovşaqların 5,000-dən çox qoşulması ola bilər ki, onların hamısını eyni anda hesablamaq yaddaş partlayışına (RAM bottleneck) səbəb olar. GraphSAGE hər k-addımlıq (k-hop) dərinlikdə sabit S_k sayda təsadüfi qonşu seçir (məsələn, 1-ci addımda S₁ = 25 qonşu, 2-ci addımda S₂ = 10 qonşu). Beləliklə, hətta 100,000 cihazlı şəbəkədə belə hər qovşaq üçün hesablama həcmi 25 × 10 = 250 əməliyyatla məhdudlaşır və cavab müddəti 12 millisaniyədən aşağı qalır."
+                        : "Its operational pipeline executes in two distinct mathematical phases: (1) Fixed-Size Uniform Neighborhood Sampling, and (2) Multi-Hop Feature Aggregation. In enterprise networks, core backbone switches act as high-degree hubs connected to thousands of endpoints, which normally triggers exponential memory explosion (the 'neighborhood expansion problem'). GraphSAGE enforces a strict uniform sample size S_k at each hop depth k (typically S₁ = 25 at hop-1 and S₂ = 10 at hop-2), bounding the receptive field to at most S₁ · S₂ = 250 nodes per target device and guaranteeing sub-15ms inference latency.",
+                    p3: isAz
+                        ? "Kibertəhlükəsizlik baxımından GraphSAGE-in ən böyük üstünlüyü onun lokal xüsusiyyət səs-küyünə (Feature-Level Noise) və kiçik həcmli Struktur Til Pozulmalarına (Structural Edge Perturbation) qarşı təbii immunitetidir. Çünki aqreqator funksiyası (Mean, LSTM və ya Max-Pooling) qonşu qovşaqların telemetriya paylanmasını statistik olaraq ümumiləşdirir və öz əvvəlki vektoru h_v^(k-1) ilə birləşdirir (CONCAT əməliyyatı). Hətta haker 1-2 qonşu əlaqəni kəssə belə, öz vektorunun qorunub saxlanması (skip-connection) sayəsində cihazın təсниfat dəqiqliyi çökmür."
+                        : "From a cybersecurity resilience standpoint, GraphSAGE exhibits exceptional natural immunity against localized Feature-Level Noise and moderate Structural Edge Perturbations. Because the model explicitly concatenates a node's own previous representation h_v^(k-1) with the aggregated neighborhood vector h_N(v)^(k) (acting as a topological skip-connection) before applying theL2 normalization and non-linear activation, localized noise on peripheral neighbors cannot easily overwrite the target device's core behavioral signature.",
+                    mathSteps: [
+                        "Step 1 (Input Initialization at Layer k = 0):   h_v⁽⁰⁾ = x_v ∈ ℝ^D,   ∀v ∈ V   (Raw IoT telemetry vector: packet size, rate, CPU, jitter)",
+                        "Step 2 (Uniform k-Hop Neighborhood Sampling):   N_S(v) = UniformSample( { u ∈ V | (u,v) ∈ E }, S_k ),   where |N_S(v)| = S_k",
+                        "Step 3A (Mean Aggregator Option):               h_{N(v)}⁽ᵏ⁾ = (1 / |N_S(v)|) ∑_{u ∈ N_S(v)} h_u⁽ᵏ⁻¹⁾",
+                        "Step 3B (Max-Pooling Aggregator Option):        h_{N(v)}⁽ᵏ⁾ = max_{u ∈ N_S(v)} ( σ( W_pool · h_u⁽ᵏ⁻¹⁾ + b_pool ) )",
+                        "Step 4 (Skip-Connection Concatenation & MLP):   z_v⁽ᵏ⁾ = σ( W⁽ᵏ⁾ · CONCAT( h_v⁽ᵏ⁻¹⁾ , h_{N(v)}⁽ᵏ⁾ ) + b⁽ᵏ⁾ ),   W⁽ᵏ⁾ ∈ ℝ^(D_k × 2D_{k-1})",
+                        "Step 5 (L2 Unit Sphere Normalization & Output): h_v⁽ᵏ⁾ = z_v⁽ᵏ⁾ / ||z_v⁽ᵏ⁾||₂,   P(y_v | z_v⁽ᴷ⁾) = Softmax( W_cls · h_v⁽ᴷ⁾ )"
+                    ],
+                    numWalkthrough: [
+                        "Target Device v₁ (PLC Controller) Initial Telemetry Vector:   h₁⁽⁰⁾ = [ 0.80 (Packet Rate),  0.20 (CPU Load),  0.10 (Port Entropy) ]",
+                        "Sampled Neighbors N_S(v₁) = { v₂, v₃ } with Vectors:          h₂⁽⁰⁾ = [ 0.70, 0.30, 0.10 ],   h₃⁽⁰⁾ = [ 0.90, 0.10, 0.20 ]",
+                        "1. Compute Neighborhood Mean Aggregation h_{N(1)}⁽¹⁾:         h_{N(1)}⁽¹⁾ = ([0.70+0.90]/2, [0.30+0.10]/2, [0.10+0.20]/2) = [ 0.80, 0.20, 0.15 ]",
+                        "2. Concatenate Self + Neighborhood Vector CONCAT(h₁⁽⁰⁾, h_N): c₁ = [ 0.80, 0.20, 0.10,  0.80, 0.20, 0.15 ] ∈ ℝ⁶",
+                        "3. Multiply by Learned Weight Matrix W⁽¹⁾ & ReLU:             z₁⁽¹⁾ = ReLU( W⁽¹⁾ · c₁ ) = [ 1.20, 0.90 ]",
+                        "4. Apply L2 Normalization (||z₁⁽¹⁾||₂ = √(1.44 + 0.81) = 1.5): h₁⁽¹⁾ = [ 1.20 / 1.50 , 0.90 / 1.50 ] = [ 0.80, 0.60 ] → Classified: 97.8% BENIGN"
+                    ],
+                    cases: [
+                        isAz ? "500 yarımstansiyadan ibarət enerji şəbəkəsinə yeni günəş panelləri инверторları qoşulanda GraphSAGE heç bir yenidən təlim tələb etmədən 11 ms ərzində onları qonşu transformatorların telemetriyası ilə müqayisə edib təhlükəsizlik statusunu təyin edir." : "When new solar inverter nodes dynamically join a 500-substation power grid, GraphSAGE computes their embeddings in 11ms without retraining, verifying that their Modbus polling rates match adjacent transformers.",
+                        isAz ? "Xəstəxanada hərəkətli tibbi arabalar (infuziya nasosları) otaqdan-otağa keçərkən fərqli Wi-Fi nöqtələrinə qoşulur. GraphSAGE hər yeni qoşulmada S₁=15 qonşu seçərək saxta tibbi cihazları 96.4% dəqiqliklə ayırd edir." : "Mobile infusion pumps roaming across hospital Wi-Fi access points are continuously re-evaluated inductively using S₁=15 neighbor samples, catching spoofed MAC addresses with 96.4% accuracy.",
+                        isAz ? "Avtomobil zavodunda 200 qaynaq robotundan 5-də temperatur və paket tezliyi səs-küyü yarandıqda, Max-Pooling aqreqatoru anomal zirvə dəyərlərini dərhal yaxalayır." : "In an automotive plant with 200 robotic arms, GraphSAGE's Max-Pooling aggregator captures sudden micro-bursts in profinet payload sizes caused by PLC logic-bomb malware."
+                    ],
+                    specs: ["O(|V| · S₁ · S₂ · D²)", "O(B · S₁ · S₂ · D)", "11.4 ms", "97.2%", "89.5%", "83.1%"],
+                    defense: "iptables -A FORWARD -m state --state NEW -m recent --set --name SAGE_RATE && iptables -A FORWARD -m recent --update --seconds 1 --hitcount 25 --name SAGE_RATE -j DROP"
+                },
+                {
+                    id: "B. GCN (Spectral Graph Convolutional Network)",
+                    badge: "SPECTRAL LAPLACIAN | O(|E| · D + |V| · D²)",
+                    p1: isAz
+                        ? "GCN (Kipf və Welling tərəfindən təqdim edilmiş Graph Convolutional Network) klassik Furiyə çevirməsini və konvolyusiya əməliyyatlarını qeyri-Evklid qraf fəzasına daşıyan təməl spektral neyron şəbəkəsidir. Adi şəkillərdə (2D piksellərdə) konvolyusiya filtri hər pikselin ətrafındakı 8 sabit qonşunu sürüşərək oxuyur, lakin kompüter şəbəkələrində qovşaqların qonşu sayı sabit deyil (bəzi sensorların 1, bəzi marşrutlayıcıların 400 qonşusu var). GCN bu problemi həll etmək üçün Qraf Laplasian Matrisinin (L = I - D⁻¹/² A D⁻¹/²) məxsusi ədədləri (eigenvalues) üzərində təyin olunmuş Çebışev polinomlarının 1-ci tərtib kəsilmiş yaxınlaşmasından istifadə edir."
+                        : "GCN (Graph Convolutional Network, introduced by Kipf & Welling) generalizes classical Euclidean 2D image convolutions to irregular, non-Euclidean graph domains via Spectral Graph Theory. While pixels in an image have a rigid 8-neighbor grid, IoT network devices have arbitrary connectivity degrees. GCN overcomes this by defining spectral filters in the Fourier domain of the normalized Graph Laplacian (L = I_N - D⁻¹/² A D⁻¹/²) and applying a localized first-order Chebyshev polynomial approximation to eliminate expensive eigenvalue decomposition.",
+                    p2: isAz
+                        ? "GCN-in riyazi nüvəsində iki mühüm mühəndislik addımı dayanır: Birincisi, Qonşuluq Matrisinə vahid matris əlavə edilməsi (Ã = A + I_N), yəni hər bir IoT qovşağına 'öz-özünə til' (self-loop) qoşulur ki, qonşuların məlumatlarını toplayarkən cihazın öz şəxsi telemetriya vektoru itməsin. İkincisi, Simmetrik Dərəcə Normallaşdırmasıdır: Â = D̃⁻¹/² Ã D̃⁻¹/². Əgər sadəcə Ã · X vurması aparılsaydı, 500 qoşulması olan mərkəzi serverin ədədləri 500 dəfə böyüyər və neyron şəbəkəsində qradient partlayışı (exploding gradients) yaradardı. Hər iki tərəfdən √(d_i · d_j) dəyərinə bölməklə həm yüksək dərəcəli şlüzlərin, həm də tək sensorların çəkisi tarazlaşdırılır."
+                        : "At the mathematical core of GCN lie two critical linear algebra tricks: First, the Renormalization Trick adds an Identity Matrix (self-loops) to the Adjacency Matrix (Ã = A + I_N), ensuring that a device's own telemetry vector is included when summing neighborhood features. Second, Symmetric Degree Normalization (Â = D̃⁻¹/² Ã D̃⁻¹/²) scales every edge (i, j) by 1 / √(d̃_i · d̃_j). Without this symmetric scaling, high-degree core switches connected to 500 sensors would produce exploding feature magnitudes and destabilize gradient backpropagation.",
+                    p3: isAz
+                        ? "Kibertəhlükəsizlik tətbiqlərində GCN 'aşağı tezlikli spektral süzgəc' (low-pass graph filter) kimi çıxış edir: o, bir-biri ilə sıx bağlı olan alt-şəbəkə qovşaqlarının xüsusiyyət vektorlarını hamarlayır (Laplacian smoothing). Bu xüsusiyyət GCN-i bütöv bir server klasterinə və ya VLAN seqmentinə yayılan sinxron DDoS, ARP-spoofing və Atribut Maskalama hücumlarını aşkarlamaqda əvəzolunmaz edir. Lakin GCN-in həssas tərəfi odur ki, bütün qonşulara yalnız dərəcələrinə görə sabit çəki verir; buna görə də haker birbaşa struktur əlaqələri dəyişdikdə (Nettack) spektral paylanma təhrif oluna bilir."
+                        : "In enterprise intrusion detection, GCN acts as a localized spectral low-pass filter that performs Laplacian smoothing across connected subgraphs, making node embeddings within the same VLAN cluster similar. This makes GCN exceptionally fast and accurate (98.1% clean accuracy) at detecting subnet-wide anomalies such as synchronized SYN-floods, worm propagation, and Attribute Masking. However, because edge weights are fixed solely by node degree (1/√(d̃_i d̃_j)), GCN is more sensitive to targeted Structural Edge Perturbations than attention-based models.",
+                    mathSteps: [
+                        "Step 1 (Add Self-Loops to Adjacency Matrix):    Ã = A + I_N,   where Ã_ij ∈ {0, 1}^(N × N)",
+                        "Step 2 (Compute Augmented Degree Matrix D̃):     D̃_ii = ∑_{j=1}^N Ã_ij = deg(v_i) + 1,   D̃_ij = 0 (for i ≠ j)",
+                        "Step 3 (Symmetric Spectral Normalization):      Â = D̃⁻¹/² · Ã · D̃⁻¹/²   ⇒   Â_ij = Ã_ij / √( (deg(i)+1) · (deg(j)+1) )",
+                        "Step 4 (Layer-wise Spectral Convolution):       H⁽ˡ⁺¹⁾ = σ( Â · H⁽ˡ⁾ · W⁽ˡ⁾ ),   where H⁽⁰⁾ = X ∈ ℝ^(N × D)",
+                        "Step 5 (2-Layer GCN Explicit Forward Equation): Z = Softmax( Â · ReLU( Â · X · W⁽⁰⁾ ) · W⁽¹⁾ ) ∈ ℝ^(N × C)",
+                        "Step 6 (Semi-Supervised Cross-Entropy Loss):    L_GCN = - ∑_{i ∈ V_L} ∑_{c=1}^C Y_{ic} ln( Z_{ic} ) + λ ||W||₂²"
+                    ],
+                    numWalkthrough: [
+                        "Consider a 3-Node IoT Subnet (v₁—v₂—v₃):        A = [[0,1,0], [1,0,1], [0,1,0]]  ⇒  Ã = A + I = [[1,1,0], [1,1,1], [0,1,1]]",
+                        "1. Augmented Degrees D̃_ii:                      d̃₁ = 2,  d̃₂ = 3,  d̃₃ = 2  ⇒  D̃⁻¹/² = diag( 1/√2, 1/√3, 1/√2 ) = diag(0.707, 0.577, 0.707)",
+                        "2. Normalized Matrix Â = D̃⁻¹/² Ã D̃⁻¹/²:        Â₁₁ = 0.50,  Â₁₂ = 1/√(2·3) = 0.408,  Â₂₂ = 1/3 = 0.333",
+                        "3. Input Node Telemetry X (1D Packet Rate):     X = [ [10.0], [12.0], [95.0 (Compromised Node v₃)] ]",
+                        "4. Spectral Aggregation (Â · X) at Node v₂:     h₂ = 0.408(10.0) + 0.333(12.0) + 0.408(95.0) = 4.08 + 4.00 + 38.76 = 46.84",
+                        "5. Threshold & W⁽⁰⁾ Classification:             Anomaly wave from v₃ elevates v₂'s spectral state from 11.0 → 46.84 → Flagged!"
+                    ],
+                    cases: [
+                        isAz ? "Sabit topologiyalı 400 serverlik korporativ Data Mərkəzdə 4 kommutator eyni anda Mirai botnet tərəfindən SYN-flood hücumuna məruz qaldıqda, GCN spektral hamarlama ilə bütün alt-şəbəkədəki anomal yükü 6.2 ms-də aşkarlayır." : "In a fixed 400-server Data Center topology, when 4 adjacent ToR switches suffer a synchronized Mirai SYN-flood, GCN's spectral smoothing detects the cluster-wide shift in 6.2ms.",
+                        isAz ? "Ağıllı binanın (Smart Building) 150 BACnet kondisioner və işıqlandırma sensorunda atributların bir qismi sıfırlandıqda (Attribute Masking), GCN qonşu sensorların orta qiyməti ilə itmiş məlumatı bərpa edir." : "Across 150 BACnet HVAC sensors in a smart skyscraper, when malware masks temperature telemetry on 12 nodes, GCN reconstructs the missing signal from 1-hop neighbors.",
+                        isAz ? "Su təmizləmə stansiyasında PLC kontrollerlər arasında sabit dövri paket mübadiləsi pozulduqda Laplasian enerjisi (xᵀLx) kəskin artır və həyəcan siqnalı verilir." : "In a municipal water treatment plant with static PLC polling rings, any deviation in cyclic packet symmetry spikes the Dirichlet Laplacian energy xᵀLx, triggering immediate lockdown."
+                    ],
+                    specs: ["O(|E| · D + |V| · D²)", "O(|E| + |V| · D)", "6.2 ms", "98.1%", "82.4%", "71.8%"],
+                    defense: "access-list 110 deny tcp any any synFragments log-input && interface GigabitEthernet0/1 ip access-group 110 in"
+                },
+                {
+                    id: "C. GAT (Graph Attention Network - Enterprise Pro Tier)",
+                    badge: "MULTI-HEAD SELF-ATTENTION | O(|V| · D · D' + |E| · D')",
+                    p1: isAz
+                        ? "GAT (Veličković və b. tərəfindən hazırlanmış Graph Attention Network) qraf neyron şəbəkələrində ən güclü müdafiə arxitekturası hesab olunur. GCN və GraphSAGE-in əsas çatışmazlığı ondan ibarətdir ki, onlar qonşu qovşaqların məlumatlarını toplayarkən bütün qonşulara ya bərabər (1/N), ya da yalnız qoşulma sayından asılı olan kor-koranə çəki (1/√(d_i d_j)) verirlər. Halbuki real kiberhücum zamanı qovşağın 10 qonşusundan 9-u təmiz, 1-i isə haker tərəfindən şəbəkəyə qoşulmuş zəhərli 'Rogue Node' (saxta qovşaq) ola bilər. GAT Transformer modellərindəki 'Özünü-Diqqət' (Self-Attention) mexanizmini qraflara gətirərək hər bir (i, j) əlaqəsi üçün dinamik α_ij əhəmiyyət əmsalı öyrənir."
+                        : "GAT (Graph Attention Network, developed by Veličković et al.) represents the gold standard in adversarial graph defense. Both GCN and GraphSAGE suffer from a critical vulnerability: during message passing, they weight neighbors either uniformly (1/|N_i|) or solely by static node degree (1/√(d_i d_j)). In a real cyberattack, 9 of a router's neighbors may be benign sensors while 1 neighbor is a malicious injected rogue node broadcasting poisoned telemetry. GAT resolves this by integrating Transformer-style Masked Multi-Head Self-Attention, dynamically computing a learned importance coefficient α_ij for every directed edge (j → i).",
+                    p2: isAz
+                        ? "Hər bir neyron qatında GAT əvvəlcə bütün qovşaqların xüsusiyyət vektorlarını W çəki matrisi ilə daha yüksək ölçülü fəzaya çevirir (Wh_i və Wh_j). Daha sonra bu iki vektoru yan-yana qoyub (CONCAT: [Wh_i || Wh_j]) öyrənilən 'a' diqqət vektoruna vurur və LeakyReLU (mənfi hissədə α=0.2 meylli) aktivləşməsindən keçirərək xam diqqət balını (e_ij) tapır. Sonda bütün qonşular üzrə Softmax funksiyası tətbiq edilir ki, çəkilərin cəmi 1.0 olsun (∑_j α_ij = 1). Üstəlik, GAT bunu K sayda müstəqil 'Diqqət Başı' (Multi-Head Attention, məsələn K = 8 baş) ilə paralel hesablayır: 1-ci baş paket tezliyinə, 2-ci baş port anomaliyasına, 3-cü baş isə gecikməyə diqqət yetirir."
+                        : "In every layer, GAT first projects node feature vectors into a higher-level latent space via a shared linear transformation W (producing Wh_i and Wh_j). A shared attentional mechanism 'a' then concatenates the pair [Wh_i || Wh_j] and applies a LeakyReLU nonlinearity (with negative slope β = 0.2) to compute raw compatibility scores e_ij. These scores are normalized across all first-order neighbors j ∈ N_i using the Softmax function so that ∑_j α_ij = 1.0. Furthermore, GAT employs K independent Attention Heads in parallel (e.g., K = 8 heads): Head #1 inspects packet frequency, Head #2 monitors port entropy, and Head #3 evaluates payload jitter.",
+                    p3: isAz
+                        ? "Məhz bu riyazi mexanizm GAT-ı Qovşaq İnyeksiyası (Node Injection) və Qradient Hücumlarına (FGSM/PGD) qarşı sarsılmaz qalxana çevirir. Haker şəbəkəyə saxta cihaz qoşub kütləvi zəhərli paketlər yaydıqda, GAT-ın diqqət mexanizmi həmin qovşağın xüsusiyyət vektoru ilə sağlam qovşaqlar arasındakı uyğunsuzluğu görür və saxta qovşağa α_ij = 0.001 kimi sıfıra yaxın diqqət çəkisi təyin edir. Beləliklə, zəhərli qovşaq fiziki olaraq şəbəkədə qalsa belə, riyazi olaraq tamamilə 'səssizləşdirilir' (muted) və sağlam şəbəkənin dəqiqliyi 94%-dən yuxarı qalır!"
+                        : "This dynamic weighting makes GAT the ultimate defense against Node Injection (TDGIA) and Gradient-based Adversarial Attacks. When an attacker injects a rogue device broadcasting anomalous feature vectors to poison a core switch, GAT's attention heads detect the feature divergence and automatically assign a near-zero attention coefficient (e.g., α_ij = 0.0018) to the malicious edge. Consequently, even before the firewall physically drops the port, GAT mathematically 'mutes' the attacker during neighborhood aggregation, preserving over 94% classification accuracy under heavy assault!",
+                    mathSteps: [
+                        "Step 1 (Linear Feature Projection per Head k):   h̃_i⁽ᵏ⁾ = W⁽ᵏ⁾ · h_i ∈ ℝ^(D'),   where W⁽ᵏ⁾ ∈ ℝ^(D' × D)",
+                        "Step 2 (Pairwise Unnormalized Attention Score):  e_{ij}⁽ᵏ⁾ = LeakyReLU( (a⁽ᵏ⁾)ᵀ · CONCAT( W⁽ᵏ⁾h_i , W⁽ᵏ⁾h_j ) ),   a⁽ᵏ⁾ ∈ ℝ^(2D')",
+                        "Step 3 (LeakyReLU Nonlinearity Definition):      LeakyReLU(x) = x (if x > 0),   and   0.2 · x (if x ≤ 0)",
+                        "Step 4 (Neighborhood Masked Softmax):            α_{ij}⁽ᵏ⁾ = exp(e_{ij}⁽ᵏ⁾) / ∑_{r ∈ N(i) ∪ {i}} exp(e_{ir}⁽ᵏ⁾),   where ∑_j α_{ij}⁽ᵏ⁾ = 1.0",
+                        "Step 5 (Multi-Head Feature Concatenation):       h_i' = ||_{k=1}^K σ( ∑_{j ∈ N(i)} α_{ij}⁽ᵏ⁾ · W⁽ᵏ⁾ h_j ) ∈ ℝ^(K · D')",
+                        "Step 6 (Final Layer Multi-Head Averaging):       Z_i = Softmax( (1 / K) ∑_{k=1}^K ∑_{j ∈ N(i)} α_{ij}⁽ᵏ⁾ W_out⁽ᵏ⁾ h_j )"
+                    ],
+                    numWalkthrough: [
+                        "Node v₁ (Hospital Server) has 2 Legitimate Monitors (v₂, v₃) and 1 Injected Hacker Node (v₄):",
+                        "1. Raw Attention Compatibility Scores e_{1j}:    e₁₂ (Legit) = +2.10,   e₁₃ (Legit) = +1.90,   e₁₄ (Hacker Rogue Node) = -4.20",
+                        "2. Apply Exponential exp(e_{1j}):                exp(2.10) = 8.166,     exp(1.90) = 6.686,     exp(-4.20) = 0.015",
+                        "3. Sum of Exponentials (Denominator):            ∑ exp = 8.166 + 6.686 + 0.015 = 14.867",
+                        "4. Compute Normalized Attention Weights α_{1j}:  α₁₂ = 8.166/14.867 = 0.549 (54.9%),  α₁₃ = 6.686/14.867 = 0.450 (45.0%),  α₁₄ = 0.015/14.867 = 0.001 (0.1%!)",
+                        "5. Weighted Aggregation h₁':                     h₁' = 0.549(Wh₂) + 0.450(Wh₃) + 0.001(Wh₄) → Hacker node v₄ is 99.9% neutralized!"
+                    ],
+                    cases: [
+                        isAz ? "Xəstəxananın Reanimasiya (ICU) şəbəkəsinə haker tərəfindən gizli qoşulan Raspberry Pi cihazı 15 pasiyent monitoruna saxta paketlər göndərdikdə, GAT həmin əlaqənin diqqət əmsalını α = 0.001-ə endirərək zəhərlənmənin qarşısını alır." : "When a rogue Raspberry Pi is plugged into a Hospital ICU VLAN to poison 15 patient cardiac monitors, GAT assigns α = 0.001 to the rogue link, preventing embedding corruption.",
+                        isAz ? "Enerji şəbəkəsində 30% hücum intensivliyi ilə 90 saxta əlaqə yaradıldıqda (Structural Perturbation), 8-başlı GAT hansı əlaqələrin anomal olduğunu tapıb onların çəkisini sıfırlayır." : "Under a 30% Structural Edge Perturbation (90 fake links added to a 300-node grid), 8-head GAT identifies the heterophilous fake edges and suppresses their attention weights.",
+                        isAz ? "Sənaye zavodunda həm Xüsusiyyət Səs-küyü, həm də Qradient hücumu eyni anda tətbiq edildikdə GAT 94.2% müdafiə dəqiqliyi nümayiş etdirir." : "In smart manufacturing plants facing simultaneous PGD feature noise and edge injection, GAT maintains an industry-leading 94.2% attacked accuracy."
+                    ],
+                    specs: ["O(K · (|V|D·D' + |E|D'))", "O(K · |E| + |V| · D')", "18.5 ms", "98.9%", "94.2%", "90.6%"],
+                    defense: "tc qdisc add dev eth0 root handle 1: htb default 12 && iptables -t mangle -A PREROUTING -m mark --mark 0xDEAD -j DROP"
+                },
+                {
+                    id: "D. RGCN (Relational Multi-Protocol Graph Convolutional Network)",
+                    badge: "HETEROGENEOUS MULTI-RELATION | O(|R| · |E| · D²)",
+                    p1: isAz
+                        ? "RGCN (Schlichtkrull və b. tərəfindən yaradılmış Relational Graph Convolutional Network) heterogen və çoxprotokollu korporativ IoT şəbəkələri üçün xüsusi dizayn edilmişdir. Adi GCN və GraphSAGE şəbəkədəki bütün əlaqələrə (tillərə) eyni gözlə baxır — yəni iki cihaz arasında əlaqə varsa A_ij = 1 yazılır, lakin bu əlaqənin hansı şəbəkə protokolu ilə (MQTT, SSH, HTTP, RTSP video, Modbus sənaye protokolu və ya DNS) qurulduğu nəzərə alınmır. Halbuki kibertəhlükəsizlikdə əlaqənin növü (r ∈ R) həlledici əhəmiyyət daşıyır!"
+                        : "RGCN (Relational Graph Convolutional Network, introduced by Schlichtkrull et al.) is purpose-built for heterogeneous, multi-protocol enterprise IoT topologies. Standard GCN and GraphSAGE treat graphs as homogeneous—recording A_ij = 1 if two devices communicate, while completely ignoring the protocol relation type (whether the link is MQTT telemetry, SSH remote administration, RTSP video streaming, SMB file sharing, or industrial Modbus TCP). In cybersecurity, the relation type r ∈ R is often the primary indicator of lateral movement!",
+                    p2: isAz
+                        ? "RGCN qrafı G = (V, E, R) şəklində modelləşdirir, burada hər bir til üçlük kimi təsvir olunur: (v_i, r, v_j) ∈ E. RGCN hər bir protokol növü r ∈ {1, ..., |R|} üçün tamamilə müstəqil W_r⁽ˡ⁾ ∈ ℝ^(D' × D) transformasiya çəki matrisi öyrənir! Yəni qonşu cihazdan gələn məlumat MQTT sensor paketidirsə W_MQTT matrisinə, əgər uzaqdan idarəetmə SSH paketidirsə W_SSH matrisinə vurulur. Protokolların sayı çox olduqda həddindən artıq yüklənmənin (overfitting) qarşısını almaq üçün RGCN 'Baza Dekompozisiyası' (Basis Decomposition: W_r = ∑_b a_rb V_b) və ya 'Blok-Diaqonal Matris' üsullarından istifadə edir."
+                        : "RGCN formulates the network as a directed multi-relational graph G = (V, E, R), where every communication edge is a typed tuple (v_i, r, v_j) ∈ E with relation r ∈ R. Instead of a single shared weight matrix W, RGCN learns a dedicated relation-specific transformation matrix W_r⁽ˡ⁾ for each protocol type (e.g., W_MQTT, W_SSH, W_Modbus, W_HTTP), plus a distinct self-connection weight W_0⁽ˡ⁾. To prevent parameter explosion when monitoring puluhan protocols, RGCN utilizes Basis Matrix Decomposition (W_r⁽ˡ⁾ = ∑_{b=1}^B a_{rb}⁽ˡ⁾ V_b⁽ˡ⁾).",
+                    p3: isAz
+                        ? "Bu memarlıq korporativ şəbəkədaxili 'Yan Hərəkət' (Lateral Movement) və 'Protokol Sui-istifadəsi' (Protocol Tunneling) hücumlarını saniyədə yaxalayır. Məsələn, ağıllı müşahidə kamerasının video-qeydiyyat serverinə (NVR) RTSP protokolu (r₃) ilə qoşulması tamamilə qanunidir. Lakin haker həmin kameranı ələ keçirib onun üzərindən mərkəzi verilənlər bazası serverinə SSH (r₂) və ya SMB (r₅) əlaqəsi açdıqda, W_SSH matrisi kamera qovşağının xüsusiyyət vektoru ilə kəskin ziddiyyət təşkil edir və hücum dərhal bloklanır."
+                        : "This relational separation makes RGCN unmatched at catching Lateral Movement and Protocol Abuse attacks. For instance, an IP security camera streaming high-bandwidth RTSP video (relation r₃) to an NVR storage node is completely benign. However, if a hacker compromises that camera and initiates an outbound SSH session (relation r₂) or SMB mount (relation r₅) toward an enterprise SQL database, RGCN's relation-specific weight matrix W_{SSH} immediately produces an extreme anomaly activation.",
+                    mathSteps: [
+                        "Step 1 (Multi-Relational Edge Representation):   G = (V, E, R),   Edge e = (v_i, r, v_j),   r ∈ R = {r₁:MQTT, r₂:SSH, r₃:RTSP, r₄:Modbus}",
+                        "Step 2 (Relation-Specific Neighborhood Set):     N_i^r = { j ∈ V | (v_j, r, v_i) ∈ E }   (Neighbors connected to node i via protocol r)",
+                        "Step 3 (Relational Message Passing Rule):        h_i⁽ˡ⁺¹⁾ = σ( W_0⁽ˡ⁾ h_i⁽ˡ⁾ + ∑_{r ∈ R} ∑_{j ∈ N_i^r} (1 / c_{i,r}) W_r⁽ˡ⁾ h_j⁽ˡ⁾ )",
+                        "Step 4 (Relation Normalization Constant):        c_{i,r} = |N_i^r|   (Degree of node i specifically under protocol relation r)",
+                        "Step 5 (Basis Regularization Decomposition):     W_r⁽ˡ⁾ = ∑_{b=1}^B a_{rb}⁽ˡ⁾ · V_b⁽ˡ⁾,   sharing B basis matrices V_b across relations",
+                        "Step 6 (Relational Link & Node Classification):  P(y_i | h_i⁽ᴸ⁾) = Softmax( W_cls · h_i⁽ᴸ⁾ ),   Score(i, r, j) = h_iᵀ · R_r · h_j"
+                    ],
+                    numWalkthrough: [
+                        "Node v₁ (IP Camera: h₁ = [1.0, 0.2]) communicates with v₂ (Server: h₂ = [0.5, 0.9]):",
+                        "1. Protocol Weight Matrices:                     W_RTSP (r₃) = [[0.8, 0.1], [0.1, 0.7]],   W_SSH (r₂) = [[-2.5, 1.8], [3.1, -1.9]]",
+                        "2. Normal Case (Camera sends RTSP r₃):           m_{RTSP} = W_RTSP · h₁ = [ 0.8(1.0)+0.1(0.2) , 0.1(1.0)+0.7(0.2) ] = [ 0.82, 0.24 ] (Normal)",
+                        "3. Attack Case (Camera opens SSH shell r₂):      m_{SSH}  = W_SSH  · h₁ = [ -2.5(1.0)+1.8(0.2), 3.1(1.0)-1.9(0.2) ] = [ -2.14, +2.72 ] (Spike!)",
+                        "4. Combine with Self-Loop W_0 · h₂ & ReLU:       h₂⁽¹⁾ shifts by ||m_{SSH} - m_{RTSP}||₂ = 3.86 units in latent space",
+                        "5. Softmax Intrusion Output:                     P(Lateral_Movement_Attack) = 99.1% → SSH port 22 from Camera IP blocked!"
+                    ],
+                    cases: [
+                        isAz ? "Neft emalı zavodunda temperatur ötürücüsü həmişə Modbus (r₄) protokolu ilə danışdığı halda, birdən-birə daxili şəbəkədə SMB/Cifs (r₅) fayl paylaşımı sorğuları göndərməyə başlayır (WannaCry/NotPetya tipli yayılma). RGCN bunu 1-ci paketdəcə tutur." : "In an oil refinery, a pressure transducer that exclusively speaks Modbus TCP (r₄) suddenly emits SMBv1 file-sharing packets (r₅) due to ransomware worm propagation; RGCN flags the illegal relation instantly.",
+                        isAz ? "Ağıllı xəstəxanada HL7 tibbi məlumat şlüzü üzərindən gizli DNS-tunelləmə (r₆) vasitəsilə pasiyent məlumatları oğurlandıqda RGCN protokol uyğunsuzluğunu aşkarlayır." : "When sensitive patient records are exfiltrated from a hospital HL7 gateway via covert DNS tunneling (relation r₆), RGCN detects the abnormal relational degree c_{i,DNS}.",
+                        isAz ? "Korporativ ofis şəbəkəsində ağıllı printerdən Active Directory serverinə Kerberos/LDAP hücumu edildikdə əlaqə tipi matrisi dərhal həyəcan siqnalı verir." : "When a compromised smart office printer attempts LDAP/Kerberos credential stuffing against an Active Directory domain controller, RGCN isolates the printer VLAN."
+                    ],
+                    specs: ["O(|R| · |E| · D + |V| · B · D²)", "O(|R| · D² + |E|)", "14.8 ms", "98.5%", "91.0%", "85.4%"],
+                    defense: "iptables -A FORWARD -s 10.20.30.0/24 -p tcp --dport 22 -m comment --comment 'RGCN_BLOCK_IOT_SSH' -j REJECT --reject-with tcp-reset"
+                },
+                {
+                    id: "E. GIN (Weisfeiler-Lehman Graph Isomorphism Network)",
+                    badge: "MAXIMAL TOPOLOGICAL DISCRIMINATION | WL-TEST EQUIVALENT",
+                    p1: isAz
+                        ? "GIN (Xu və b. tərəfindən sübut edilmiş Graph Isomorphism Network) qraf neyron şəbəkələrinin riyazi olaraq çata biləcəyi ən yüksək həndəsi-struktur ayırdetmə gücünə malik modeldir. Bəs niyə GCN və ya GraphSAGE bəzən mürəkkəb struktur hücumlarını qaçırır? Çünki Ortalama (Mean) və ya Maksimum (Max-Pooling) aqreqatorları 'inyektiv' (injective / bire-bir) funksiyalar deyil! Məsələn, bir qovşağın eyni xüsusiyyətli 2 qonşusu varsa: Mean({x, x}) = x olur; 100 qonşusu varsa yenə Mean({x, x, ..., x}) = x olur! Yəni adi modellər qonşuların sayını və incə topoloji quruluşunu itirir."
+                        : "GIN (Graph Isomorphism Network, formulated by Xu et al.) is mathematically proven to achieve the maximum theoretical discriminative power among all message-passing neural networks—matching the famous Weisfeiler-Lehman (WL) Graph Isomorphism Test. Why do standard GCN and GraphSAGE sometimes fail against stealthy topological attacks? Because their Mean and Max-Pooling aggregators are not 'injective' (one-to-one) multiset functions! For example, if a node has two identical neighbors {x, x} versus twenty identical neighbors {x, ..., x}, both Mean and Max produce the exact same output x—completely losing structural multiplicity.",
+                    p2: isAz
+                        ? "GIN bu fundamental riyazi problemi həll etmək üçün qonşu vektorlarının Ortalama və ya Maksimumunu yox, birbaşa İnyektiv Cəmini (Sum Aggregator: ∑ h_u) hesablayır, öz vektorunu isə öyrənilən irrasional epsilon əmsalına ((1 + ε) · h_v) vurub üzərinə gəlir və nəticəni Çoxqatlı Perseptronun (MLP - Universal Approximation Theorem) içindən keçirir. Riyazi olaraq sübut olunub ki, MLP + Sum birləşməsi istənilən iki fərqli qraf strukturunu (multiset-i) heç vaxt eyni rəqəmə çevirmir."
+                        : "GIN solves this by replacing Mean/Max pooling with an Injective Multiset Summation Aggregator coupled with a learnable irrational scalar parameter ε⁽ᵏ⁾ and a Multi-Layer Perceptron (MLP). By computing (1 + ε⁽ᵏ⁾) · h_v + ∑_{u ∈ N(v)} h_u and passing the result through a 2-layer MLP (which satisfies the Universal Approximation Theorem), GIN guarantees that any two non-isomorphic IoT subgraphs are mapped to distinct embeddings in latent space.",
+                    p3: isAz
+                        ? "Kibertəhlükəsizlikdə GIN ən hiyləgər 'Kamuflyaj Edilmiş Botnet Topologiyalarını' (Camouflaged Structural Attacks) ifşa etmək üçün istifadə olunur. Məsələn, peşəkar haker qrupu (APT) sənaye şəbəkəsindəki 20 cihazı ələ keçirib onların paket həcmini və ortalama tezliyini normal ulduzvari (star topology) alt-şəbəkə ilə 100% eyni saxlayır, lakin gizlicə cihazlar arasında P2P halqa (cycle/mesh ring) əlaqələri qurur. GCN və GraphSAGE ortalama götürdüyü üçün bunu normal sayır, GIN isə Weisfeiler-Lehman izomorfizm həssaslığı ilə ulduz və halqa həndəsəsini dərhal bir-birindən ayırır!"
+                        : "In enterprise cybersecurity, GIN is the ultimate weapon against Camouflaged Structural Botnets and Advanced Persistent Threats (APTs). Suppose an attacker compromises 20 IoT sensors and carefully tunes their packet rates so the neighborhood mean matches a benign star-topology subnet, while secretly rewiring the nodes into a peer-to-peer command ring (cycle graph). While Mean/Max models are fooled by the identical feature averages, GIN instantly detects the Weisfeiler-Lehman structural isomorphism violation!",
+                    mathSteps: [
+                        "Step 1 (Weisfeiler-Lehman Color Refinement):     c_v⁽ᵏ⁾ = HASH( c_v⁽ᵏ⁻¹⁾ , {{ c_u⁽ᵏ⁻¹⁾ : u ∈ N(v) }} )   (Injective multiset hashing)",
+                        "Step 2 (Injective Multiset Sum Aggregation):     m_v⁽ᵏ⁾ = (1 + ε⁽ᵏ⁾) · h_v⁽ᵏ⁻¹⁾ + ∑_{u ∈ N(v)} h_u⁽ᵏ⁻¹⁾,   where ε⁽ᵏ⁾ ∈ ℝ is learnable",
+                        "Step 3 (Universal Function Approximation MLP):   h_v⁽ᵏ⁾ = MLP⁽ᵏ⁾( m_v⁽ᵏ⁾ ) = W₂⁽ᵏ⁾ · ReLU( BatchNorm( W₁⁽ᵏ⁾ · m_v⁽ᵏ⁾ + b₁ ) ) + b₂",
+                        "Step 4 (Graph-Level Readout Concatenation):      h_G = CONCAT( ∑_{v ∈ V} h_v⁽⁰⁾ , ∑_{v ∈ V} h_v⁽¹⁾ , ... , ∑_{v ∈ V} h_v⁽ᴷ⁾ )",
+                        "Step 5 (Injectivity Theorem Condition):          ∃ f: ∑_{u ∈ M₁} f(u) ≠ ∑_{u ∈ M₂} f(u)   ∀ non-isomorphic multisets M₁ ≠ M₂",
+                        "Step 6 (Structural Anomaly Classification):      P(y_v | h_v⁽ᴷ⁾) = Softmax( W_out · CONCAT_{k=0}^K h_v⁽ᵏ⁾ )"
+                    ],
+                    numWalkthrough: [
+                        "Compare Benign Star Hub v₁ (connected to 2 sensors with x = [1.0]) vs. Botnet Hub v₂ (connected to 5 sensors with x = [1.0]):",
+                        "1. Why GraphSAGE Mean Fails:                     Mean(v₁) = (1.0 + 1.0)/2 = 1.0   |   Mean(v₂) = (1+1+1+1+1)/5 = 1.0  (Identical! Blind!)",
+                        "2. How GIN Injective Sum Works (with ε = 0.1):   m(v₁) = (1 + 0.1)(1.0) + (1.0 + 1.0) = 1.1 + 2.0 = 3.10",
+                        "3. GIN Sum on Botnet Hub v₂ (with ε = 0.1):      m(v₂) = (1 + 0.1)(1.0) + (1.0 × 5)   = 1.1 + 5.0 = 6.10  (Δ = +3.00 Separation!)",
+                        "4. Pass through 2-Layer MLP (W₁=0.5, W₂=1.2):    h(v₁) = 1.86 (Normal Star),   h(v₂) = 3.66 (Anomalous Multiplicity)",
+                        "5. Final WL-Isomorphism Decision:                GIN separates the two topologies with 100% mathematical certainty!"
+                    ],
+                    cases: [
+                        isAz ? "Enerji şəbəkəsində hakerlər eyni telemetriya paketlərini təkrarlayaraq (Replay Attack) 8 yeni gizli komanda halqası qurduqda, GIN multiset cəmləməsi ilə təkrarlanan strukturu dərhal tutur." : "When attackers launch a topological replay attack in a Smart Grid by cloning benign telemetry across an 8-node covert mesh ring, GIN's injective summation exposes the multiset multiplicity.",
+                        isAz ? "Xəstəxana şəbəkəsində eyni modeldən olan 40 oksigen aparatının qoşulma qrafında 2 əlavə gizli körpü (bridge edge) yaradıldıqda GIN izomorfizm pozuntusunu 99.1% dəqiqliklə tapır." : "In a hospital network of 40 identical ventilators, adding just 2 unauthorized bridge edges alters the WL subtree hierarchy, which GIN flags with 99.1% accuracy.",
+                        isAz ? "Sənaye zavodunda bütün paket ölçüləri normal saxlanılaraq yalnız kommutatorlararası topoloji marşrut dəyişdirildikdə (Pure Structural Attack) GIN ən yüksək nəticəni göstərir." : "During a pure topological routing attack in a smart factory where packet payloads remain 100% normal, GIN outperforms all spectral models by 8.4%."
+                    ],
+                    specs: ["O(|E| · D + |V| · D²)", "O(|V| · K · D + |E|)", "13.1 ms", "98.6%", "92.8%", "88.2%"],
+                    defense: "ebpf-loader --attach xdp --interface eth0 --drop-non-isomorphic- flows --wl-hash-threshold 0.85"
+                }
+            ];
+        }
+
+        // Deep Academic Monograph Data for Every Single Attack (5 Attacks x 1.5 Pages Each)
+        function getAttacksData(lang) {
+            const isAz = lang === 'az';
+            return [
+                {
+                    id: "🚨 1. Structural Edge Perturbation Attack (Nettack / Metattack Topological Assault)",
+                    badge: "TOPOLOGICAL ADJACENCY CORRUPTION | ||A' - A||₀ ≤ 2Δ",
+                    p1: isAz
+                        ? "Structural Edge Perturbation (Struktur Til Pozulması — elmi ədəbiyyatda Zügner və b. tərəfindən 'Nettack' və 'Metattack' kimi tanıdılmışdır) birbaşa şəbəkənin fiziki və məntiqi əlaqə cədvəlini, yəni N × N ölçülü Qonşuluq Matrisini (Adjacency Matrix A) hədəf alan ən təhlükəli topoloji hücumdur. Bu hücum zamanı haker cihazların daxili paket məzmununa toxunmaya da bilər; əvəzində o, şəbəkədəki mövcud rabitə xətlərini kəsir (edge deletion: A_ij = 1 → 0) və ya normalda heç vaxt bir-biri ilə danışmayan fərqli təyinatlı cihazlar arasında saxta rabitə kanalları açır (edge addition: A_ij = 0 → 1)."
+                        : "Structural Edge Perturbation (formalized in adversarial machine learning literature as Nettack for targeted attacks and Metattack for global poisoning by Zügner et al.) is a direct topological assault on the network's N × N Adjacency Matrix A. Rather than modifying packet payloads, the adversary manipulates the graph connectivity itself—strategically adding fake communication links between unrelated devices (A_ij: 0 → 1) or severing critical backbone links to security gateways (A_ij: 1 → 0).",
+                    p2: isAz
+                        ? "Bəs bu hücum Qraf Neyron Şəbəkələrini (GNN) necə çaşdırır? GNN modelləri 'Homofiliya' (Homophily) fərziyyəsinə əsaslanır — yəni bir-birinə qoşulan qovşaqların oxşar funksiyaya və təhlükəsizlik statusuna malik olduğunu qəbul edir. Təcavüzkar hədəf seçdiyi qovşağı (məsələn, mərkəzi SCADA serverini) səhv təsnif etdirmək üçün 'Suroqat Model' (Surrogate Linearized GCN: Z = Â²XW) qurur və hansı tilin əlavə edilməsinin və ya silinməsinin İtki Funksiyasını (Loss) ən çox artıracağını hesablayır. Hücumun gizli qalması üçün haker iki riyazi şərti qoruyur: 1) Dəyişiklik büdcəsi ||A' - A||₀ ≤ 2Δ həddini aşmır və 2) Şəbəkənin Dərəcə Paylanması (Power-Law Degree Distribution α) dəyişmir ki, adi statistik monitorlar hücumu hiss etməsin."
+                        : "Why is this devastating to Graph Neural Networks? GNNs rely heavily on network 'Homophily'—the principle that connected nodes share similar behavioral classes. By training a linearized surrogate model (Z = Â²XW), the attacker computes the exact meta-gradient of the classification loss with respect to every potential edge flip in A×A. The attacker selects edge additions that connect compromised恶意 nodes directly to benign high-degree hubs (injecting heterophilous poison during message passing) while enforcing an unnoticeability constraint: preserving the graph's power-law degree distribution so traditional SIEM monitors see zero statistical anomalies.",
+                    p3: isAz
+                        ? "Korporativ şəbəkədə 30% Hücum İntensivliyi seçildikdə, 300 qovşaqlı IoT qrafında 90 strateji əlaqə yenidən quraşdırılır. Nəticədə standart GCN modelinin dəqiqliyi 98.1%-dən 71.8%-ə düşür, çünki spektral Laplasian matrisi (D̃⁻¹/² Ã D̃⁻¹/²) saxta əlaqələr üzərindən zəhərli vektorları bütün alt-şəbəkəyə yayır. Bu hücuma qarşı ən yüksək müqaviməti GAT (90.6%) və GIN (88.2%) modelləri göstərir."
+                        : "At a 30% Attack Intensity Rate on a 300-node enterprise topology, 90 critical edges are surgically rewired. Standard GCN accuracy plummets from 98.1% down to 71.8% because symmetric Laplacian normalization (D̃⁻¹/² Ã D̃⁻¹/²) blindly propagates features across the newly forged heterophilous bridges. Defending against this requires GAT's self-attention (which down-weights fake edges to α ≈ 0.002) or Jaccard similarity edge pruning.",
+                    mathSteps: [
+                        "Step 1 (Bilevel Optimization Objective):         argmax_{A' ∈ Φ(A)}  L_atk( f_θ*(A', X) , Y )   where θ* = argmin_θ L_train(f_θ(A', X))",
+                        "Step 2 (Perturbation Budget Constraint Δ):       ||A' - A||₀ = ∑_{i,j} |A'_{ij} - A_{ij}| ≤ 2Δ,   and   A'_{ij} = A'_{ji} ∈ {0, 1}",
+                        "Step 3 (Surrogate Linearized 2-Layer GCN):       Z_surr(A') = Â'² · X · W⁽⁰⁾ W⁽¹⁾ = ( (D')⁻¹/² Ã' (D')⁻¹/² )² · X · W_eff",
+                        "Step 4 (Structural Meta-Gradient Score):         S_edge(u, v) = (-1)^(A_{uv}) · [ ∇_A L_atk( Z_surr(A), Y ) ]_{u,v}",
+                        "Step 5 (Degree Distribution Unnoticeability):    D_KL( P_deg(A') || P_deg(A) ) ≤ ε_deg   (Power-law exponent α remains invariant)",
+                        "Step 6 (Greedy Edge Flip Update at Step t):      A^(t+1)_{u*,v*} = 1 - A^(t)_{u*,v*}   for (u*, v*) = argmax_{(u,v)} S_edge(u, v)"
+                    ],
+                    numWalkthrough: [
+                        "Target Node v₁ (SCADA Gateway, Class: Benign) connected to v₂ (Sensor). Attacker controls v₄ (Malicious Bot, x₄ = [9.5]):",
+                        "1. Clean Adjacency Row for v₁:                   A₁ = [ 1 (self),  1 (v₂),  0 (v₃),  0 (v₄) ]   ⇒   Degree d̃₁ = 2",
+                        "2. Clean GCN Aggregation at v₁ (with x=[1,1,1,9.5]): h₁_clean = (1/2)(1.0) + (1/2)(1.0) = 1.00  →  Classified: 99% BENIGN",
+                        "3. Attacker Executes Edge Flip e_{14} (0 → 1):   A'₁ = [ 1 (self),  1 (v₂),  0 (v₃),  1 (v₄ Added!) ]   ⇒   New Degree d̃'₁ = 3",
+                        "4. Attacked GCN Aggregation at v₁:               h₁_atk = (1/3)(1.0) + (1/3)(1.0) + (1/3)(9.5) = 0.33 + 0.33 + 3.17 = 3.83!",
+                        "5. Result of Single Structural Edge Flip:        v₁'s embedding shifts by +283% (1.00 → 3.83), crossing the decision boundary!"
+                    ],
+                    cases: [
+                        isAz ? "Enerji şəbəkəsində hakerlər BGP və OSPF marşrut cədvəllərini saxtalaşdıraraq 12 yarımstansiya şlüzünün mərkəzi təhlükəsizlik serveri ilə əlaqəsini kəsir və onları yoluxmuş kommutatora yönləndirir." : "In a regional power grid, attackers use ARP spoofing and OSPF route poisoning to sever telemetry links between 12 substations and the SIEM collector while bridging them to a compromised RTU.",
+                        isAz ? "Xəstəxana şəbəkəsində qonaq Wi-Fi seqmenti ilə Reanimasiya (ICU) VLAN-ı arasında icazəsiz virtual körpü (VLAN hopping edge) yaradılaraq tibbi cihazların qraf qonşuluğu pozulur." : "In a hospital network, an attacker exploits VLAN hopping on a misconfigured trunk port to create direct Layer-2 edges between the public guest Wi-Fi and ICU infusion pumps.",
+                        isAz ? "Sənaye zavodunda SDN (Software-Defined Networking) kontrollerinə saxta OpenFlow qaydaları yeridilərək 40 PLC kontroller bir-birindən təcrid edilir." : "In a smart factory, compromised OpenFlow SDN controller rules rewire 40 PLC communication paths, blinding standard GCN monitors."
+                    ],
+                    specs: ["O(Δ · |V|² · D)", "O(|V|²)", "High (Global)", "-3.1% (GAT)", "-15.7% (GCN)", "Jaccard Edge Pruning (τ < 0.15)"],
+                    defense: "switchport mode access && switchport port-security maximum 2 && switchport port-security violation restrict && ip arp inspection vlan 10-50"
+                },
+                {
+                    id: "🚨 2. Feature-Level Noise Attack (Bounded L_∞ Telemetry Perturbation)",
+                    badge: "SUBTLE TELEMETRY CORRUPTION | ||X' - X||_∞ ≤ ε",
+                    p1: isAz
+                        ? "Feature-Level Noise Attack (Xüsusiyyət Səviyyəli Səs-küy Hücumu) şəbəkənin fiziki və məntiqi əlaqələrinə (Qonşuluq Matrisi A-ya) qətiyyən toxunmur; bütün kabellər, portlar və marşrutlar olduğu kimi qalır. Əvəzində təcavüzkar cihazların göndərdiyi telemetriya göstəricilərinə — yəni X ∈ ℝ^(N × D) Xüsusiyyət Matrisinə — insan gözünün və ənənəvi hədd (threshold) firewall-larının hiss edə bilməyəcəyi dərəcədə kiçik, lakin riyazi olaraq dəqiq hesablanmış η (eta) səs-küy vektoru əlavə edir: X' = X + η."
+                        : "Feature-Level Noise Attack leaves the physical and logical network topology (Adjacency Matrix A) 100% untouched—every cable, switch port, and routing table remains normal. Instead, the adversary injects mathematically calibrated, bounded perturbations η directly into the device telemetry matrix X' = X + η (modifying packet inter-arrival times, payload byte lengths, TCP window sizes, and CPU load reports).",
+                    p2: isAz
+                        ? "Adi səs-küy ilə Adversarial Səs-küy arasındakı fərq nədir? Təsadüfi səs-küy (Gaussian noise) əksər hallarda qonşular toplanarkən sıfırlanır. Lakin adversarial xüsusiyyət səs-küyü neyron şəbəkəsinin çəki matrislərinin (W⁽⁰⁾, W⁽¹⁾) ən həssas özəl vektorları (principal eigenvectors) istiqamətində qurulur. Haker hər bir atributda dəyişikliyi L_∞ norması ilə çox kiçik ε həddində saxlayır (məsələn, paket ölçüsünü cəmi +2 bayt, gecikməni +0.04 millisaniyə, CPU yükünü -1.5% dəyişir). Sistem inzibatçısı ekrana baxanda bütün rəqəmləri 'yaşıl' (normal) görür, lakin D-ölçülü fəzada bu kiçik dəyişikliklər toplanaraq qərar sərhədini (decision hyperplane) keçir!"
+                        : "Why doesn't traditional security catch this? Because the perturbation η is strictly bounded by an L_∞ norm constraint (||η||_∞ ≤ ε, e.g., altering packet size by just ±2 bytes, jitter by +0.04ms, and CPU telemetry by -1.2%). To a human SOC analyst or a static rule-based IDS (like Snort/Suricata), every individual metric remains well inside normal operating thresholds. However, when multiplied across D = 64 feature dimensions and propagated through GNN weight matrices W⁽ˡ⁾, these micro-perturbations align constructively to push the node embedding across the classification hyperplane!",
+                    p3: isAz
+                        ? "Hücumun ən təhlükəli xüsusiyyəti 'Qonşuluq Dalğalanması' (Neighborhood Ripple Effect) yaratmasıdır: GNN-də hər qovşaq öz qonşularının xüsusiyyətlərini topladığı üçün, cəmi 10 cihazın telemetriyasına yeridilmiş ε səs-küyü 2-addımlıq (2-hop) mesaj ötürməsindən sonra 80 sağlam cihazın da vektorunu sürüşdürür. GraphSAGE-in Max/Mean hovuzlaması və GAT-ın diqqət süzgəci bu səs-küyü sönümləndirməkdə ən yüksək effektivlik göstərir."
+                        : "Furthermore, in Graph Neural Networks, feature noise triggers a 'Topological Ripple Effect': perturbing the feature vector x_j of a single high-degree gateway node automatically corrupts the aggregated representations h_i⁽¹⁾ and h_i⁽²⁾ of all its 1-hop and 2-hop neighbors during message passing. GraphSAGE and GAT mitigate this via L2 unit-sphere normalization and attentional filtering.",
+                    mathSteps: [
+                        "Step 1 (Bounded Feature Perturbation Model):     X' = X + η,   where η ∈ ℝ^(N × D)   and   ||η_i||_p ≤ ε   (typically p = ∞ or p = 2)",
+                        "Step 2 (L_∞ Box Constraint per Telemetry Field): x_{i,d}^{min} ≤ x_{i,d} + η_{i,d} ≤ x_{i,d}^{max},   |η_{i,d}| ≤ ε_d   ∀d ∈ {1..D}",
+                        "Step 3 (Propagation of Noise Through Layer 1):   H'⁽¹⁾ = σ( Â (X + η) W⁽⁰⁾ ) ≈ H⁽¹⁾ + diag(σ'(z)) · Â · η · W⁽⁰⁾",
+                        "Step 4 (First-Order Taylor Expansion of Loss):   L(A, X + η) ≈ L(A, X) + ⟨ ∇_X L(A, X) , η ⟩_F",
+                        "Step 5 (Optimal Noise Alignment Vector):         η* = ε · sign( Âᵀ · (∂L / ∂H⁽¹⁾) · (W⁽⁰⁾)ᵀ )   (Aligns with spectral receptive field)",
+                        "Step 6 (Evasion Misclassification Condition):    argmax_{c} [ Softmax( Â · ReLU( Â (X + η*) W⁽⁰⁾ ) W⁽¹⁾ ) ]_{i,c} = c_benign"
+                    ],
+                    numWalkthrough: [
+                        "Malicious Botnet Node v₁ has True Telemetry x₁ = [ 0.90 (High Exfil Rate), 0.85 (High CPU), 0.80 (Port Scan) ]:",
+                        "1. Neuron Decision Weight Vector w_mal:          w = [ +2.0, +1.5, +2.5 ],   Bias b = -4.20   (Classifies Malicious if wᵀx + b > 0)",
+                        "2. Clean Logit Score before Noise:               z_clean = 2.0(0.90) + 1.5(0.85) + 2.5(0.80) - 4.20 = 1.80 + 1.275 + 2.00 - 4.20 = +0.875 (>0 → CAUGHT!)",
+                        "3. Attacker Injects Bounded Noise (ε = 0.16):    η₁ = [ -0.16, -0.16, -0.16 ]   ⇒   Perturbed x'₁ = [ 0.74, 0.69, 0.64 ]",
+                        "4. Attacked Logit Score after Noise:             z_atk = 2.0(0.74) + 1.5(0.69) + 2.5(0.64) - 4.20 = 1.48 + 1.035 + 1.60 - 4.20 = -0.085 (<0 → EVADED!)",
+                        "5. Impact:                                       A tiny 0.16 shift per feature flips the neural logit from +0.875 (Malicious) to -0.085 (Benign)!"
+                    ],
+                    cases: [
+                        isAz ? "Sənaye nasosuna yerləşdirilmiş casus proqram hər gün 50 MB gizli layihə sənədini xaricə ötürərkən paket ölçülərini kiçik hissələrə bölür və ötürmə tezliyinə ±0.03 Hs səs-küy qatır ki, hədd detektorları onu adi ürək döyüntüsü (heartbeat) siqnalı saysın." : "Spyware on an industrial pump exfiltrates 50MB of CAD blueprints by fragmenting payloads and adding ±0.03Hz jitter noise, disguising C2 traffic as normal MQTT heartbeat signals.",
+                        isAz ? "Ağıllı elektrik sayğaclarına (Smart Meters) kütləvi hücum zamanı enerji sərfiyyatı rəqəmlərinə ε = 3% riyazi səs-küy əlavə edilərək şəbəkədə süni balanssızlıq yaradılır." : "In a false-data injection attack (FDIA) on 1,000 smart power meters, attackers inject ε = 3% coordinated noise into voltage phase angles to trick state estimators.",
+                        isAz ? "Xəstəxanada yoluxmuş rentgen (DICOM) serveri kriptomayninq edərkən SNMP vasitəsilə göndərilən CPU və RAM telemetriyasına mənfi səs-küy qataraq özünü sakit göstərir." : "A compromised hospital DICOM imaging server running illicit cryptominers perturbs its outbound SNMP CPU and thermal telemetry vectors by -14% to evade anomaly detection."
+                    ],
+                    specs: ["O(|V| · D)", "O(|V| · D)", "Medium (Local/1-Hop)", "-4.1% (GraphSAGE)", "-11.2% (GCN)", "Adversarial Training + L2 Feature Smoothing"],
+                    defense: "tc qdisc add dev eth0 root netem delay 2ms 0.5ms distribution normal && iptables -A INPUT -m statistic --mode random --probability 0.05 -j LOG"
+                },
+                {
+                    id: "🚨 3. Node Injection Attack (TDGIA — Topological Defective Graph Injection)",
+                    badge: "ROGUE ENDPOINT INJECTION | V' = V ∪ V_atk, N → N + N_atk",
+                    p1: isAz
+                        ? "Node Injection Attack (Qovşaq İnyeksiyası Hücumu — Zou və b. tərəfindən 'TDGIA: Topological Defective Graph Injection Attack' kimi riyaziləşdirilmişdir) praktiki cəhətdən müasir müəssisələr üçün ən real kiberhücum ssenarisidir! Niyə? Çünki 1-ci və 2-ci hücumlarda haker mövcud qorunan serverləri və ya kommutatorları sındırıb onların əlaqələrini dəyişməlidir ki, bu da çətindir. Qovşaq İnyeksiyası hücumunda isə haker mövcud sağlam cihazların heç birinə toxunmur! Sadəcə olaraq şəbəkəyə özünün gətirdiyi yeni saxta fiziki və ya virtual cihazları (Rogue Nodes: V_atk) qoşur!"
+                        : "Node Injection Attack (formalized as TDGIA—Topological Defective Graph Injection Attack by Zou et al.) is the most practically dangerous threat vector in real-world enterprise networks. Why? Because modifying existing hardened routers or rewriting internal telemetry (Attacks #1 and #2) requires prior administrative compromise. In a Node Injection Attack, the adversary touches ZERO existing legitimate devices! Instead, the attacker simply connects brand-new unauthorized physical or virtual rogue nodes (V_atk) into the active network topology!",
+                    p2: isAz
+                        ? "Bu saxta qovşaqlar nə ola bilər? Zavodda boş qalmış Ethernet portuna taxılan 30 dollarlıq Raspberry Pi, açıq Wi-Fi şəbəkəsinə qoşulan saxta IoT sensoru, yaxud bulud klasterində icazəsiz yaradılmış 15 Docker konteyneri / Virtual Maşın! Bu yeni V_atk qovşaqları şəbəkəyə qoşulan kimi Qonşuluq Matrisi N × N ölçüsündən (N + N_atk) × (N + N_atk) ölçüsünə böyüyür və Xüsusiyyət Matrisinə yeni X_atk sətirləri əlavə olunur."
+                        : "In practice, these injected nodes V_atk take the form of a rogue Raspberry Pi plugged into an open wall jack, unauthorized Docker containers spawned in a Kubernetes cluster, or spoofed virtual IoT endpoints joining via MQTT. Mathematically, this expands the Adjacency Matrix from N × N to (N + N_atk) × (N + N_atk) and appends a synthetic feature matrix X_atk ∈ ℝ^(N_atk × D) completely controlled by the adversary.",
+                    p3: isAz
+                        ? "TDGIA alqoritmi iki mərhələdə işləyir: 1) Topoloji Qüsurlu Til Seçimi (Topological Defective Edge Selection) — saxta qovşaqlar ən yüksək dərəcəli mərkəzi şlüzlərə və ya az qonşusu olan həssas sensorlara qoşulur ki, təsir dairəsi (receptive field) maksimum olsun; 2) Hamarlanmış Zəhərli Xüsusiyyət Generasiyası (Smooth Feature Optimization) — saxta qovşağın X_atk vektoru elə hesablanır ki, qonşuluq ortalamasına (Â · X') qarışdıqda ətrafdakı 100-dən çox günahsız cihazın təsnifatını tamamilə pozsun! Bu hücuma qarşı yeganə tam müdafiə GAT modelidir (çünki GAT yeni qoşulan şübhəli qovşağa α ≈ 0.001 çəki verərək onu bloklayır)."
+                        : "TDGIA executes in two lethal stages: (1) Topological Defective Edge Selection—strategically linking the rogue nodes to high-centrality hubs or low-degree vulnerable sensors to maximize 2-hop message-passing reach; and (2) Smooth Adversarial Feature Generation—optimizing the synthetic features X_atk so they blend past anomaly filters while maximally corrupting the embeddings of over 100 innocent neighboring devices! GAT is the premier defense here, using self-attention to isolate injected nodes.",
+                    mathSteps: [
+                        "Step 1 (Augmented Graph Construction):           V' = V ∪ V_atk,   |V'| = N + N_atk,   X' = [ X ; X_atk ] ∈ ℝ^((N+N_atk) × D)",
+                        "Step 2 (Block Adjacency Matrix Expansion):       A' = [ [ A , A_{atk} ] , [ A_{atk}ᵀ , A_{internal} ] ] ∈ {0, 1}^((N+N_atk) × (N+N_atk))",
+                        "Step 3 (Topological Defective Vulnerability):    W_def(v_i) = (1 / (d_i + 1)) ∑_{j ∈ N(i)} (1 / √(d_i · d_j))   (Selects vulnerable target nodes)",
+                        "Step 4 (Injected Feature Optimization Objective): X_atk* = argmax_{X_atk}  L_atk( f_θ(A', [X ; X_atk]) , Y_V )   subject to ||X_atk||_∞ ≤ 1",
+                        "Step 5 (2-Hop Poisoning Propagation to V):       H'_V⁽²⁾ = σ( Â'_{VV} H'_V⁽¹⁾ W⁽¹⁾ + Â'_{V,atk} H'_{atk}⁽¹⁾ W⁽¹⁾ )",
+                        "Step 6 (GAT Attentional Neutralization Defense): α_{i, v_atk} = Softmax( LeakyReLU( aᵀ[Wh_i || Wh_{atk}] ) ) → 0.001  (Mutes V_atk)"
+                    ],
+                    numWalkthrough: [
+                        "Legitimate Sensor v₁ (x₁ = 1.0) has 1 Legitimate Neighbor v₂ (x₂ = 1.0). Clean GCN Average: h₁ = (1.0 + 1.0)/2 = 1.0 (Benign).",
+                        "1. Attacker Injects Rogue Node v_atk (N: 2 → 3): Connects v_atk directly to Sensor v₁  ⇒  New Neighborhood N'(v₁) = { v₁, v₂, v_atk }",
+                        "2. Attacker Optimizes Rogue Feature x_{atk}:     Sets x_{atk} = -8.00 (Adversarial Poison Vector)",
+                        "3. Unprotected GCN Aggregation at Innocent v₁:   h₁_GCN = (1.0 + 1.0 + (-8.00)) / 3 = -6.00 / 3 = -2.00  →  Innocent v₁ Misclassified!",
+                        "4. Protected GAT Aggregation at Innocent v₁:     GAT computes α_{1,atk} = 0.002,  α₁₁ = 0.499,  α₁₂ = 0.499",
+                        "5. GAT Output vs. GCN Output:                    h₁_GAT = 0.499(1) + 0.499(1) + 0.002(-8) = +0.982 (SAFE!) vs. GCN = -2.00 (POISONED!)"
+                    ],
+                    cases: [
+                        isAz ? "Təcavüzkar zavodun kommutator şkafına gizlicə 4G modemli Raspberry Pi (Rogue Node) qoşur. Həmin cihaz 20 PLC kontrollerə saxta ARP və Modbus paketləri yayaraq onların qraf vektorlarını zəhərləyir." : "An intruder plugs a cellular-equipped Raspberry Pi into an industrial switch closet; the rogue node establishes links to 20 PLCs, broadcasting synthetic telemetry to poison their neighborhood embeddings.",
+                        isAz ? "Bulud əsaslı IoT arxitekturasında oğurlanmış API açarı ilə 25 saxta MQTT müştəri qovşağı (Sybil / Node Injection) yaradılır və mərkəzi brokerin yük balansı pozulur." : "Using a leaked API token, an attacker spawns 25 virtual Sybil MQTT client nodes that subscribe to core broker topics, injecting crafted feature vectors into the cloud graph.",
+                        isAz ? "Ağıllı xəstəxanada saxta Wi-Fi tibbi sensoru (Evil Twin node) şəbəkəyə daxil edilərək ətrafdakı sağlam monitorların XAI izaholunma balını aşağı salır." : "An 'Evil Twin' wireless medical sensor is injected into a hospital ward, linking to legitimate gateways to corrupt 2-hop GNN classification."
+                    ],
+                    specs: ["O(N_atk · |E| · D)", "O((N + N_atk)²)", "Critical (2-Hop Blast Radius)", "-2.8% (GAT Pro)", "-18.9% (GCN)", "802.1X Port Auth + GAT Attention"],
+                    defense: "dot1x system-auth-control && interface range GigabitEthernet1/0/1-48 authentication port-control auto && mab"
+                },
+                {
+                    id: "🚨 4. Gradient-based Adversarial Attack (FGSM & PGD White-Box Neural Assault)",
+                    badge: "WHITE-BOX GRADIENT EXPLOITATION | ∇_X L(f_θ(A, X), Y)",
+                    p1: isAz
+                        ? "Gradient-based Adversarial Attack (Qradient Əsaslı Adversarial Hücum — Goodfellow tərəfindən 'FGSM: Fast Gradient Sign Method' və Madry tərəfindən 'PGD: Projected Gradient Descent' kimi yaradılmışdır) süni intellektin öz öyrənmə riyaziyyatını özünə qarşı çevirən ən intellektual hücum növüdür! Normalda neyron şəbəkəsi öyrənərkən İtki Funksiyasını (Loss L) azaltmaq üçün qradientin əksi istiqamətində (θ ← θ - η∇L) addım atır. Bu hücumda isə haker modelin çəkilərini sabit saxlayıb, İtki Funksiyasını MAKSİMUMA çatdırmaq üçün giriş məlumatlarını qradientlə EYNİ istiqamətdə (X ← X + ε·sign(∇_X L)) dəyişdirir!"
+                        : "Gradient-based Adversarial Attacks (encompassing the Fast Gradient Sign Method—FGSM by Goodfellow et al., and Projected Gradient Descent—PGD by Madry et al.) weaponize the neural network's own backpropagation calculus against itself. During normal training, a GNN minimizes Cross-Entropy Loss L by stepping opposite to the weight gradient (-∇_W L). In a Gradient Attack, the adversary freezes the weights and steps in the EXACT POSITIVE direction of the input gradient (+∇_X L and +∇_A L) to maximize classification error!",
+                    p2: isAz
+                        ? "FGSM hücumu bunu tək bir ildırım sürətli addımda edir: hər bir xüsusiyyətə görə törəmənin işarəsini tapır (sign(∂L/∂X)) və onu ε həddinə vurur. PGD (Proyeksiyalı Qradient Enişi) isə bundan qat-qat güclü olan çoxaddımlı (məsələn, T = 40 iterasiyalı) hücumdur: hər kiçik α addımından sonra nəticəni icazə verilən ε-kürəsinin (L_∞ ball: Π_{X+S}) içinə proyeksiyalayır. Beləliklə, PGD D-ölçülü həndəsi fəzada modelin ən zəif nöqtəsini ('kor zonası'nı) zərgər dəqiqliyi ilə tapır."
+                        : "While FGSM executes a single lightning-fast step along the gradient sign (X' = X + ε · sign(∇_X L)), Projected Gradient Descent (PGD) performs T iterative micro-steps of size α (e.g., T = 40 iterations), projecting the perturbed telemetry back onto the feasible L_∞ ε-ball (Π_{X+S}) after every step. Mathematically, PGD is the strongest first-order white-box attack, relentlessly hunting down the steepest vulnerability ravine on the GNN's non-convex loss surface.",
+                    p3: isAz
+                        ? "Bəs qraflarda bu necə tətbiq olunur? Təcavüzkar həm kəsilməz Xüsusiyyət Matrisinə görə (∇_X L), həm də diskret Qonşuluq Matrisinə görə (∇_A L — PGD Topology Attack) törəmə alır! Hansı əlaqənin və hansı paket atributunun qradienti ən böyükdürsə, məhz həmin nöqtəyə zərbə endirilir. Bu hücuma qarşı mübarizədə təkcə standart təlim kifayət etmir; GraphGuard daxilində Min-Max Adversarial Təlim (Adversarial Training) və Qradient Maskalanması tətbiq olunur."
+                        : "On graphs, attackers compute joint gradients with respect to both continuous node features (∇_X L) and relaxed continuous edge probabilities A ∈ [0,1]^(N×N) (∇_A L via PGD-Topology). Wherever the partial derivative ∂L/∂A_ij or ∂L/∂X_id is largest, the neural decision boundary is thinnest—allowing the attacker to drop unprotected model accuracy by over 25% with minimal perturbation.",
+                    mathSteps: [
+                        "Step 1 (Cross-Entropy Loss Function L):          L(A, X; θ) = - ∑_{v ∈ V_atk} ∑_{c=1}^C Y_{vc} ln( [Softmax( f_θ(A, X) )]_{vc} )",
+                        "Step 2 (Input Feature Gradient Computation):     G_X = ∇_X L(A, X; θ) = ∂L / ∂X ∈ ℝ^(N × D)   via Backpropagation through GNN layers",
+                        "Step 3 (FGSM Single-Step Attack Equation):       X_{FGSM} = X + ε · sign( ∇_X L(A, X; θ) ),   where sign(z) ∈ {-1, 0, +1}",
+                        "Step 4 (PGD Iterative Multi-Step Equation):      X^(t+1) = Π_{B_∞(X, ε)} ( X^(t) + α · sign( ∇_X L(A, X^(t); θ) ) ),   for t = 0..T-1",
+                        "Step 5 (Projection Operator Π Definition):       [Π_{B_∞(X, ε)}(Z)]_{i,d} = min( max( Z_{i,d} , X_{i,d} - ε ) , X_{i,d} + ε )",
+                        "Step 6 (Min-Max Adversarial Defense Objective):  min_θ  𝔼_{(A,X)} [  max_{||η||_∞ ≤ ε}  L( f_θ(A, X + η) , Y )  ]"
+                    ],
+                    numWalkthrough: [
+                        "Target IoT Node Feature x = [ 0.50 (Packet Size), 0.40 (Rate) ]. Allowed Budget ε = 0.10, Step Size α = 0.05:",
+                        "1. Compute Backprop Gradient ∇_x L at t = 0:     ∇_x L = [ +3.40 , -1.90 ]   ⇒   sign(∇_x L) = [ +1 , -1 ]",
+                        "2. PGD Iteration 1 (x⁽¹⁾ = x⁽⁰⁾ + α·sign):       x⁽¹⁾ = [ 0.50 + 0.05(+1) , 0.40 + 0.05(-1) ] = [ 0.55 , 0.35 ]  (Loss rises: 0.21 → 0.58)",
+                        "3. PGD Iteration 2 (∇_x L = [+4.1, -2.2]):       x⁽²⁾ = [ 0.55 + 0.05(+1) , 0.35 + 0.05(-1) ] = [ 0.60 , 0.30 ]  (Loss rises: 0.58 → 1.42!)",
+                        "4. Projection Check ||x⁽²⁾ - x⁽⁰⁾||_∞ ≤ 0.10:    |[0.60, 0.30] - [0.50, 0.40]| = [0.10, 0.10] ≤ 0.10 (Valid inside ε-box!)",
+                        "5. Final Classification Impact:                  Loss > ln(2) = 0.693 threshold crossed → Model probability flips from 81% Safe to 76% Attack!"
+                    ],
+                    cases: [
+                        isAz ? "Təcavüzkar açıq mənbəli GNN təhlükəsizlik modelinin çəkilərini əldə edərək (White-Box) PGD alqoritmi ilə DDoS paketlərinin TTL və pəncərə ölçüsünü 20 iterasiyada optimallaşdırır ki, detektor onları buraxsın." : "An APT group extracts weights from a deployed edge GNN classifier and runs 20-step PGD to craft adversarial DDoS packet headers that evade detection.",
+                        isAz ? "Ağıllı elektrik şəbəkəsində (Smart Grid) qradient həssaslığı yüksək olan 5 kritik transformator tapılır və yalnız həmin qovşaqlarda paket gecikməsi dəyişdirilir." : "Using Jacobian saliency maps (∇_X L), attackers identify the 5 most gradient-sensitive substation nodes in a power grid and concentrate perturbations there.",
+                        isAz ? "Avtomatlaşdırılmış zavodda zərərli proqram hər dəqiqə API cavablarını yoxlayaraq (Black-Box Zeroth-Order Gradient Estimation) öz trafikini GNN-in kor zonasına salır." : "Malware inside an industrial PLC subnet uses zeroth-order gradient estimation by querying API confidence scores to iteratively cloak its C2 traffic."
+                    ],
+                    specs: ["O(T · |E| · D²)", "O(|V| · D + |E|)", "Severe (Iterative PGD-40)", "-5.2% (GAT)", "-16.4% (GCN)", "Min-Max PGD Adversarial Training"],
+                    defense: "sysctl -w net.ipv4.tcp_syncookies=1 && iptables -A INPUT -p tcp -m u32 --u32 '0>>22&0x3C@12>>26&0x3C@0=0x47524144' -j DROP"
+                },
+                {
+                    id: "🚨 5. Attribute Masking & Obfuscation Attack (Hadamard Feature Zeroing)",
+                    badge: "TELEMETRY BLINDING | x'_i = x_i ⊙ m_i, m_i ∈ {0, 1}^D",
+                    p1: isAz
+                        ? "Attribute Masking Attack (Atributların Maskalanması və Gizlədilməsi Hücumu) dərin öyrənmə modellərini 'kor etmək' üçün cihazların xüsusiyyət vektorundakı (x_i ∈ ℝ^D) ən vacib məlumat sütunlarını seçici şəkildə sıfırlayan və ya gizlədən hücumdur. Riyazi olaraq bu hücum x_i vektorunun ikilik maska vektoru m_i ∈ {0, 1}^D ilə element-bə-element Hadamard vurulmasıdır: x'_i = x_i ⊙ m_i. Əgər m_{i,d} = 0 olarsa, həmin d-ci telemetriya göstəricisi neyron şəbəkəsi üçün tamamilə yoxa çıxır!"
+                        : "Attribute Masking Attack is an algorithmic blinding assault designed to starve the Graph Neural Network of critical decision features by selectively zeroing out or obfuscating specific dimensions of the node feature vector x_i ∈ ℝ^D. Mathematically, the attacker applies an element-wise Hadamard product with a binary mask vector m_i ∈ {0, 1}^D: x'_i = x_i ⊙ m_i. Whenever m_{i,d} = 0, the d-th telemetry attribute is completely erased prior to GNN ingestion!",
+                    p2: isAz
+                        ? "Bəs real şəbəkədə haker atributları necə 'sıfırlayır'? 1) Şəbəkə paketlərini TLS 1.3 və ya xüsusi şifrələmə tunellərinə salaraq yük entropiyasını və tətbiq qatı (Layer-7) başlıqlarını gizlədir; 2) Cihazdakı SNMP və NetFlow agentlərini söndürərək CPU yükü, yaddaş sərfiyyatı və proses siyahısı sütunlarının mərkəzi serverə `0` və ya `NULL` kimi getməsinə nail olur; 3) Paket fraqmentasiyası tətbiq edərək həqiqi paket uzunluğu atributunu maskalayır."
+                        : "How do real-world attackers execute Attribute Masking on live IoT networks? (1) Wrapping malicious command traffic inside custom encrypted tunnels or DOH (DNS-over-HTTPS) to strip Layer-7 protocol headers; (2) Disabling or spoofing local SNMP/NetFlow daemons on compromised sensors so CPU load, memory usage, and socket count fields arrive at the collector as zero-padded NULLs (m_{i,d} = 0); and (3) Using Mutual Information analysis to identify and mask the top K% most informative features.",
+                    p3: isAz
+                        ? "Əgər müdafiə modeli yalnız tək-tək cihazların daxili atributlarına baxan adi neyron şəbəkəsidirsə (MLP və ya Random Forest), atributların 30%-i sıfırlanan kimi model tamamilə kor olur. Lakin GNN modelləri (xüsusilə GCN, GraphSAGE və GAT) bu hücuma qarşı unikal üstünlüyə malikdir: hətta yoluxmuş cihaz öz atributlarını 100% gizlətsə belə (x'_i = [0, 0, ..., 0]), onun ətrafındakı sağlam qonşu kommutatorlar və şlüzlər (N(v_i)) həmin cihazla olan trafikin statistikasını öz vektorlarında saxlayır və Mesaj Ötürmə (Message Passing) vasitəsilə gizlənmiş atributları bərpa edir!"
+                        : "If a security system relies on flat tabular classifiers (like Random Forests or standard MLPs), masking 30% of key features causes total detection failure. Graph Neural Networks, however, possess a built-in structural antidote: Topological Feature Imputation! Even if a compromised IoT node zeroes out 100% of its own local telemetry reports (x'_i = [0, 0, ..., 0]), its adjacent 1-hop switches and gateways (u ∈ N(i)) still observe the traffic flowing across their shared edges and reconstruct the missing attributes during message passing!",
+                    mathSteps: [
+                        "Step 1 (Hadamard Binary Masking Operation):      x'_i = x_i ⊙ m_i = [ x_{i,1}·m_{i,1} , x_{i,2}·m_{i,2} , ... , x_{i,D}·m_{i,D} ]ᵀ",
+                        "Step 2 (Mask Sparsity Budget Constraint):        ∑_{d=1}^D (1 - m_{i,d}) ≤ K_mask,   where K_mask / D = Perturbation Rate (%)",
+                        "Step 3 (Feature Importance Selection via Grad):  m_{i,d} = 0   for top K_mask dimensions with largest | x_{i,d} · (∂L / ∂x_{i,d}) |",
+                        "Step 4 (Signal Loss in Flat Non-Graph Models):   ||W · (x_i ⊙ m_i)||₂ ≪ ||W · x_i||₂   ⇒   Logit collapses toward uniform uncertainty",
+                        "Step 5 (GNN Topological Feature Reconstruction): h_i⁽¹⁾ = σ( Â_{ii}(x_i ⊙ m_i)W + ∑_{j ∈ N(i)} Â_{ij} x_j W )   (Neighbors restore signal!)",
+                        "Step 6 (Denoising Autoencoder Pre-Training):     L_mask = ∑_{i ∈ V} || MLP_dec( GNN(A, X ⊙ M) )_i - x_i ||₂²"
+                    ],
+                    numWalkthrough: [
+                        "Compromised Camera v₁ has True Telemetry x₁ = [ 0.90 (RTSP Flood), 0.80 (High CPU), 0.85 (Port Scan), 0.10 (Temp) ]:",
+                        "1. AttackerApplies 50% Attribute Mask m₁:        m₁ = [ 0 , 0 , 1 , 1 ]   (Blinds RTSP rate and CPU telemetry via SNMP killer!)",
+                        "2. Masked Feature Vector Sent to Collector:      x'₁ = x₁ ⊙ m₁ = [ 0.90×0 , 0.80×0 , 0.85×1 , 0.10×1 ] = [ 0.00 , 0.00 , 0.85 , 0.10 ]",
+                        "3. Flat Non-Graph Classifier Fails:              Score_MLP(x'₁) drops from 0.94 → 0.31 (Missed! Blinded by zeros!)",
+                        "4. GNN 1-Hop Neighbor Switch v₂ Observes Flow:   v₂ holds unmasked edge telemetry x₂ = [ 0.88 , 0.76 , 0.82 , 0.12 ]",
+                        "5. GCN/GraphSAGE Reconstructs v₁ State:          h₁⁽¹⁾ = 0.5(x'₁) + 0.5(x₂) = [ 0.44 , 0.38 , 0.835 , 0.11 ] → Anomaly Caught (93.4%)!"
+                    ],
+                    cases: [
+                        isAz ? "Haker zavodun PLC kontrollerinə sızaraq SNMP və Modbus diaqnostika registrlərini söndürür (m = [0, 0, 1, 0]), lakin qonşu kommutatorun port sayğacları GNN vasitəsilə hücumu aşkarlayır." : "An attacker disables SNMP and Modbus diagnostic registers on a compromised factory PLC (sending zeroed telemetry fields), but GNN message passing reconstructs the anomaly from adjacent switch port counters.",
+                        isAz ? "Ağıllı binada yoluxmuş IP-kameralar şifrələnmiş TLS tuneli açaraq paket məzmunu atributlarını gizlədir, lakin axın həndəsəsi onları ələ verir." : "Compromised smart-building IP cameras wrap botnet traffic in TLS 1.3 to mask payload entropy attributes, yet GraphSAGE detects the topological flow pattern.",
+                        isAz ? "Tibbi şəbəkədə zərərli proqram paket başlıqlarındakı seçilmiş baytları sıfırlayaraq (Header Stripping) imza əsaslı IDS-dən yayınır, lakin GAT və GCN tərəfindən tutulur." : "Malware on medical telemetry gateways zeroes out optional TCP header fields to blind signature IDS, while GCN's neighborhood smoothing maintains >91% accuracy."
+                    ],
+                    specs: ["O(|V| · D)", "O(|V| · D)", "Moderate (Local Feature Loss)", "-3.5% (GAT / GCN)", "-7.8% (RGCN)", "Masked Graph Autoencoder (GraphMAE)"],
+                    defense: "snmp-server group SECURE v3 priv && ip flow-export version 9 && iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP"
+                }
+            ];
+        }
+
+        // Complete 24-Term Platform Glossary (Translated in EN/AZ + All Languages)
+        function getFullGlossary(lang) {
+            const isAz = lang === 'az';
+            if (isAz) {
+                return [
+                    ["1. Node (Qovşaq / Vertex v ∈ V)", "Şəbəkədə IP və ya MAC ünvanı olan hər hansı fiziki və ya virtual IoT cihazı (temperatur sensoru, PLC kontroller, IP kamera, marşrutlayıcı, bulud serveri). Qraf sxemlərində dairə kimi göstərilir."],
+                    ["2. Edge (Til / Əlaqə e_ij ∈ E)", "İki qovşaq arasında qurulan fiziki kabel və ya məntiqi protokol əlaqəsi (TCP sessiyası, UDP axını, MQTT abunəliyi, Modbus sorğusu)."],
+                    ["3. Adjacency Matrix (Qonşuluq Matrisi A)", "Şəbəkənin topoloji xəritəsini saxlayan N × N ölçülü riyazi cədvəl. Əgər i cihazı ilə j cihazı arasında birbaşa əlaqə varsa A_ij = 1, yoxdursa 0 yazılır."],
+                    ["4. Degree Matrix (Dərəcə Matrisi D)", "Diaqonal matrisdir (D_ii = ∑_j A_ij); hər bir cihazın aktiv qoşulmalarının (qonşularının) sayını göstərir. Mərkəzi kommutatorların dərəcəsi yüksək, sadə sensorların dərəcəsi 1-2 olur."],
+                    ["5. Feature Vector (Xüsusiyyət Vektoru x_i ∈ ℝ^D)", "Hər bir cihazın rəqəmsal davranış pasportu: orta paket ölçüsü (bayt), ötürmə tezliyi (Hs), CPU yükü (%), RAM sərfiyyatı, gecikmə (jitter) və port entropiyasından ibarət ədədlər siyahısı."],
+                    ["6. Graph Laplacian (Qraf Laplasianı L = D - A)", "Qraf üzərində siqnalların necə yayıldığını və hamarlandığını təyin edən əsas spektral matris. Normallaşdırılmış forması: L_sym = I - D⁻¹/² A D⁻¹/²."],
+                    ["7. Message Passing (Qonşuluq Mesaj Ötürməsi)", "GNN-in ürəyi olan riyazi proses: hər bir qovşaq öz qonşularından xüsusiyyət vektorlarını toplayır (Aggregate), öz əvvəlki vəziyyəti ilə birləşdirir (Combine) və neyron çəkiləri ilə yeniləyir."],
+                    ["8. Inductive vs. Transductive Learning", "Transduktiv model (GCN) yalnız təlim zamanı gördüyü sabit şəbəkədə işləyir. İnduktiv model (GraphSAGE, GAT) isə şəbəkəyə sonradan qoşulan tamamilə yeni cihazları yenidən təlimsiz dərhal analiz edir."],
+                    ["9. Self-Attention Coefficient (Diqqət Əmsalı α_ij)", "GAT modelində i qovşağının j qonşusuna nə dərəcədə etibar etdiyini göstərən 0 ilə 1 arasında öyrənilən çəki. Saxta hücum qovşaqları üçün α_ij ≈ 0.001 olur."],
+                    ["10. Homophily vs. Heterophily (Homofiliya)", "Homofiliya — oxşar təyinatlı və təhlükəsizlik statuslu cihazların bir-biri ilə əlaqədə olmasıdır. Hakerlər sağlam sensoru zərərli serverə bağlayaraq heterofiliya (uyğunsuzluq) yaradırlar."],
+                    ["11. Weisfeiler-Lehman (WL) Isomorphism Test", "İki qrafın həndəsi-struktur cəhətdən eyni (izomorf) olub-olmadığını yoxlayan klassik alqoritm. GIN modeli məhz bu test qədər yüksək ayırdetmə gücünə malikdir."],
+                    ["12. Receptive Field (k-Hop Qəbul Dairəsi)", "k qatlı GNN modelində bir qovşağın neçə addım uzaqlıqdakı qonşulardan məlumat topladığını göstərir (məsələn, 2-hop = qonşular və qonşuların qonşuları)."],
+                    ["13. Clean Accuracy (Təmiz Dəqiqlik %)", "Şəbəkəyə heç bir adversarial hücum edilməzdən əvvəl GNN modelinin cihazları (Təhlükəsiz və ya Zərərli) nə qədər düzgün təsnif etdiyini göstərən baza faizi."],
+                    ["14. Attacked Accuracy (Hücum Altında Dəqiqlik %)", "Seçilmiş Hücum Strategiyası və İntensivlik Dərəcəsi (%) tətbiq edildikdən sonra modelin qoruyub saxladığı real müdafiə dəqiqliyi."],
+                    ["15. Attack Intensity Rate (Hücum İntensivliyi 0%–50%)", "Simulyasiya zamanı təcavüzkarın şəbəkədəki əlaqələrin və ya telemetriya atributlarının neçə faizini dəyişdirdiyini təyin edən büdcə (Δ)."],
+                    ["16. XAI Fidelity Score (İzaholunan Süni İntellekt Balı %)", "GNNExplainer alqoritmi vasitəsilə süni intellektin verdiyi qərarın nə qədər şəffaf, məntiqi və sübuta yetirilə bilən olduğunu ölçən etibarlılıq göstəricisi."],
+                    ["17. Surrogate Model (Suroqat Kölgə Modeli)", "Hakerin əsas müdafiə sisteminə hücum etməzdən əvvəl hədəf şəbəkənin zəif nöqtələrini (qradientlərini) hesablamaq üçün qurduğu sadələşdirilmiş köməkçi GNN modeli."],
+                    ["18. FGSM & PGD (Qradient Hücum Alqoritmləri)", "İtki funksiyasının giriş matrisinə görə törəməsini (∇_X L) hesablayaraq modeli ən qısa yolla səhv salan biraddımlı (FGSM) və çoxaddımlı (PGD) riyazi optimallaşdırma hücumları."],
+                    ["19. Hadamard Product (Element-bə-Element Vurma ⊙)", "Atribut Maskalama hücumunda xüsusiyyət vektorunun hər bir həddini uyğun olaraq 0 və ya 1 maskasına vuran riyazi əməliyyat."],
+                    ["20. Synthetic Graph vs. Custom File", "Synthetic Graph — Barabási-Albert qanunu ilə avtomatik sınaq şəbəkəsi yaradır. Custom File — müəssisənin öz real CSV/JSON şəbəkə topologiyasını yükləməsinə imkan verir."],
+                    ["21. Auto-Remediation CLI Playbook", "Zəiflik tapılan kimi insan müdaxiləsi gözləmədən saniyədə generasiya olunan hazır Linux iptables firewall və Cisco IOS marşrutlayıcı mühafizə kodları."],
+                    ["22. Linux iptables & eBPF XDP", "Linux nüvəsində (kernel) zərərli IP paketlərini şəbəkə kartı səviyyəsində bloklayan və sürət limiti (rate-limiting) tətbiq edən mühafizə mexanizmləri."],
+                    ["23. ISO/IEC 27001:2022 Compliance", " İnformasiya Təhlükəsizliyi İdarəetmə Sistemləri üzrə beynəlxalq standart (A.8.16 Şəbəkə Monitorinqi və A.8.20 Şəbəkə Təhlükəsizliyi maddələri)."],
+                    ["24. NIST SP 800-53 Rev. 5", "ABŞ Milli Standartlar və Texnologiya İnstitutunun kibertəhlükəsizlik çərçivəsi (SI-4 Sistem Monitorinqi və IR-4 Avtomatlaşdırılmış İnsident Cavabı tələbləri)."]
+                ];
+            }
+            return [
+                ["1. Node (Vertex v ∈ V)", "Any physical or virtual IoT endpoint with an IP/MAC address (sensor, PLC controller, IP camera, router, cloud gateway) represented as a vertex in the graph."],
+                ["2. Edge (Communication Link e_ij ∈ E)", "A physical cable or logical protocol session connecting two nodes (TCP stream, UDP flow, MQTT publish/subscribe, Modbus polling)."],
+                ["3. Adjacency Matrix (A ∈ {0,1}^(N×N))", "An N × N mathematical grid encoding network topology: A_ij = 1 if device i communicates directly with device j, and 0 otherwise."],
+                ["4. Degree Matrix (D_ii = ∑_j A_ij)", "A diagonal matrix counting the total number of active communication links attached to each device v_i."],
+                ["5. Feature Vector (x_i ∈ ℝ^D)", "A numerical telemetry signature for node i capturing packet size, transmission frequency, CPU load, memory usage, jitter, and port entropy."],
+                ["6. Graph Laplacian (L = D - A)", "The fundamental spectral operator measuring signal smoothness across connected nodes; normalized as L_sym = I - D⁻¹/² A D⁻¹/²."],
+                ["7. Message Passing (Neighborhood Aggregation)", "The core GNN mechanism where every node iteratively collects feature vectors from its k-hop neighbors, transforms them via neural weights W, and updates its embedding."],
+                ["8. Inductive vs. Transductive Learning", "Transductive models (GCN) require a fixed graph during training. Inductive models (GraphSAGE, GAT) generalize immediately to unseen devices joining dynamically."],
+                ["9. Self-Attention Coefficient (α_ij)", "A learned weight in GAT (between 0.0 and 1.0) quantifying how trustworthy neighbor j's telemetry is to node i. Rogue nodes receive α_ij ≈ 0.001."],
+                ["10. Network Homophily vs. Heterophily", "Homophily is the tendency of benign devices to connect to benign devices of similar function. Structural attacks inject heterophilous edges linking malware to clean hubs."],
+                ["11. Weisfeiler-Lehman (WL) Isomorphism Test", "The theoretical benchmark for distinguishing non-isomorphic graph structures. GIN achieves WL-equivalent discriminative power via injective summation."],
+                ["12. Receptive Field (k-Hop Neighborhood)", "The topological radius of nodes whose telemetry influences a target node's classification after k GNN layers."],
+                ["13. Clean Accuracy (%)", "Baseline node classification accuracy (Benign vs. Malicious) evaluated on the unperturbed IoT network prior to adversarial assault."],
+                ["14. Attacked Accuracy (%)", "Classification accuracy retained by the selected GNN architecture while actively enduring the chosen Attack Strategy and Intensity Rate."],
+                ["15. Attack Intensity Rate (0%–50%)", "The adversarial perturbation budget (Δ or ε) specifying the percentage of topological edges flipped or feature dimensions corrupted."],
+                ["16. XAI Fidelity Score (%)", "Explainable AI metric computed via GNNExplainer quantifying how faithfully the identified subgraph explains the neural network's alert decision."],
+                ["17. Surrogate Model (Linearized Shadow GNN)", "A simplified two-layer model (Z = Â²XW) trained by an attacker to estimate topological meta-gradients during Nettack/Metattack."],
+                ["18. FGSM & PGD (Gradient Assaults)", "Single-step (FGSM) and iterative multi-step (PGD) white-box optimization algorithms that perturb telemetry along the positive gradient of Cross-Entropy Loss."],
+                ["19. Hadamard Product (⊙ Element-wise Multiplication)", "Binary masking operation x'_i = x_i ⊙ m_i used in Attribute Masking Attacks to zero out specific telemetry columns."],
+                ["20. Synthetic Graph vs. Custom File Mode", "Synthetic Mode generates scale-free Barabási-Albert IoT topologies; Custom Mode ingests real enterprise CSV/JSON edge lists and feature matrices."],
+                ["21. Auto-Remediation CLI Playbook", "Zero-latency automated synthesis of production-ready Linux iptables rules and Cisco IOS Access Control Lists (ACLs) upon threat detection."],
+                ["22. Linux iptables & eBPF XDP", "Kernel-level packet filtering and eXpress Data Path rate-limiting rules that quarantine compromised IoT MAC/IP addresses at line rate."],
+                ["23. ISO/IEC 27001:2022 Compliance", "International standard for Information Security Management Systems (specifically Controls A.8.16 Monitoring Activities and A.8.20 Network Security)."],
+                ["24. NIST SP 800-53 Rev. 5", "U.S. National Institute of Standards and Technology security controls (SI-4 System Monitoring, SC-7 Boundary Protection, and IR-4 Incident Handling)."]
+            ];
+        }
+
+        // Master Builder: Generates the Full 20-Page Textbook (1.5 Pages per Model & Attack)
         function buildEncyclopediaHTML(lang) {
-            const t = L[lang] || L.en;
-            const glossaryRows = t.terms.map(([term, desc]) => `
-                <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 hover:border-cyan-500/40 transition">
-                    <h6 class="text-cyan-400 font-bold text-sm mb-1">🔹 ${term}</h6>
-                    <p class="text-xs text-slate-300 leading-relaxed">${desc}</p>
-                </div>
-            `).join('');
+            const u = UI[lang] || UI.en;
+            const models = getModelsData(lang);
+            const attacks = getAttacksData(lang);
+            const glossary = getFullGlossary(lang);
+
+            const renderMonographCard = (item, isAttack) => {
+                const borderCol = isAttack ? "border-red-900/60" : "border-emerald-900/60";
+                const titleCol = isAttack ? "text-red-500" : "text-emerald-400";
+                const badgeCol = isAttack ? "bg-red-500/20 text-red-300 border-red-500/40" : "bg-emerald-500/20 text-emerald-300 border-emerald-500/40";
+                const mathBoxClass = isAttack ? "math-box-danger text-red-200" : "math-box text-cyan-200";
+
+                return `
+                    <div class="bg-slate-900/95 p-6 sm:p-8 rounded-3xl border-2 ${borderCol} shadow-2xl space-y-6">
+                        <div class="flex flex-wrap justify-between items-center gap-3 border-b border-slate-800 pb-4">
+                            <h4 class="text-xl sm:text-2xl font-extrabold ${titleCol}">${item.id}</h4>
+                            <span class="text-xs font-mono px-3 py-1 rounded-full border ${badgeCol}">${item.badge}</span>
+                        </div>
+
+                        <!-- I. 3 Deep Theoretical Paragraphs -->
+                        <div class="space-y-4">
+                            <h5 class="text-sm font-bold uppercase tracking-wider text-cyan-400">${u.lblTheory}</h5>
+                            <p class="text-sm text-slate-200 leading-relaxed text-justify">${item.p1}</p>
+                            <p class="text-sm text-slate-200 leading-relaxed text-justify">${item.p2}</p>
+                            <p class="text-sm text-slate-200 leading-relaxed text-justify">${item.p3}</p>
+                        </div>
+
+                        <!-- II. 6-Stage Mathematical Formulation -->
+                        <div class="space-y-3">
+                            <h5 class="text-sm font-bold uppercase tracking-wider text-cyan-400">${u.lblMath}</h5>
+                            <div class="${mathBoxClass} p-5 rounded-2xl text-xs sm:text-sm space-y-2.5 overflow-x-auto leading-relaxed">
+                                ${item.mathSteps.map(s => `<div>${s}</div>`).join('')}
+                            </div>
+                        </div>
+
+                        <!-- III. Step-by-Step Numerical Matrix Calculation Walkthrough -->
+                        <div class="space-y-3">
+                            <h5 class="text-sm font-bold uppercase tracking-wider text-amber-400">${u.lblNum}</h5>
+                            <div class="matrix-box p-5 rounded-2xl text-xs sm:text-sm text-amber-200 space-y-2 overflow-x-auto leading-relaxed">
+                                ${item.numWalkthrough.map(n => `<div>▶ ${n}</div>`).join('')}
+                            </div>
+                        </div>
+
+                        <!-- IV. 3 Real-World Industrial IoT Case Studies -->
+                        <div class="space-y-3">
+                            <h5 class="text-sm font-bold uppercase tracking-wider text-emerald-400">${u.lblCases}</h5>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs space-y-1.5">
+                                    <div class="font-bold text-cyan-400">⚡ ${u.scadaLabel}</div>
+                                    <p class="text-slate-300 leading-relaxed">${item.cases[0]}</p>
+                                </div>
+                                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs space-y-1.5">
+                                    <div class="font-bold text-emerald-400">🏥 ${u.icuLabel}</div>
+                                    <p class="text-slate-300 leading-relaxed">${item.cases[1]}</p>
+                                </div>
+                                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs space-y-1.5">
+                                    <div class="font-bold text-amber-400">🏭 ${u.plcLabel}</div>
+                                    <p class="text-slate-300 leading-relaxed">${item.cases[2]}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- V. Complexity & Resilience Table + VI. CLI Defense -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-2">
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                                <h6 class="text-xs font-bold uppercase text-cyan-400 mb-3">${u.lblTable}</h6>
+                                <div class="grid grid-cols-3 gap-2 text-xs font-mono">
+                                    <div class="bg-slate-900 p-2 rounded border border-slate-800"><span class="text-slate-400 block text-[10px]">Time Complexity</span><span class="text-white font-bold">${item.specs[0]}</span></div>
+                                    <div class="bg-slate-900 p-2 rounded border border-slate-800"><span class="text-slate-400 block text-[10px]">Space Complexity</span><span class="text-white font-bold">${item.specs[1]}</span></div>
+                                    <div class="bg-slate-900 p-2 rounded border border-slate-800"><span class="text-slate-400 block text-[10px]">Inference / Impact</span><span class="text-cyan-400 font-bold">${item.specs[2]}</span></div>
+                                    <div class="bg-slate-900 p-2 rounded border border-slate-800"><span class="text-slate-400 block text-[10px]">Clean / Best Acc</span><span class="text-emerald-400 font-bold">${item.specs[3]}</span></div>
+                                    <div class="bg-slate-900 p-2 rounded border border-slate-800"><span class="text-slate-400 block text-[10px]">15% Attack Acc</span><span class="text-amber-400 font-bold">${item.specs[4]}</span></div>
+                                    <div class="bg-slate-900 p-2 rounded border border-slate-800"><span class="text-slate-400 block text-[10px]">30% Attack / Mitigation</span><span class="text-red-400 font-bold">${item.specs[5]}</span></div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                                <h6 class="text-xs font-bold uppercase text-emerald-400 mb-2">${u.lblDefense}</h6>
+                                <pre class="bg-black/60 p-3 rounded-lg text-[11px] font-mono text-emerald-400 overflow-x-auto border border-slate-800">$ ${item.defense}</pre>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            };
 
             return `
-                <!-- CARD 1: FUNDAMENTAL GRAPH THEORY & SVG DIAGRAM -->
-                <div class="kb-card border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer" onclick="this.classList.toggle('pinned')">
-                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition">
-                        <span class="text-base sm:text-lg">${t.s1}</span>
+                <!-- CHAPTER 1: FUNDAMENTAL GRAPH THEORY & LINEAR ALGEBRA MASTERCLASS -->
+                <div class="kb-card pinned border border-cyan-500/50 rounded-2xl bg-slate-950 overflow-hidden shadow-lg">
+                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition cursor-pointer" onclick="this.parentElement.classList.toggle('pinned')">
+                        <span class="text-base sm:text-lg">${u.ch1}</span>
                         <span class="kb-arrow text-xl transition-transform duration-300">▼</span>
                     </div>
-                    <div class="kb-body px-6 pb-6 space-y-5 border-t border-slate-800/80 pt-4">
-                        <p class="text-slate-300 leading-relaxed">${t.s1Text}</p>
-                        
-                        <!-- Interactive SVG Topological Graph Diagram -->
-                        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col lg:flex-row items-center justify-around gap-6">
-                            <svg width="320" height="170" viewBox="0 0 320 170" class="bg-slate-950 rounded-xl border border-slate-800 p-2">
-                                <line x1="60" y1="85" x2="150" y2="40" stroke="#10b981" stroke-width="2.5"/>
-                                <line x1="60" y1="85" x2="150" y2="130" stroke="#10b981" stroke-width="2.5"/>
-                                <line x1="150" y1="40" x2="150" y2="130" stroke="#06b6d4" stroke-width="2"/>
-                                <line x1="150" y1="40" x2="255" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5,5"/>
-                                <line x1="150" y1="130" x2="255" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5,5"/>
-                                <circle cx="60" cy="85" r="16" fill="#059669"/>
-                                <text x="60" y="89" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₁ (GW)</text>
-                                <circle cx="150" cy="40" r="14" fill="#0284c7"/>
-                                <text x="150" y="44" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₂</text>
-                                <circle cx="150" cy="130" r="14" fill="#0284c7"/>
-                                <text x="150" y="134" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₃</text>
-                                <circle cx="255" cy="85" r="16" fill="#dc2626"/>
-                                <text x="255" y="89" text-anchor="middle" fill="white" font-size="9" font-weight="bold">v₄ (Atk)</text>
-                            </svg>
-                            <div class="math-box p-4 rounded-xl text-xs text-cyan-300 space-y-1.5 flex-1">
-                                <div class="text-emerald-400 font-bold mb-1">📐 Graph Mathematical Representation:</div>
-                                <div>G = (V, E, X), &nbsp; |V| = N, &nbsp; X ∈ ℝ^(N × D)</div>
-                                <div>Adjacency Matrix A_ij = { 1 if (v_i, v_j) ∈ E, else 0 }</div>
-                                <div>Degree Matrix D_ii = ∑_j A_ij, &nbsp; Laplacian L = D - A</div>
-                                <div>Normalized Propagation: Â = D̃⁻¹/² (A + I) D̃⁻¹/²</div>
+                    <div class="kb-body px-6 pb-8 space-y-6 border-t border-slate-800 pt-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                            <div class="space-y-3 text-sm text-slate-200 leading-relaxed text-justify">
+                                <p><b>Topological Graph Formulation G = (V, E, X):</b> Unlike legacy firewalls that inspect network packets as isolated tabular rows, GraphGuard IoT models the entire enterprise infrastructure as an attributed, non-Euclidean mathematical graph. Every physical or virtual device (PLC controllers, temperature sensors, IP cameras, medical monitors, cloud brokers) is a vertex <b>v_i ∈ V</b> (where |V| = N), and every active protocol session (TCP/IP, MQTT, Modbus, SSH) is a directed edge <b>e_{ij} ∈ E</b>.</p>
+                                <p><b>Linear Algebra of Network Topologies:</b> Connectivity is stored in the <b>N × N Adjacency Matrix A</b> (where A_{ij} = 1 if linked, 0 otherwise) and the diagonal <b>Degree Matrix D_{ii} = ∑_j A_{ij}</b>. Simultaneously, every node holds a D-dimensional telemetry <b>Feature Vector x_i ∈ ℝ^D</b> stacked into the matrix <b>X ∈ ℝ^(N × D)</b>. Graph Neural Networks detect cyberattacks by multiplying normalized Laplacian operators (<b>Â = D̃⁻¹/²(A+I)D̃⁻¹/²</b>) with feature matrices to expose structural and behavioral anomalies across k-hop neighborhoods.</p>
                             </div>
-                        </div>
-
-                        <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 text-xs text-amber-200">
-                            💡 <b>${t.s1Ex}</b>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CARD 2: ALL 5 GNN ARCHITECTURES + MATH + EXAMPLES -->
-                <div class="kb-card border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer" onclick="this.classList.toggle('pinned')">
-                    <div class="p-5 font-bold text-emerald-400 flex justify-between items-center hover:bg-slate-900 transition">
-                        <span class="text-base sm:text-lg">${t.s2}</span>
-                        <span class="kb-arrow text-xl transition-transform duration-300">▼</span>
-                    </div>
-                    <div class="kb-body px-6 pb-6 space-y-4 border-t border-slate-800/80 pt-4">
-                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
-                            <h5 class="text-emerald-400 font-bold text-base">A. GraphSAGE (Inductive Neighborhood Sampling)</h5>
-                            <p class="text-xs text-slate-300">${t.m1}</p>
-                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
-                                h_N(v)⁽ᵏ⁾ = AGGREGATE_k({ h_u⁽ᵏ⁻¹⁾, ∀u ∈ Sample(N(v), S_k) }) &nbsp;|&nbsp; h_v⁽ᵏ⁾ = σ(W⁽ᵏ⁾ · CONCAT(h_v⁽ᵏ⁻¹⁾, h_N(v)⁽ᵏ⁾))
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
-                            <h5 class="text-emerald-400 font-bold text-base">B. GCN (Spectral Graph Convolutional Network)</h5>
-                            <p class="text-xs text-slate-300">${t.m2}</p>
-                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
-                                H⁽ˡ⁺¹⁾ = σ( D̃⁻¹/² Ã D̃⁻¹/² H⁽ˡ⁾ W⁽ˡ⁾ ), &nbsp; where Ã = A + I_N, &nbsp; D̃_ii = ∑_j Ã_ij
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
-                            <h5 class="text-emerald-400 font-bold text-base">C. GAT (Graph Attention Network - Pro Tier)</h5>
-                            <p class="text-xs text-slate-300">${t.m3}</p>
-                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
-                                α_ij = softmax_j( LeakyReLU( aᵀ [W h_i || W h_j] ) ) &nbsp;|&nbsp; h_i' = σ( ∑_{j ∈ N(i)} α_ij W h_j )
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
-                            <h5 class="text-emerald-400 font-bold text-base">D. RGCN (Relational Multi-Protocol GCN)</h5>
-                            <p class="text-xs text-slate-300">${t.m4}</p>
-                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
-                                h_i⁽ˡ⁺¹⁾ = σ( W_0⁽ˡ⁾ h_i⁽ˡ⁾ + ∑_{r ∈ R} ∑_{j ∈ N_i^r} (1 / c_{i,r}) W_r⁽ˡ⁾ h_j⁽ˡ⁾ )
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
-                            <h5 class="text-emerald-400 font-bold text-base">E. GIN (Weisfeiler-Lehman Graph Isomorphism Network)</h5>
-                            <p class="text-xs text-slate-300">${t.m5}</p>
-                            <div class="math-box p-3 rounded-lg text-xs text-cyan-300">
-                                h_v⁽ᵏ⁾ = MLP⁽ᵏ⁾( (1 + ε⁽ᵏ⁾) · h_v⁽ᵏ⁻¹⁾ + ∑_{u ∈ N(v)} h_u⁽ᵏ⁻¹⁾ )
+                            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col items-center">
+                                <svg width="360" height="190" viewBox="0 0 360 190" class="bg-slate-950 rounded-xl border border-slate-800 p-2 w-full max-w-[360px]">
+                                    <line x1="65" y1="95" x2="170" y2="40" stroke="#10b981" stroke-width="3"/>
+                                    <line x1="65" y1="95" x2="170" y2="150" stroke="#10b981" stroke-width="3"/>
+                                    <line x1="170" y1="40" x2="170" y2="150" stroke="#06b6d4" stroke-width="2"/>
+                                    <line x1="170" y1="40" x2="290" y2="95" stroke="#ef4444" stroke-width="3" stroke-dasharray="6,4"/>
+                                    <line x1="170" y1="150" x2="290" y2="95" stroke="#ef4444" stroke-width="3" stroke-dasharray="6,4"/>
+                                    <circle cx="65" cy="95" r="22" fill="#059669"/><text x="65" y="99" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₁ (SCADA)</text>
+                                    <circle cx="170" cy="40" r="18" fill="#0284c7"/><text x="170" y="44" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₂ (PLC)</text>
+                                    <circle cx="170" cy="150" r="18" fill="#0284c7"/><text x="170" y="154" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₃ (Sens)</text>
+                                    <circle cx="290" cy="95" r="22" fill="#dc2626"/><text x="290" y="99" text-anchor="middle" fill="white" font-size="10" font-weight="bold">v₄ (Hacker)</text>
+                                </svg>
+                                <div class="text-[11px] font-mono text-cyan-300 mt-3 text-center">
+                                    Adjacency A = [[0,1,1,0], [1,0,1,1], [1,1,0,1], [0,1,1,0]] &nbsp;|&nbsp; Degrees D = diag(2, 3, 3, 2)
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- CARD 3: ALL 5 ADVERSARIAL ATTACKS (RED ALERT HEADERS + MATH) -->
-                <div class="kb-card border border-red-900/60 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer" onclick="this.classList.toggle('pinned')">
-                    <div class="p-5 font-bold text-red-500 flex justify-between items-center hover:bg-slate-900 transition">
-                        <span class="text-base sm:text-lg">${t.s3}</span>
+                <!-- CHAPTER 2: ALL 5 GNN ARCHITECTURES (1.5 PAGES EACH = 7.5 PAGES) -->
+                <div class="kb-card pinned border border-emerald-500/50 rounded-2xl bg-slate-950 overflow-hidden shadow-lg">
+                    <div class="p-5 font-bold text-emerald-400 flex justify-between items-center hover:bg-slate-900 transition cursor-pointer" onclick="this.parentElement.classList.toggle('pinned')">
+                        <span class="text-base sm:text-lg">${u.ch2}</span>
                         <span class="kb-arrow text-xl transition-transform duration-300">▼</span>
                     </div>
-                    <div class="kb-body px-6 pb-6 space-y-4 border-t border-slate-800/80 pt-4">
-                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
-                            <h5 class="text-red-500 font-bold text-base">🚨 1. Structural Edge Perturbation (Nettack / Metattack)</h5>
-                            <p class="text-xs text-slate-300">${t.a1}</p>
-                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
-                                argmax_{A'} L_atk( f_θ(A', X) ) &nbsp; subject to &nbsp; ||A' - A||_0 ≤ 2Δ, &nbsp; A' ∈ {0, 1}^(N × N)
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
-                            <h5 class="text-red-500 font-bold text-base">🚨 2. Feature-Level Noise Attack</h5>
-                            <p class="text-xs text-slate-300">${t.a2}</p>
-                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
-                                X' = X + η, &nbsp; ||η||_∞ ≤ ε &nbsp;⇒&nbsp; argmax_y P_θ(y | A, X + η) ≠ y_true
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
-                            <h5 class="text-red-500 font-bold text-base">🚨 3. Node Injection Attack (TDGIA)</h5>
-                            <p class="text-xs text-slate-300">${t.a3}</p>
-                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
-                                V' = V ∪ V_atk, &nbsp; A' = [ A , A_atk ; A_atkᵀ , O ] ∈ {0,1}^((N+N_atk)×(N+N_atk))
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
-                            <h5 class="text-red-500 font-bold text-base">🚨 4. Gradient-based Adversarial Attack (FGSM / PGD)</h5>
-                            <p class="text-xs text-slate-300">${t.a4}</p>
-                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
-                                X^(t+1) = Π_{X+S}( X^(t) + α · sign( ∇_X L(f_θ(A, X^(t)), Y) ) )
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 p-4 rounded-xl border border-red-900/40 space-y-2">
-                            <h5 class="text-red-500 font-bold text-base">🚨 5. Attribute Masking Attack</h5>
-                            <p class="text-xs text-slate-300">${t.a5}</p>
-                            <div class="math-box-danger p-3 rounded-lg text-xs text-red-300">
-                                x'_i = x_i ⊙ m_i, &nbsp; where m_i ∈ {0, 1}^D &nbsp; (Hadamard Element-wise Zeroing)
-                            </div>
-                        </div>
+                    <div class="kb-body px-4 sm:px-6 pb-8 space-y-8 border-t border-slate-800 pt-6">
+                        ${models.map(m => renderMonographCard(m, false)).join('')}
                     </div>
                 </div>
 
-                <!-- CARD 4: COMPLETE SITE GLOSSARY, METRICS & COMPLIANCE -->
-                <div class="kb-card border border-slate-700 rounded-2xl bg-slate-950 overflow-hidden shadow-lg cursor-pointer" onclick="this.classList.toggle('pinned')">
-                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition">
-                        <span class="text-base sm:text-lg">${t.s4}</span>
+                <!-- CHAPTER 3: ALL 5 ADVERSARIAL ATTACK VECTORS (1.5 PAGES EACH = 7.5 PAGES) -->
+                <div class="kb-card pinned border border-red-500/50 rounded-2xl bg-slate-950 overflow-hidden shadow-lg">
+                    <div class="p-5 font-bold text-red-500 flex justify-between items-center hover:bg-slate-900 transition cursor-pointer" onclick="this.parentElement.classList.toggle('pinned')">
+                        <span class="text-base sm:text-lg">${u.ch3}</span>
                         <span class="kb-arrow text-xl transition-transform duration-300">▼</span>
                     </div>
-                    <div class="kb-body px-6 pb-6 border-t border-slate-800/80 pt-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            ${glossaryRows}
+                    <div class="kb-body px-4 sm:px-6 pb-8 space-y-8 border-t border-slate-800 pt-6">
+                        ${attacks.map(a => renderMonographCard(a, true)).join('')}
+                    </div>
+                </div>
+
+                <!-- CHAPTER 4: COMPLETE 24-TERM ENCYCLOPEDIA GLOSSARY -->
+                <div class="kb-card pinned border border-cyan-500/50 rounded-2xl bg-slate-950 overflow-hidden shadow-lg">
+                    <div class="p-5 font-bold text-cyan-400 flex justify-between items-center hover:bg-slate-900 transition cursor-pointer" onclick="this.parentElement.classList.toggle('pinned')">
+                        <span class="text-base sm:text-lg">${u.ch4}</span>
+                        <span class="kb-arrow text-xl transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="kb-body px-6 pb-8 border-t border-slate-800 pt-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${glossary.map(([term, def]) => `
+                                <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition">
+                                    <h6 class="text-cyan-400 font-bold text-sm mb-1.5">📘 ${term}</h6>
+                                    <p class="text-xs text-slate-300 leading-relaxed">${def}</p>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
                 </div>
@@ -823,38 +1112,39 @@
 
         function changeLanguage(lang) {
             currentLang = lang;
-            const t = L[lang] || L.en;
-            document.getElementById('txtControlsTitle').innerText = t.controls;
-            document.getElementById('txtDatasetSource').innerText = t.dataset;
-            document.getElementById('btnSynthetic').innerText = t.synGraph;
-            document.getElementById('btnCustom').innerText = t.customFile;
-            document.getElementById('txtNodeCount').innerText = t.nodeCount;
-            document.getElementById('txtUploadTopo').innerText = t.uploadTopo;
-            document.getElementById('txtGnnArch').innerText = t.gnnArch;
-            document.getElementById('txtAttackStrat').innerText = t.attackStrat;
-            document.getElementById('txtAttackRate').innerText = t.attackRate;
-            document.getElementById('txtProKey').innerText = t.proKey;
-            document.getElementById('btnRunSim').innerText = t.runSim;
-            document.getElementById('txtCleanAcc').innerText = t.cleanAcc;
-            document.getElementById('txtAttackAcc').innerText = t.attackAcc;
-            document.getElementById('txtXaiScore').innerText = t.xaiScore;
-            document.getElementById('txtLogTitle').innerText = t.logTitle;
-            document.getElementById('pdfBtn').innerText = t.exportPdf;
-            document.getElementById('txtRemediationTitle').innerText = t.remedTitle;
-            document.getElementById('copyPatchBtn').innerText = t.copyPatch;
-            document.getElementById('downloadPatchBtn').innerText = t.downloadSh;
-            document.getElementById('txtLogInit').innerText = t.logInit;
+            const u = UI[lang] || UI.en;
+            document.getElementById('txtControlsTitle').innerText = u.controls;
+            document.getElementById('txtDatasetSource').innerText = u.dataset;
+            document.getElementById('btnSynthetic').innerText = u.synGraph;
+            document.getElementById('btnCustom').innerText = u.customFile;
+            document.getElementById('txtNodeCount').innerText = u.nodeCount;
+            document.getElementById('txtUploadTopo').innerText = u.uploadTopo;
+            document.getElementById('txtGnnArch').innerText = u.gnnArch;
+            document.getElementById('txtAttackStrat').innerText = u.attackStrat;
+            document.getElementById('txtAttackRate').innerText = u.attackRate;
+            document.getElementById('txtProKey').innerText = u.proKey;
+            document.getElementById('btnRunSim').innerText = u.runSim;
+            document.getElementById('txtCleanAcc').innerText = u.cleanAcc;
+            document.getElementById('txtAttackAcc').innerText = u.attackAcc;
+            document.getElementById('txtXaiScore').innerText = u.xaiScore;
+            document.getElementById('txtLogTitle').innerText = u.logTitle;
+            document.getElementById('pdfBtn').innerText = u.exportPdf;
+            document.getElementById('txtRemediationTitle').innerText = u.remedTitle;
+            document.getElementById('copyPatchBtn').innerText = u.copyPatch;
+            document.getElementById('downloadPatchBtn').innerText = u.downloadSh;
+            document.getElementById('txtLogInit').innerText = u.logInit;
 
-            document.getElementById('detRepTitle').innerText = t.detTitle;
-            document.getElementById('detRepSub').innerText = t.detSub;
-            document.getElementById('detRepContent').innerHTML = buildEncyclopediaHTML(lang);
-            updateGuideModal();
+            document.getElementById('detRepTitle').innerText = u.detTitle;
+            document.getElementById('detRepSub').innerText = u.detSub;
+            if (!document.getElementById('detailedReportModal').classList.contains('hidden')) {
+                document.getElementById('detRepContent').innerHTML = buildEncyclopediaHTML(lang);
+            }
         }
 
         function openDetailedReportModal() {
-            const t = L[currentLang] || L.en;
-            document.getElementById('detRepTitle').innerText = t.detTitle;
-            document.getElementById('detRepSub').innerText = t.detSub;
+            const u = UI[currentLang] || UI.en;
+            document.getElementById('detRepTitle').innerText = u.detTitle;
+            document.getElementById('detRepSub').innerText = u.detSub;
             document.getElementById('detRepContent').innerHTML = buildEncyclopediaHTML(currentLang);
             document.getElementById('detailedReportModal').classList.remove('hidden');
         }
@@ -1001,10 +1291,6 @@
             const data = await res.json();
             if (data.checkout_url) window.location.href = data.checkout_url;
         }
-
-        window.onload = function() {
-            document.getElementById('detRepContent').innerHTML = buildEncyclopediaHTML('en');
-        };
     </script>
 </body>
 </html>
