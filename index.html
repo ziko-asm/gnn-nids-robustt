@@ -20,9 +20,28 @@
             50% { opacity: 1; transform: scale(1.03); }
         }
         .pulse-badge { animation: pulseGlow 2.4s infinite ease-in-out; }
+        .soc-grid-bg {
+            background-color: #060911;
+            background-image: 
+                radial-gradient(at 15% 10%, rgba(16, 185, 129, 0.08) 0px, transparent 45%),
+                radial-gradient(at 85% 15%, rgba(6, 182, 212, 0.08) 0px, transparent 45%),
+                radial-gradient(at 50% 85%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+        }
+        .card-surface {
+            background: linear-gradient(180deg, rgba(17, 24, 39, 0.92) 0%, rgba(11, 15, 25, 0.96) 100%);
+            backdrop-filter: blur(12px);
+        }
+        .kpi-card {
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(52, 211, 153, 0.45);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+        }
     </style>
 </head>
-<body class="bg-[#090d16] text-slate-100 min-h-screen selection:bg-emerald-500 selection:text-slate-950">
+<body class="soc-grid-bg text-slate-100 min-h-screen selection:bg-emerald-500 selection:text-slate-950">
 
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-md pointer-events-none"></div>
@@ -61,6 +80,10 @@
                     <span>📘</span>
                     <span id="txtWordBtn">42 Səhifəlik Word Hesabatı (.DOCX)</span>
                     <span id="badgeWordLang" class="px-1.5 py-0.5 text-[10px] rounded bg-cyan-400/20 text-cyan-200 border border-cyan-400/30 font-mono">AZ</span>
+                </button>
+
+                <button id="btnHowItWorksNav" onclick="scrollToSystemReport()" class="bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 px-3 py-2 rounded-xl text-xs font-bold cursor-pointer transition flex items-center gap-1.5 shadow-sm">
+                    <span>🧭</span> <span id="txtHowItWorksBtn">Sistem Necə İşləyir? (Hesabat)</span>
                 </button>
 
                 <button id="btnGuideNav" onclick="startPlatformGuide()" class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-3 py-2 rounded-xl text-xs font-semibold cursor-pointer transition flex items-center gap-1.5">
@@ -234,9 +257,19 @@
                 <div>
                     <div class="flex justify-between items-center mb-1">
                         <label id="txtProKey" for="apiKeyInput" class="text-xs text-slate-400 font-medium">Pro Lisenziya Açarı</label>
-                        <button onclick="activateDemoProKey()" class="text-[10px] text-cyan-400 hover:text-cyan-300 underline cursor-pointer">Demo Pro Açar</button>
+                        <button id="btnDemoProKey" onclick="activateDemoProKey()" class="text-[10px] text-cyan-400 hover:text-cyan-300 underline cursor-pointer font-semibold">Demo Pro Açar</button>
                     </div>
                     <input id="apiKeyInput" type="text" value="PRO-GRAPHGUARD-TITAN8" placeholder="PRO-GRAPHGUARD-XXXX" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-1.5 text-xs text-emerald-300 font-mono focus:outline-none focus:border-emerald-500">
+                </div>
+
+                <!-- Live Active Mathematical Equation Pill -->
+                <div class="bg-slate-950/90 border border-slate-800/90 rounded-xl p-3 space-y-1.5">
+                    <div class="flex justify-between items-center text-[10px]">
+                        <span id="txtActiveFormulaLbl" class="text-slate-400 uppercase font-bold tracking-wider">Aktiv Riyazi Model & Hücum</span>
+                        <span id="activeParadigmBadge" class="text-emerald-400 font-mono font-semibold">Inductive Sampling</span>
+                    </div>
+                    <div id="liveGnnFormula" class="text-[11px] font-mono text-cyan-300 truncate" title="GNN Propagation Equation">h_v^(k) = σ(W · CONCAT(h_v, Mean/Pool(N_S(v))))</div>
+                    <div id="liveAtkFormula" class="text-[11px] font-mono text-rose-400 truncate" title="Adversarial Perturbation Objective">argmax_{A'} L_surr(Â'^2 X W) s.t. ||A'-A||_0 ≤ 2Δ</div>
                 </div>
             </div>
 
@@ -256,92 +289,118 @@
 
             <!-- 6 KPI Telemetry Cards -->
             <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
-                <div class="bg-[#111827] border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
+                <div class="kpi-card card-surface border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
                     <p id="txtCleanAcc" class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Təmiz Dəqiqlik</p>
                     <h3 id="cleanAcc" class="text-xl sm:text-2xl font-extrabold text-emerald-400 mt-1 font-mono">97.4%</h3>
+                    <div class="w-full h-1.5 bg-slate-900 rounded-full mt-2 overflow-hidden"><div id="barCleanAcc" class="h-full bg-emerald-400 rounded-full transition-all duration-500" style="width:97.4%"></div></div>
                 </div>
-                <div class="bg-[#111827] border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
+                <div class="kpi-card card-surface border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
                     <p id="txtAttackAcc" class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Hücum Altında</p>
                     <h3 id="attackAcc" class="text-xl sm:text-2xl font-extrabold text-rose-500 mt-1 font-mono">84.3%</h3>
+                    <div class="w-full h-1.5 bg-slate-900 rounded-full mt-2 overflow-hidden"><div id="barAttackAcc" class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width:84.3%"></div></div>
                 </div>
-                <div class="bg-[#111827] border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
+                <div class="kpi-card card-surface border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
                     <p id="txtShieldGain" class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Qalxan Bərpası</p>
                     <h3 id="shieldGain" class="text-xl sm:text-2xl font-extrabold text-teal-400 mt-1 font-mono">+0.0%</h3>
+                    <div class="w-full h-1.5 bg-slate-900 rounded-full mt-2 overflow-hidden"><div id="barShieldGain" class="h-full bg-teal-400 rounded-full transition-all duration-500" style="width:15%"></div></div>
                 </div>
-                <div class="bg-[#111827] border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
+                <div class="kpi-card card-surface border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
                     <p id="txtXaiScore" class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">XAI Dəqiqliyi</p>
                     <h3 id="xaiScore" class="text-xl sm:text-2xl font-extrabold text-cyan-400 mt-1 font-mono">91.5%</h3>
+                    <div class="w-full h-1.5 bg-slate-900 rounded-full mt-2 overflow-hidden"><div id="barXaiScore" class="h-full bg-cyan-400 rounded-full transition-all duration-500" style="width:91.5%"></div></div>
                 </div>
-                <div class="bg-[#111827] border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
+                <div class="kpi-card card-surface border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
                     <p id="txtLatencyLabel" class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Gecikmə (Latency)</p>
                     <h3 id="latencyScore" class="text-xl sm:text-2xl font-extrabold text-amber-400 mt-1 font-mono">12.8 ms</h3>
+                    <div class="w-full h-1.5 bg-slate-900 rounded-full mt-2 overflow-hidden"><div id="barLatency" class="h-full bg-amber-400 rounded-full transition-all duration-500" style="width:45%"></div></div>
                 </div>
-                <div class="bg-[#111827] border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
+                <div class="kpi-card card-surface border border-slate-800/90 rounded-2xl p-3.5 shadow-lg">
                     <p id="txtHomophilyLabel" class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Homofiliya (h)</p>
                     <h3 id="homophilyScore" class="text-xl sm:text-2xl font-extrabold text-purple-400 mt-1 font-mono">0.84</h3>
+                    <div class="w-full h-1.5 bg-slate-900 rounded-full mt-2 overflow-hidden"><div id="barHomophily" class="h-full bg-purple-400 rounded-full transition-all duration-500" style="width:84%"></div></div>
                 </div>
             </div>
 
             <!-- LIVE INTERACTIVE 60-FPS TOPOLOGICAL GRAPH & BLAST-RADIUS RADAR -->
-            <div class="bg-[#111827] border border-slate-800/90 rounded-2xl p-5 shadow-xl relative overflow-hidden">
-                <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
+            <div class="card-surface border border-slate-800/90 rounded-2xl p-5 shadow-xl relative overflow-hidden space-y-3">
+                <div class="flex flex-wrap justify-between items-center gap-2">
                     <div>
                         <h3 id="txtTopoRadarTitle" class="text-sm sm:text-base font-extrabold text-cyan-400 flex items-center gap-2">
                             🌐 Canlı 60-FPS IoT Topoloji Qrafı və Rəqib Hücum Radarı
-                            <span class="text-[10px] px-2 py-0.5 bg-cyan-500/15 text-cyan-300 rounded-md border border-cyan-500/30 font-mono">INTERACTIVE PHYSICS</span>
+                            <span class="text-[10px] px-2 py-0.5 bg-cyan-500/15 text-cyan-300 rounded-md border border-cyan-500/30 font-mono">60-FPS LIVE</span>
                         </h3>
                         <p id="topoSubtitle" class="text-xs text-slate-400 mt-0.5">
                             Yaşıl = Normal Qovşaq | Qırmızı = Yoluxmuş / Hücum Qovşağı | Bənövşəyi = Karantin | Düyünləri dartın və ya üzərinə klikləyin!
                         </p>
                     </div>
                     <div class="flex flex-wrap items-center gap-1.5">
-                        <button id="btnToggleAnim" onclick="toggleRadarAnimation()" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 px-2.5 py-1 rounded-lg text-xs font-bold cursor-pointer transition">
+                        <button id="btnToggleAnim" onclick="toggleRadarAnimation()" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition">
                             ⏸️ Pause
                         </button>
-                        <button onclick="injectLiveRogueNode()" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 px-2.5 py-1 rounded-lg text-xs font-bold cursor-pointer transition">
+                        <button id="btnRogueNode" onclick="injectLiveRogueNode()" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition">
                             🚨 +Rogue Node
                         </button>
-                        <button onclick="autoPruneInfectedEdges()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2.5 py-1 rounded-lg text-xs font-bold cursor-pointer transition">
+                        <button id="btnPruneEdges" onclick="autoPruneInfectedEdges()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition">
                             ✂️ GNNGuard Prune
                         </button>
-                        <button onclick="rebuildLiveGraph()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1 rounded-lg text-xs cursor-pointer transition">
+                        <button id="btnRebuildGraph" onclick="rebuildLiveGraph()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition">
                             🔄 Yenilə
                         </button>
                     </div>
                 </div>
 
-                <!-- Canvas + Interactive Node Inspector Overlay -->
-                <div class="relative rounded-xl overflow-hidden border border-slate-800 bg-[#050811]">
-                    <canvas id="topoCanvas" width="820" height="310" class="w-full h-72 sm:h-80 block cursor-grab active:cursor-grabbing"></canvas>
+                <!-- Top Docked HUD Telemetry Bar (Never blocks GW-1, GW-2, or GW-3 on the canvas!) -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-slate-950/90 border border-slate-800/90 rounded-xl px-3.5 py-2 text-[11px] font-mono text-slate-300">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>FPS: <b id="hudFps" class="text-emerald-400">60</b> | <span id="lblHudFlows">Axın</span>: <b id="hudPackets" class="text-cyan-400">1,420/s</b></span>
+                    </div>
+                    <div><span id="lblHudBenign">Təmiz</span>: <b id="hudBenign" class="text-emerald-400">24</b></div>
+                    <div><span id="lblHudCompromised">Yoluxmuş</span>: <b id="hudCompromised" class="text-rose-400">8</b></div>
+                    <div><span id="lblHudQuarantined">Karantin</span>: <b id="hudQuarantined" class="text-purple-400">0</b></div>
+                    <div><span id="lblHudShield">Aktiv Qalxan</span>: <b id="hudShieldMode" class="text-amber-300">NONE</b></div>
+                </div>
 
-                    <!-- Top-Left Live HUD Telemetry Overlay -->
-                    <div class="absolute top-3 left-3 bg-slate-950/85 backdrop-blur border border-slate-800/90 rounded-xl px-3 py-2 text-[11px] font-mono text-slate-300 space-y-0.5 pointer-events-none">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                            <span>FPS: <b id="hudFps" class="text-emerald-400">60</b> | Flows: <b id="hudPackets" class="text-cyan-400">1,420/s</b></span>
+                <!-- 100% Unobstructed Interactive Physics Canvas (All 3 Gateways GW-1, GW-2, GW-3 Clearly Visible) -->
+                <div class="relative rounded-xl overflow-hidden border border-slate-800 bg-[#04070f] shadow-inner">
+                    <canvas id="topoCanvas" width="860" height="320" class="w-full h-72 sm:h-80 block cursor-grab active:cursor-grabbing"></canvas>
+                </div>
+
+                <!-- Bottom Docked Selected Node Inspector & Zero-Trust Quarantine Control Bar -->
+                <div id="nodeInspectorCard" class="bg-slate-950/95 border border-cyan-500/40 rounded-xl p-3.5 text-xs shadow-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/40 flex items-center justify-center text-base">🔍</div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span id="inspNodeId" class="font-mono font-extrabold text-cyan-300 text-sm">GW-1 (Core Gateway)</span>
+                                <span id="inspNodeBadge" class="px-2 py-0.5 text-[10px] rounded-md bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">BENIGN</span>
+                            </div>
+                            <p id="lblInspHint" class="text-[11px] text-slate-400 mt-0.5">Qrafdakı istənilən qovşağa klikləyərək telemetriyasını yoxlayın və ya karantinə alın</p>
                         </div>
-                        <div>Benign: <b id="hudBenign" class="text-emerald-400">24</b> | Compromised: <b id="hudCompromised" class="text-rose-400">8</b> | Quarantined: <b id="hudQuarantined" class="text-purple-400">0</b></div>
-                        <div>Active Shield: <b id="hudShieldMode" class="text-amber-300">NONE</b></div>
                     </div>
 
-                    <!-- Top-Right Selected Node Inspector Card -->
-                    <div id="nodeInspectorCard" class="absolute top-3 right-3 bg-slate-900/95 backdrop-blur-md border border-cyan-500/50 rounded-xl p-3 w-64 text-xs shadow-2xl">
-                        <div class="flex justify-between items-center border-b border-slate-800 pb-1.5 mb-2">
-                            <span id="inspNodeId" class="font-mono font-extrabold text-cyan-300">GW-1 (Core Switch)</span>
-                            <span id="inspNodeBadge" class="px-1.5 py-0.5 text-[10px] rounded bg-emerald-500/20 text-emerald-300 font-bold">ONLINE</span>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px] font-mono bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 w-full md:w-auto">
+                        <div>
+                            <span id="lblInspIp" class="text-slate-400 block text-[10px]">IP / VLAN</span>
+                            <span id="inspNodeIp" class="text-slate-100 font-bold">10.40.1.10 (VLAN-CORE)</span>
                         </div>
-                        <div class="space-y-1 text-[11px] font-mono text-slate-300">
-                            <div class="flex justify-between"><span>IP / VLAN:</span> <span id="inspNodeIp" class="text-slate-100">10.40.1.1 (VLAN-10)</span></div>
-                            <div class="flex justify-between"><span>Protokol:</span> <span id="inspNodeProto" class="text-amber-300">IEC-61850 / MQTT</span></div>
-                            <div class="flex justify-between"><span>GNN Diqqət (α_ij):</span> <span id="inspNodeAttn" class="text-cyan-300">0.942</span></div>
-                            <div class="flex justify-between"><span>Kosinus Oxşarlığı:</span> <span id="inspNodeCos" class="text-emerald-400">0.968</span></div>
+                        <div>
+                            <span id="lblInspProto" class="text-slate-400 block text-[10px]">Protokol</span>
+                            <span id="inspNodeProto" class="text-amber-300 font-bold">IEC-61850</span>
                         </div>
-                        <div class="mt-2.5 pt-2 border-t border-slate-800 flex gap-1.5">
-                            <button onclick="toggleQuarantineSelectedNode()" id="btnQuarantineNode" class="w-full bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 text-purple-200 py-1 px-2 rounded-lg text-[11px] font-bold cursor-pointer transition">
-                                🔒 Qovşağı Karantinə Al
-                            </button>
+                        <div>
+                            <span id="lblInspAttn" class="text-slate-400 block text-[10px]">GNN Diqqət (α_ij)</span>
+                            <span id="inspNodeAttn" class="text-cyan-300 font-bold">0.820</span>
+                        </div>
+                        <div>
+                            <span id="lblInspCos" class="text-slate-400 block text-[10px]">Kosinus Oxşarlığı</span>
+                            <span id="inspNodeCos" class="text-emerald-400 font-bold">0.880</span>
                         </div>
                     </div>
+
+                    <button onclick="toggleQuarantineSelectedNode()" id="btnQuarantineNode" class="w-full md:w-auto bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 text-purple-200 py-2 px-4 rounded-xl text-xs font-extrabold cursor-pointer transition whitespace-nowrap shadow-md shadow-purple-950/50">
+                        🔒 Qovşağı Karantinə Al
+                    </button>
                 </div>
             </div>
 
@@ -414,6 +473,71 @@
             </div>
         </div>
     </main>
+
+    <!-- ============================================================================ -->
+    <!-- INTEGRATED MODULE-BY-MODULE TECHNICAL OPERATIONS REPORT & 20x20 EXPLORER    -->
+    <!-- ============================================================================ -->
+    <section id="howItWorksSection" class="max-w-7xl mx-auto px-4 sm:px-6 pb-12 pt-2 space-y-6">
+        <div class="card-surface border border-emerald-500/30 rounded-2xl p-6 shadow-2xl cyber-glow">
+            <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 border-b border-slate-800 pb-4 mb-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold mb-2">
+                        <span>🧭</span> <span id="txtReportBadge">PLATFORMANIN İŞLƏMƏ MEXANİZMİ VƏ MODUL HESABATI</span>
+                    </div>
+                    <h2 id="txtReportMainTitle" class="text-xl sm:text-2xl font-extrabold text-white">
+                        Saytın Hər Hissəsinin Necə İşlədiyinə Dair Texniki Hesabat (8 Əsas Modul)
+                    </h2>
+                    <p id="txtReportSubTitle" class="text-xs sm:text-sm text-slate-400 mt-1">
+                        Bu bölmədə platformanın bütün panellərinin, düymələrinin, riyazi GNN mühərrikinin və avtomatik müdafiə sisteminin iş prinsipi ətraflı izah olunur.
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="printModuleReport()" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer transition flex items-center gap-1.5">
+                        <span>🖨️</span> <span id="txtPrintModReport">Bu Hesabatı Çap Et / PDF</span>
+                    </button>
+                    <button onclick="downloadWordEncyclopedia()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-extrabold cursor-pointer transition flex items-center gap-1.5">
+                        <span>📘</span> <span id="txtDownload42FromReport">42 Səhifəlik Word (.DOCX)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 8-Module Dynamic Cards Grid -->
+            <div id="moduleReportGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+            <!-- Interactive End-to-End Dataflow Pipeline Diagram -->
+            <div class="mt-6 bg-slate-950/90 border border-slate-800/90 rounded-2xl p-4">
+                <h3 id="txtPipelineTitle" class="text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-3">
+                    ⚡ Addım-Addım Real-Vaxt İşləmə Zənciri (SOC Dataflow Pipeline)
+                </h3>
+                <div id="pipelineStepsGrid" class="grid grid-cols-1 sm:grid-cols-5 gap-2.5 text-xs"></div>
+            </div>
+
+            <!-- Interactive 20 GNN & 20 Attack Quick-Inspect & One-Click Load Matrix -->
+            <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 id="txtExplorerGnnTitle" class="text-xs sm:text-sm font-extrabold text-emerald-400">
+                            🧠 20 GNN Arxitekturası — Kliklə və Simulyatora Yüklə
+                        </h3>
+                        <span class="text-[10px] font-mono text-slate-400">1-Click Load</span>
+                    </div>
+                    <div id="gnnInteractivePills" class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3"></div>
+                    <div id="gnnSelectedDetailBox" class="bg-slate-900/90 border border-emerald-500/30 rounded-xl p-3 text-xs space-y-1"></div>
+                </div>
+
+                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 id="txtExplorerAtkTitle" class="text-xs sm:text-sm font-extrabold text-rose-400">
+                            ⚔️ 20 Kiber və Rəqib Hücum Vektoru — Kliklə və Sına
+                        </h3>
+                        <span class="text-[10px] font-mono text-slate-400">1-Click Attack</span>
+                    </div>
+                    <div id="atkInteractivePills" class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3"></div>
+                    <div id="atkSelectedDetailBox" class="bg-slate-900/90 border border-rose-500/30 rounded-xl p-3 text-xs space-y-1"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- PLATFORM GUIDE MODAL -->
     <div id="guideModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
@@ -1321,6 +1445,310 @@
         // ============================================================================
         // LIVE 60-FPS INTERACTIVE PHYSICS TOPOLOGY GRAPH & PACKET RADAR ENGINE
         // ============================================================================
+
+        // ============================================================================
+        // EXTENDED 10-LANGUAGE LOCALIZATION FOR ALL CONTROLS, RADAR HUD & MODULE REPORT
+        // ============================================================================
+        const UI_EXT = {
+            az: {
+                howBtn: "Sistem Necə İşləyir? (Hesabat)", demoKey: "Demo Pro Açar", formulaLbl: "Aktiv Riyazi Model & Hücum",
+                pauseBtn: "⏸️ Pause", resumeBtn: "▶️ Davam et", rogueBtn: "🚨 +Rogue Node", pruneBtn: "✂️ GNNGuard Prune", rebuildBtn: "🔄 Yenilə",
+                flows: "Axın", benign: "Təmiz", compromised: "Yoluxmuş", quarantined: "Karantin", activeShield: "Aktiv Qalxan",
+                inspHint: "Qrafdakı istənilən qovşağa klikləyərək telemetriyasını yoxlayın və ya karantinə alın",
+                proto: "Protokol", attn: "GNN Diqqət (α_ij)", cos: "Kosinus Oxşarlığı",
+                quarBtn: "🔒 Qovşağı Karantinə Al", unquarBtn: "🔓 Karantindən Çıxar", regStatus: "Normativ Status",
+                repBadge: "PLATFORMANIN İŞLƏMƏ MEXANİZMİ VƏ MODUL HESABATI",
+                repTitle: "Saytın Hər Hissəsinin Necə İşlədiyinə Dair Texniki Hesabat (8 Əsas Modul)",
+                repSub: "Bu bölmədə platformanın bütün panellərinin, düymələrinin, riyazi GNN mühərrikinin və avtomatik müdafiə sisteminin iş prinsipi ətraflı izah olunur.",
+                printRep: "Bu Hesabatı Çap Et / PDF",
+                pipeTitle: "⚡ Addım-Addım Real-Vaxt İşləmə Zənciri (SOC Dataflow Pipeline)",
+                expGnnTitle: "🧠 20 GNN Arxitekturası — Kliklə və Simulyatora Yüklə",
+                expAtkTitle: "⚔️ 20 Kiber və Rəqib Hücum Vektoru — Kliklə və Sına",
+                modules: [
+                    { icon: "🌐", title: "1. Üst Naviqasiya & 10-Dilli 42 Səhifəlik Word (.DOCX) Mühərriki",
+                      desc: "Üst paneldəki dil seçicidən 10 dildən (AZ, EN, RU, DE, FR, FI, NO, HI, ZH, JA) birini seçdikdə bütün interfeys və Word generatoru həmin dilə keçir. '42 Səhifəlik Word Hesabatı' düyməsi brauzerin özündə OpenXML/ZIP standartı ilə 42 səhifəlik kitab (Səh 1-2: AI və Kibertəhlükəsizlik, Səh 3-22: 20 GNN, Səh 23-42: 20 Hücum) yaradıb endirir." },
+                    { icon: "⚙️", title: "2. Məlumat Mənbəyi və 8 Qlobal Sektor Etalonu",
+                      desc: "Sol paneldə 'Sintetik Qraf' (50–2000 qovşaq) və ya 'Xüsusi Fayl' (öz CSV/JSON şəbəkə topologiyanız) rejimi seçilir. 8 hazır sənaye profili (Smart Power Grid SCADA, Hospital ICU, Industrial PLC, UNSW TON_IoT, Bot-IoT, CIC-IoT-2023, Smart City V2X, Aerospace) bir kliklə optimal qovşaq sayını, GNN modelini və qalxanı tənzimləyir." },
+                    { icon: "🧠", title: "3. 20 Qlobal GNN Arxitekturası Seçici Mühərriki",
+                      desc: "5 riyazi ailəyə bölünmüş 20 GNN modelini (GraphSAGE, GCN, GAT, GATv2, RGCN, GIN, GraphGPS, Graphormer, ChebNet, SGC, APPNP, GraphSAINT, TAGCN, Cluster-GCN, PNA, RGAT, HAN, TGN, GNNGuard, RobustGCN) canlı müqayisə edir. Hər modelin öz dəqiqliyi, gecikmə vaxtı (3.8 ms – 24.0 ms) və hücuma həssaslıq əmsalı riyazi olaraq hesablanır." },
+                    { icon: "⚔️", title: "4. 20 Rəqib (Adversarial) və Şəbəkə Hücum Simulyatoru",
+                      desc: "Topoloji til zəhərlənməsi (Nettack, Metattack, PGD-Topology, DICE), qradiyent əlamət küyü (FGSM, PGD-40, Carlini-Wagner), saxta düyün inyeksiyası (TDGIA, Sybil Swarm, NIPA) və sənaye protokol hücumlarını (VLAN Hopping, MQTT Poison, Modbus Replay, APT Lateral) 0%–50% intensivlik slayderi ilə canlı sınaqdan keçirir." },
+                    { icon: "🛡️", title: "5. 5 Aktiv Müdafiə Qalxanı (Pre-Filtering) və Benchmark",
+                      desc: "GNN-dən əvvəl işə düşən 5 müdafiə qalxanını (Standart, Jaccard Til Kəsimi τ=0.15, SVD Aşağı-Ranqlı Bərpa Rank-15, GraphMAE Avtoenkoder Təmizləməsi və Min-Max PGD Rəqib Təlimi) müqayisə edir. '5 Qalxan Üzrə Müqayisəli Benchmark' düyməsi bütün qalxanların hücum altındakı bərpa gücünü (+% Gain) eyni anda hesablayır." },
+                    { icon: "📊", title: "6. 6 Canlı KPI Telemetriya Kartı",
+                      desc: "Yuxarıdakı 6 indikator kartı real vaxtda: 1) Təmiz Dəqiqliyi (Clean Acc), 2) Hücum Altında Dəqiqliyi, 3) Qalxan Bərpasını (Shield Gain +%), 4) XAI İzaholunma Dəqiqliyini, 5) Aşkarlama Gecikməsini (ms) və 6) Qrafın Homofiliya İndeksini (h) vizual proqres barlarla göstərir." },
+                    { icon: "📡", title: "7. Canlı 60-FPS Fizika Radarı və Qovşaq İnspektoru",
+                      desc: "Mərkəzi radarda 3 nüvə şlüzü (GW-1, GW-2, GW-3) və IoT sensorları arasında axan yaşıl (normal) və qırmızı (hücum) paketlər 60 FPS sürətlə vizuallaşdırılır. İstənilən düyünü siçanla dartmaq, üzərinə klikləyib aşağıdakı İnspektor panelində IP/VLAN, α_ij diqqət əmsalını görmək və 'Qovşağı Karantinə Al' düyməsi ilə təcrid etmək mümkündür." },
+                    { icon: "⚡", title: "8. eBPF Paket İnspektoru, STIX 2.1 və Avtomatik CLI Yama",
+                      desc: "Sağ aşağı panellər eBPF XDP paket axınını izləyir, təhlükə jurnalını STIX 2.1 JSON və PDF Audit formatında ixrac edir, həmçinin ISO/IEC 27001:2022 və NIST SP 800-53 standartlarına uyğun hazır Cisco IOS, Linux iptables və eBPF XDP müdafiə skriptini (.sh) avtomatik sintez edir." }
+                ],
+                pipeSteps: [
+                    "1. Telemetriya Girişi: Sintetik qraf və ya CSV/JSON faylı G=(V,E,X) matrisinə çevrilir.",
+                    "2. Rəqib Hücumu: Seçilmiş hücum vektoru tilləri (A') və ya əlamətləri (X') zəhərləyir.",
+                    "3. Qalxan Süzgəci: Jaccard / SVD / GraphMAE şübhəli əlaqələri təmizləyir.",
+                    "4. GNN Təsnifatı: Seçilmiş GNN modeli mesaj ötürülməsi ilə yoluxmuş düyünləri tapır.",
+                    "5. SOC Karantin: Avtomatik Cisco IOS / iptables / eBPF yaması və PDF/STIX hesabatı yaradılır."
+                ]
+            },
+            en: {
+                howBtn: "How It Works (System Report)", demoKey: "Demo Pro Key", formulaLbl: "Active Math Model & Attack",
+                pauseBtn: "⏸️ Pause", resumeBtn: "▶️ Resume", rogueBtn: "🚨 +Rogue Node", pruneBtn: "✂️ GNNGuard Prune", rebuildBtn: "🔄 Rebuild",
+                flows: "Flows", benign: "Benign", compromised: "Compromised", quarantined: "Quarantined", activeShield: "Active Shield",
+                inspHint: "Click any node on the graph to inspect its live GNN telemetry or isolate it in quarantine",
+                proto: "Protocol", attn: "GNN Attention (α_ij)", cos: "Cosine Similarity",
+                quarBtn: "🔒 Quarantine Node", unquarBtn: "🔓 Release Quarantine", regStatus: "Regulatory Status",
+                repBadge: "SYSTEM ARCHITECTURE & MODULE-BY-MODULE OPERATIONS REPORT",
+                repTitle: "How Every Part of the Platform Works — Technical Operations Report (8 Core Modules)",
+                repSub: "A complete breakdown of how every control panel, mathematical GNN engine, interactive radar, and automated SOC defense module operates.",
+                printRep: "Print / Save Report as PDF",
+                pipeTitle: "⚡ End-to-End Real-Time Execution Pipeline (SOC Dataflow)",
+                expGnnTitle: "🧠 20 GNN Architectures — Click Any Model to Inspect & Load",
+                expAtkTitle: "⚔️ 20 Cyber & Adversarial Attacks — Click Any Vector to Test",
+                modules: [
+                    { icon: "🌐", title: "1. Top Navigation & 10-Language 42-Page Word (.DOCX) Engine",
+                      desc: "Switching between 10 global languages (EN, AZ, RU, DE, FR, FI, NO, HI, ZH, JA) dynamically translates the entire UI and the client-side OpenXML (.docx) builder, which generates a 42-page technical book (Pages 1–2: AI & Cybersecurity, Pages 3–22: 20 GNNs, Pages 23–42: 20 Attacks) directly in the browser." },
+                    { icon: "⚙️", title: "2. Dataset Source & 8 Global Sector Benchmark Presets",
+                      desc: "Choose between Synthetic Graph generation (50–2,000 IoT nodes) or Custom File Upload (CSV/JSON topology). Eight 1-click industry presets (Smart Grid SCADA, Hospital ICU, Industrial PLC, UNSW TON_IoT, Bot-IoT, CIC-IoT-2023, Smart City V2X, Aerospace) auto-configure optimal parameters." },
+                    { icon: "🧠", title: "3. 20 Global GNN Architecture Selector Engine",
+                      desc: "Evaluates 20 GNN architectures across 5 mathematical families (Spatial, Spectral, Multi-Head Attention/Transformers, Heterogeneous/Temporal, and Adversarially Hardened). Computes clean accuracy, inference latency (3.8 ms to 24.0 ms), and structural vulnerability." },
+                    { icon: "⚔️", title: "4. 20 Adversarial & Industrial Protocol Attack Simulator",
+                      desc: "Simulates structural edge poisoning (Nettack, Metattack, PGD-Topology, DICE), white-box feature gradients (FGSM, PGD-40, Carlini-Wagner), rogue node injections (TDGIA, Sybil Swarm, NIPA), and OT exploits (VLAN Hopping, MQTT Poison, Modbus Replay, APT Lateral) from 0% to 50% intensity." },
+                    { icon: "🛡️", title: "5. 5 Active Pre-Processing Shields & Comparative Matrix",
+                      desc: "Benchmarks 5 active defense shields (Baseline, Jaccard Edge Pruning τ=0.15, SVD Low-Rank Rank-15, GraphMAE Autoencoder Denoising, and Min-Max PGD Adversarial Training). Clicking any bar in the 5-Shield Matrix activates that shield immediately." },
+                    { icon: "📊", title: "6. 6 Real-Time KPI Telemetry Cards",
+                      desc: "Tracks 6 vital SOC metrics with animated progress bars: Clean Accuracy, Attacked Accuracy, Active Shield Recovery Gain (+%), XAI Attribution Fidelity, Detection Latency (ms), and Graph Homophily Ratio (h)." },
+                    { icon: "📡", title: "7. Unobstructed 60-FPS Physics Radar & Node Inspector",
+                      desc: "Visualizes live packet flows between 3 Core Gateways (GW-1, GW-2, GW-3) and IoT endpoints at 60 FPS. Drag any node, inject live rogue nodes, auto-prune infected edges via GNNGuard, or click any node to inspect its IP/VLAN, α_ij attention, and quarantine it." },
+                    { icon: "⚡", title: "8. eBPF Packet Stream, STIX 2.1 & Auto-Remediation CLI Playbook",
+                      desc: "Streams real-time eBPF XDP packet verdicts, exports OASIS STIX 2.1 JSON threat intelligence and PDF compliance audits, and synthesizes ready-to-run Cisco IOS, Linux iptables, and eBPF XDP quarantine scripts (.sh)." }
+                ],
+                pipeSteps: [
+                    "1. Telemetry Ingestion: Synthetic or custom CSV/JSON topology builds graph G=(V,E,X).",
+                    "2. Adversarial Perturbation: Selected attack corrupts edges (A') or node features (X').",
+                    "3. Pre-Filter Shield: Jaccard / SVD / GraphMAE scrubs low-similarity malicious edges.",
+                    "4. GNN Message Passing: Selected GNN computes node embeddings and isolates anomalies.",
+                    "5. Zero-Trust Response: Synthesizes Cisco IOS / iptables / eBPF CLI patch & PDF/STIX audit."
+                ]
+            },
+            ru: {
+                howBtn: "Как работает система (Отчет)", demoKey: "Демо Pro Ключ", formulaLbl: "Активная мат. модель и атака",
+                pauseBtn: "⏸️ Пауза", resumeBtn: "▶️ Старт", rogueBtn: "🚨 +Ложный узел", pruneBtn: "✂️ Очистка GNNGuard", rebuildBtn: "🔄 Обновить",
+                flows: "Потоки", benign: "Чистые", compromised: "Атакованы", quarantined: "Карантин", activeShield: "Активный щит",
+                inspHint: "Нажмите на любой узел графа для просмотра телеметрии GNN или изоляции в карантин",
+                proto: "Протокол", attn: "Внимание GNN (α_ij)", cos: "Косинусное сходство",
+                quarBtn: "🔒 Изолировать в карантин", unquarBtn: "🔓 Снять карантин", regStatus: "Нормативный статус",
+                repBadge: "АРХИТЕКТУРА СИСТЕМЫ И ТЕХНИЧЕСКИЙ ОТЧЕТ ПО МОДУЛЯМ",
+                repTitle: "Как работает каждый модуль платформы — Технический отчет (8 ключевых модулей)",
+                repSub: "Подробное руководство по работе всех панелей управления, математического ядра GNN, интерактивного радара и автоматической защиты SOC.",
+                printRep: "Печать / PDF отчета по модулям",
+                pipeTitle: "⚡ Пошаговый конвейер обработки данных в реальном времени (SOC Pipeline)",
+                expGnnTitle: "🧠 20 архитектур GNN — Нажмите для просмотра и загрузки",
+                expAtkTitle: "⚔️ 20 векторов кибератак — Нажмите для тестирования",
+                modules: [
+                    { icon: "🌐", title: "1. Верхняя панель и генератор 42-стр. отчетов Word (.DOCX) на 10 языках",
+                      desc: "Переключение между 10 языками мгновенно переводит весь интерфейс и клиентский генератор OpenXML (.docx), создающий 42-страничную энциклопедию (Стр. 1–2: ИИ и кибербезопасность, Стр. 3–22: 20 моделей GNN, Стр. 23–42: 20 векторов атак)." },
+                    { icon: "⚙️", title: "2. Источник данных и 8 отраслевых профилей (Presets)",
+                      desc: "Поддерживается генерация синтетического графа (50–2000 узлов IoT) или загрузка собственной топологии CSV/JSON. 8 отраслевых эталонов (Smart Grid SCADA, реанимация ICU, промышленный ПЛК, TON_IoT, Bot-IoT, CIC-IoT-2023, Smart City, космос) настраивают систему в один клик." },
+                    { icon: "🧠", title: "3. Ядро из 20 глобальных архитектур GNN",
+                      desc: "Охватывает 5 математических семейств GNN (пространственные, спектральные, механизмы внимания/трансформеры, гетерогенные/временные и защищенные). Вычисляет чистую точность, задержку (от 3.8 мс) и устойчивость к взлому." },
+                    { icon: "⚔️", title: "4. Симулятор 20 состязательных и сетевых кибератак",
+                      desc: "Моделирует структурное отравление ребер (Nettack, Metattack, PGD-Topology, DICE), градиентные атаки на признаки (FGSM, PGD-40, CW), инъекцию узлов (TDGIA, рои Sybil, NIPA) и промышленные эксплойты (VLAN Hopping, MQTT, Modbus Replay, APT) при интенсивности 0–50%." },
+                    { icon: "🛡️", title: "5. 5 активных щитов защиты и сравнительная матрица",
+                      desc: "Сравнивает базовый режим с фильтрацией Жаккара (τ=0.15), низкоранговым SVD (Rank-15), автоэнкодером GraphMAE и состязательным обучением Min-Max PGD. Клик по любой полосе матрицы мгновенно включает выбранный щит." },
+                    { icon: "📊", title: "6. 6 карточек KPI телеметрии в реальном времени",
+                      desc: "Отображает 6 ключевых метрик SOC: чистую точность, точность под атакой, прирост от щита (+%), достоверность объяснений XAI, задержку обнаружения (мс) и индекс гомофилии графа (h)." },
+                    { icon: "📡", title: "7. Интерактивный 60-FPS радар топологии и инспектор узлов",
+                      desc: "Визуализирует потоки пакетов между 3 центральными шлюзами (GW-1, GW-2, GW-3) и датчиками IoT. Узлы можно перетаскивать мышью, добавлять ложные узлы (+Ложный узел), очищать ребра (GNNGuard) и изолировать любой выбранный узел в карантин." },
+                    { icon: "⚡", title: "8. Потоковый инспектор eBPF, STIX 2.1 и авто-генерация патчей",
+                      desc: "Отображает пакеты eBPF XDP на скорости линии, экспортирует отчеты STIX 2.1 JSON и PDF, а также автоматически синтезирует готовые скрипты защиты Cisco IOS, Linux iptables и eBPF XDP (.sh) по стандартам ISO 27001 и NIST." }
+                ],
+                pipeSteps: [
+                    "1. Сбор телеметрии: Формирование графа G=(V,E,X) из синтетики или файла CSV/JSON.",
+                    "2. Генерация атаки: Выбранный вектор искажает матрицу связей (A') или признаки (X').",
+                    "3. Пред-фильтрация: Щит Jaccard / SVD / GraphMAE отсекает подозрительные ребра.",
+                    "4. Передача сообщений GNN: Выбранная модель GNN выявляет аномальные узлы.",
+                    "5. Реагирование SOC: Генерация патча Cisco IOS / iptables / eBPF и отчетов PDF/STIX."
+                ]
+            }
+        };
+
+        // Fallback generator for DE, FR, FI, NO, HI, ZH, JA so all 10 languages have full localized controls & module reports
+        ['de', 'fr', 'fi', 'no', 'hi', 'zh', 'ja'].forEach(l => {
+            const base = UI[l] || UI.en;
+            UI_EXT[l] = {
+                howBtn: l === 'de' ? "Systembericht (Module)" : l === 'fr' ? "Fonctionnement (Rapport)" : l === 'zh' ? "系统工作原理 (模块报告)" : l === 'ja' ? "システム動作解説 (モジュール報告)" : "System Architecture Report",
+                demoKey: "Demo Pro Key",
+                formulaLbl: "Math Model & Attack",
+                pauseBtn: "⏸️ Pause", resumeBtn: "▶️ Resume",
+                rogueBtn: "🚨 +Rogue Node", pruneBtn: "✂️ GNNGuard Prune", rebuildBtn: "🔄 " + base.resetBtn,
+                flows: "Flows", benign: "Benign", compromised: "Infected", quarantined: "Quarantined", activeShield: "Shield",
+                inspHint: base.topoSub,
+                proto: "Protocol", attn: "GNN Attn (α_ij)", cos: "Cosine Sim",
+                quarBtn: "🔒 Quarantine Node", unquarBtn: "🔓 Unquarantine", regStatus: "Compliance Status",
+                repBadge: "SYSTEM ARCHITECTURE & 8-MODULE TECHNICAL REPORT (" + l.toUpperCase() + ")",
+                repTitle: base.docTitle + " — 8 Core Platform Modules",
+                repSub: base.whatIsAiBody2,
+                printRep: base.exportPdf,
+                pipeTitle: "⚡ Real-Time SOC Dataflow Pipeline (G = V, E, X)",
+                expGnnTitle: "🧠 " + base.gnnArch,
+                expAtkTitle: "⚔️ " + base.attackStrat,
+                modules: UI_EXT.en.modules,
+                pipeSteps: UI_EXT.en.pipeSteps
+            };
+        });
+
+        let selectedExplorerGnnIdx = 0;
+        let selectedExplorerAtkIdx = 0;
+
+        function scrollToSystemReport() {
+            const el = document.getElementById('howItWorksSection');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function printModuleReport() {
+            const ext = UI_EXT[currentLang] || UI_EXT.en;
+            const w = window.open('', '_blank');
+            if (!w) {
+                showToast('Use the 42-Page Word (.DOCX) button to download the full report!', 'cyan');
+                return;
+            }
+            const modsHtml = ext.modules.map(m => `
+                <div style="border:1px solid #cbd5e1;border-radius:10px;padding:14px;margin-bottom:12px;background:#f8fafc;">
+                    <h3 style="margin:0 0 6px 0;color:#0f172a;font-size:15px;">${m.icon} ${m.title}</h3>
+                    <p style="margin:0;color:#334155;font-size:12.5px;line-height:1.55;">${m.desc}</p>
+                </div>`).join('');
+            w.document.write(`<html><head><title>${ext.repTitle}</title><style>body{font-family:Inter,Arial,sans-serif;padding:32px;color:#0f172a;}</style></head><body><h1 style="color:#0f2942;margin-bottom:4px;">🛡️ GraphGuard IoT v8.0 — ${ext.repTitle}</h1><p style="color:#475569;font-size:13px;margin-bottom:20px;">${ext.repSub}</p>${modsHtml}<script>window.onload=()=>window.print()<\/script></body></html>`);
+            w.document.close();
+        }
+
+        function renderModuleReportAndExplorer() {
+            const ext = UI_EXT[currentLang] || UI_EXT.en;
+            const u = UI[currentLang] || UI.en;
+
+            const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+            setTxt('txtHowItWorksBtn', ext.howBtn);
+            setTxt('btnDemoProKey', ext.demoKey);
+            setTxt('txtActiveFormulaLbl', ext.formulaLbl);
+            setTxt('btnToggleAnim', animRunning ? ext.pauseBtn : ext.resumeBtn);
+            setTxt('btnRogueNode', ext.rogueBtn);
+            setTxt('btnPruneEdges', ext.pruneBtn);
+            setTxt('btnRebuildGraph', ext.rebuildBtn);
+            setTxt('lblHudFlows', ext.flows);
+            setTxt('lblHudBenign', ext.benign);
+            setTxt('lblHudCompromised', ext.compromised);
+            setTxt('lblHudQuarantined', ext.quarantined);
+            setTxt('lblHudShield', ext.activeShield);
+            setTxt('lblInspHint', ext.inspHint);
+            setTxt('lblInspProto', ext.proto);
+            setTxt('lblInspAttn', ext.attn);
+            setTxt('lblInspCos', ext.cos);
+            setTxt('txtReportBadge', ext.repBadge);
+            setTxt('txtReportMainTitle', ext.repTitle);
+            setTxt('txtReportSubTitle', ext.repSub);
+            setTxt('txtPrintModReport', ext.printRep);
+            setTxt('txtDownload42FromReport', u.wordBtn);
+            setTxt('txtPipelineTitle', ext.pipeTitle);
+            setTxt('txtExplorerGnnTitle', ext.expGnnTitle);
+            setTxt('txtExplorerAtkTitle', ext.expAtkTitle);
+
+            // Render 8 Module Cards
+            const modGrid = document.getElementById('moduleReportGrid');
+            if (modGrid) {
+                modGrid.innerHTML = ext.modules.map(m => `
+                    <div class="bg-slate-950/85 border border-slate-800/90 hover:border-emerald-500/40 rounded-2xl p-4 transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2.5 mb-2">
+                                <span class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-base">${m.icon}</span>
+                                <h4 class="text-xs sm:text-sm font-extrabold text-emerald-300 leading-snug">${m.title}</h4>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">${m.desc}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Render 5 Pipeline Steps
+            const pipeGrid = document.getElementById('pipelineStepsGrid');
+            if (pipeGrid) {
+                pipeGrid.innerHTML = ext.pipeSteps.map((s, i) => `
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 relative">
+                        <div class="text-[10px] font-mono text-cyan-400 font-bold mb-1">STEP 0${i + 1}</div>
+                        <div class="text-slate-200 leading-snug text-[11px]">${s}</div>
+                    </div>
+                `).join('');
+            }
+
+            renderInteractive20x20Pills();
+        }
+
+        function renderInteractive20x20Pills() {
+            const gnnPills = document.getElementById('gnnInteractivePills');
+            const atkPills = document.getElementById('atkInteractivePills');
+            if (!gnnPills || !atkPills) return;
+
+            gnnPills.innerHTML = GNN_20_CATALOG.map((m, idx) => `
+                <button onclick="selectExplorerGnn(${idx})" class="px-2 py-1.5 rounded-lg text-[11px] font-mono font-semibold truncate cursor-pointer transition border ${idx === selectedExplorerGnnIdx ? 'bg-emerald-500/25 border-emerald-400 text-emerald-200' : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'}">
+                    ${m.id}. ${m.name}
+                </button>
+            `).join('');
+
+            atkPills.innerHTML = ATTACK_20_CATALOG.map((a, idx) => `
+                <button onclick="selectExplorerAtk(${idx})" class="px-2 py-1.5 rounded-lg text-[11px] font-mono font-semibold truncate cursor-pointer transition border ${idx === selectedExplorerAtkIdx ? 'bg-rose-500/25 border-rose-400 text-rose-200' : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'}">
+                    ${a.id}. ${a.name}
+                </button>
+            `).join('');
+
+            const gm = GNN_20_CATALOG[selectedExplorerGnnIdx] || GNN_20_CATALOG[0];
+            const gdBox = document.getElementById('gnnSelectedDetailBox');
+            if (gdBox) {
+                const descTxt = currentLang === 'az' ? gm.desc_az : gm.desc;
+                gdBox.innerHTML = `
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-1.5">
+                        <span class="font-extrabold text-emerald-300 text-xs">#${gm.id} ${gm.name} (${gm.paradigm})</span>
+                        <span class="font-mono text-[11px] text-cyan-300">Acc: ${gm.acc} | Latency: ${gm.lat}</span>
+                    </div>
+                    <div class="font-mono text-[11px] text-amber-300 py-0.5">${gm.formula}</div>
+                    <p class="text-slate-300 text-xs leading-relaxed">${descTxt}</p>
+                `;
+            }
+
+            const am = ATTACK_20_CATALOG[selectedExplorerAtkIdx] || ATTACK_20_CATALOG[0];
+            const adBox = document.getElementById('atkSelectedDetailBox');
+            if (adBox) {
+                const descTxt = currentLang === 'az' ? am.desc_az : am.desc;
+                adBox.innerHTML = `
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-1.5">
+                        <span class="font-extrabold text-rose-300 text-xs">#${am.id} ${am.name} (${am.vector})</span>
+                        <span class="font-mono text-[11px] text-emerald-300">Countermeasure: ${am.def}</span>
+                    </div>
+                    <div class="font-mono text-[11px] text-rose-300 py-0.5">${am.formula}</div>
+                    <p class="text-slate-300 text-xs leading-relaxed">${descTxt}</p>
+                `;
+            }
+        }
+
+        function selectExplorerGnn(idx) {
+            selectedExplorerGnnIdx = idx;
+            const gm = GNN_20_CATALOG[idx];
+            if (gm) {
+                document.getElementById('modelType').value = gm.key;
+                onControlParamChange();
+                showToast(`🧠 Loaded GNN #${gm.id}: ${gm.name} (${gm.acc})`, 'emerald');
+            }
+            renderInteractive20x20Pills();
+        }
+
+        function selectExplorerAtk(idx) {
+            selectedExplorerAtkIdx = idx;
+            const am = ATTACK_20_CATALOG[idx];
+            if (am) {
+                document.getElementById('attackType').value = am.key;
+                onControlParamChange();
+                showToast(`⚔️ Loaded Attack #${am.id}: ${am.name}`, 'rose');
+            }
+            renderInteractive20x20Pills();
+        }
+
         let liveNodes = [];
         let liveEdges = [];
         let livePackets = [];
@@ -1624,18 +2052,19 @@
             document.getElementById('inspNodeId').innerText = `${n.label} (${n.isHub ? 'Core Gateway' : 'IoT Endpoint'})`;
             const badge = document.getElementById('inspNodeBadge');
             const btn = document.getElementById('btnQuarantineNode');
+            const ext = UI_EXT[currentLang] || UI_EXT.en;
             if (n.isQuarantined) {
-                badge.className = "px-1.5 py-0.5 text-[10px] rounded bg-purple-500/20 text-purple-300 font-bold";
+                badge.className = "px-2 py-0.5 text-[10px] rounded-md bg-purple-500/20 text-purple-300 font-bold border border-purple-500/30";
                 badge.innerText = "QUARANTINED";
-                btn.innerText = "🔓 Karantindən Çıxar";
+                btn.innerText = ext.unquarBtn;
             } else if (n.isCompromised) {
-                badge.className = "px-1.5 py-0.5 text-[10px] rounded bg-rose-500/20 text-rose-300 font-bold";
+                badge.className = "px-2 py-0.5 text-[10px] rounded-md bg-rose-500/20 text-rose-300 font-bold border border-rose-500/30";
                 badge.innerText = "COMPROMISED";
-                btn.innerText = "🔒 Qovşağı Karantinə Al";
+                btn.innerText = ext.quarBtn;
             } else {
-                badge.className = "px-1.5 py-0.5 text-[10px] rounded bg-emerald-500/20 text-emerald-300 font-bold";
+                badge.className = "px-2 py-0.5 text-[10px] rounded-md bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30";
                 badge.innerText = "BENIGN";
-                btn.innerText = "🔒 Qovşağı Karantinə Al";
+                btn.innerText = ext.quarBtn;
             }
             document.getElementById('inspNodeIp').innerText = `${n.ip} (${n.vlan})`;
             document.getElementById('inspNodeProto').innerText = n.proto;
@@ -1667,7 +2096,7 @@
 
         function toggleRadarAnimation() {
             animRunning = !animRunning;
-            document.getElementById('btnToggleAnim').innerText = animRunning ? "⏸️ Pause" : "▶️ Resume";
+            const ext = UI_EXT[currentLang] || UI_EXT.en; document.getElementById('btnToggleAnim').innerText = animRunning ? ext.pauseBtn : ext.resumeBtn;
         }
 
         function injectLiveRogueNode() {
@@ -1871,6 +2300,25 @@ echo "[GraphGuard SOC] Zero-Trust mitigation patch applied."`;
             document.getElementById('homophilyScore').innerText = data.homophily || 0.84;
             document.getElementById('hudPackets').innerText = `${1100 + data.node_count}/s`;
 
+            // Update KPI micro progress bars
+            const setW = (id, pct) => { const el = document.getElementById(id); if (el) el.style.width = `${Math.max(8, Math.min(100, pct))}%`; };
+            setW('barCleanAcc', data.clean_accuracy);
+            setW('barAttackAcc', data.attacked_accuracy);
+            setW('barShieldGain', 15 + (data.shield_gain || 0) * 4);
+            setW('barXaiScore', data.xai_fidelity_score);
+            setW('barLatency', Math.min(100, ((data.latency_ms || 12.4) / 28.0) * 100));
+            setW('barHomophily', (data.homophily || 0.84) * 100);
+
+            // Sync Live Formula Card & Explorer selection
+            const gObj = GNN_20_CATALOG.find(m => m.key === data.model_type) || GNN_20_CATALOG[0];
+            const aObj = ATTACK_20_CATALOG.find(a => a.key === data.attack_type) || ATTACK_20_CATALOG[0];
+            selectedExplorerGnnIdx = GNN_20_CATALOG.indexOf(gObj);
+            selectedExplorerAtkIdx = ATTACK_20_CATALOG.indexOf(aObj);
+            if (document.getElementById('activeParadigmBadge')) document.getElementById('activeParadigmBadge').innerText = gObj.paradigm;
+            if (document.getElementById('liveGnnFormula')) document.getElementById('liveGnnFormula').innerText = gObj.formula;
+            if (document.getElementById('liveAtkFormula')) document.getElementById('liveAtkFormula').innerText = aObj.formula;
+            renderInteractive20x20Pills();
+
             renderShieldComparisonBars();
             appendPacketStreamEntry();
 
@@ -1879,7 +2327,7 @@ echo "[GraphGuard SOC] Zero-Trust mitigation patch applied."`;
 
             const compBadge = document.getElementById('complianceBadge');
             const remBox = document.getElementById('remediationBox');
-            compBadge.innerHTML = `Regulatory Status: <span class="px-2 py-0.5 rounded ${data.threat_detected ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'} font-bold">${data.compliance_status}</span>`;
+            const ext = UI_EXT[currentLang] || UI_EXT.en; compBadge.innerHTML = `${ext.regStatus}: <span class="px-2 py-0.5 rounded ${data.threat_detected ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'} font-bold">${data.compliance_status}</span>`;
             remBox.className = `bg-slate-950 border ${data.threat_detected ? 'border-red-900/60 text-amber-300' : 'border-slate-800 text-emerald-400'} rounded-xl p-4 font-mono text-xs overflow-x-auto max-h-72 overflow-y-auto leading-relaxed`;
             remBox.innerText = data.remediation_script;
 
@@ -2018,6 +2466,9 @@ echo "[GraphGuard SOC] Zero-Trust mitigation patch applied."`;
             document.getElementById('txtDownloadSh').innerText = u.downloadSh;
             document.getElementById('txtClearLog').innerText = u.clearBtn;
             document.getElementById('txtClearPlaybook').innerText = u.clearBtn;
+            updateNodeInspector();
+            renderModuleReportAndExplorer();
+            if (lastSimulationResults) renderSimulationOutput(lastSimulationResults, 'Lang Sync');
         }
 
         function clearThreatLog() {
@@ -2030,7 +2481,7 @@ echo "[GraphGuard SOC] Zero-Trust mitigation patch applied."`;
             const compBadge = document.getElementById('complianceBadge');
             remBox.className = "bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-x-auto max-h-72 overflow-y-auto leading-relaxed";
             remBox.innerText = "# Playbook cleared. Run an adversarial simulation to synthesize automated Cisco IOS, Linux iptables & eBPF XDP defense patches...";
-            compBadge.innerHTML = `Regulatory Status: <span class="text-slate-500 font-semibold">Cleared — Awaiting simulation telemetry...</span>`;
+            const ext = UI_EXT[currentLang] || UI_EXT.en; compBadge.innerHTML = `${ext.regStatus}: <span class="text-slate-500 font-semibold">Cleared — Awaiting simulation telemetry...</span>`;
         }
 
         function resetAllPanels() {
