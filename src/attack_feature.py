@@ -1,55 +1,79 @@
+"""
+Feature-space attacks.
+
+1. gaussian_noise  - random measurement noise on every device (sanity baseline,
+                     not an adversary).
+2. pgd_evasion     - white-box L-infinity PGD (Madry et al., 2018) where ONLY the
+                     compromised devices change ONLY their own traffic statistics,
+                     trying to be classified as benign. This is the realistic
+                     IoT threat: a bot can shape its own traffic, but cannot
+                     rewrite a neighbour's telemetry.
+
+`eps` is measured in standard deviations of each (standardised) feature.
+
+Run:  python -m src.attack_feature --eps 0.5
+"""
+
+from __future__ import annotations
+
+import argparse
+
 import torch
+import torch.nn.functional as F
+
 from src.dataset import generate_iot_graph_dataset
-from src.model import IoTGNN
+from src.utils import build_model, compute_metrics, fmt, set_seed, train_model
 
-def evaluate_feature_perturbation(noise_level: float = 0.15):
-    print(f"[*] Starting Feature-Level Perturbation Attack (Noise Level: {noise_level * 100}%)...")
-    
-    data = generate_iot_graph_dataset(num_nodes=300)
-    
-    if not hasattr(data, 'test_mask'):
-        indices = torch.randperm(data.num_nodes)
-        train_size = int(data.num_nodes * 0.7)
-        data.train_mask = torch.zeros(data.num_nodes, dtype=torch.bool)
-        data.train_mask[indices[:train_size]] = True
-        data.test_mask = torch.zeros(data.num_nodes, dtype=torch.bool)
-        data.test_mask[indices[train_size:]] = True
 
-    # Train base GraphSAGE model
-    model = IoTGNN(data.num_features, 64, 2, 'sage')
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
-    criterion = torch.nn.CrossEntropyLoss()
+def gaussian_noise(x: torch.Tensor, sigma: float, seed: int = 0) -> torch.Tensor:
+    g = torch.Generator().manual_seed(seed)
+    return x + sigma * torch.randn(x.shape, generator=g)
 
-    model.train()
-    for _ in range(100):
-        optimizer.zero_grad()
-        out = model(data.x, data.edge_index)
-        loss = criterion(out[data.train_mask], data.y[data.train_mask])
-        loss.backward()
-        optimizer.step()
 
+def pgd_evasion(model, x, edge_index, controlled: torch.Tensor, eps: float,
+                steps: int = 40, alpha: float | None = None, edge_weight=None) -> torch.Tensor:
+    """Perturb rows of `x` selected by boolean mask `controlled` so that those
+    nodes are pushed toward class 0 (benign). Returns the perturbed features."""
+    if eps <= 0 or controlled.sum() == 0:
+        return x
+    alpha = alpha if alpha is not None else 2.5 * eps / steps
     model.eval()
-    
-    # 1. Clean Evaluation
-    with torch.no_grad():
-        out_clean = model(data.x, data.edge_index)
-        pred_clean = out_clean.argmax(dim=-1)
-        acc_clean = int((pred_clean[data.test_mask] == data.y[data.test_mask]).sum()) / int(data.test_mask.sum())
+    row_mask = controlled.float().unsqueeze(1)
+    target = torch.zeros(int(controlled.sum()), dtype=torch.long)
 
-    # 2. Perturbed Feature Evaluation (Adding Gaussian Noise)
-    noise = torch.randn_like(data.x) * noise_level
-    x_perturbed = data.x + noise
-    
-    with torch.no_grad():
-        out_pert = model(x_perturbed, data.edge_index)
-        pred_pert = out_pert.argmax(dim=-1)
-        acc_pert = int((pred_pert[data.test_mask] == data.y[data.test_mask]).sum()) / int(data.test_mask.sum())
+    delta = torch.zeros_like(x)
+    for _ in range(steps):
+        delta.requires_grad_(True)
+        out = model(x + delta * row_mask, edge_index, edge_weight)
+        # attacker minimises the loss of the "benign" label on its own nodes
+        loss = F.nll_loss(out[controlled], target)
+        (grad,) = torch.autograd.grad(loss, delta)
+        with torch.no_grad():
+            delta = (delta - alpha * grad.sign()).clamp(-eps, eps)
+    return (x + delta.detach() * row_mask)
 
-    print("-" * 50)
-    print(f"[*] Feature Perturbation Results (GraphSAGE):")
-    print(f"    - Clean Accuracy    : {acc_clean * 100:.2f}%")
-    print(f"    - Perturbed Accuracy: {acc_pert * 100:.2f}% (Under {noise_level*100}% Feature Noise)")
-    print("-" * 50)
 
-if __name__ == '__main__':
-    evaluate_feature_perturbation(noise_level=0.15)
+def main():
+    parser = argparse.ArgumentParser(description="Feature-space attacks on GNN-NIDS")
+    parser.add_argument("--eps", type=float, default=0.5)
+    parser.add_argument("--nodes", type=int, default=600)
+    parser.add_argument("--seed", type=int, default=0)
+    args = parser.parse_args()
+
+    set_seed(args.seed)
+    data = generate_iot_graph_dataset(num_nodes=args.nodes, seed=args.seed)
+    attackers = data.y == 1
+
+    for m in ["mlp", "gcn", "gat", "sage"]:
+        set_seed(args.seed)
+        model = train_model(build_model(m, data.num_features), data)
+        x_noise = gaussian_noise(data.x, args.eps, seed=args.seed)
+        x_pgd = pgd_evasion(model, data.x, data.edge_index, attackers, args.eps)
+        print(f"\n[{m.upper()}]")
+        print(f"  clean                 {fmt(compute_metrics(model, data.x, data.edge_index, data.y, data.test_mask))}")
+        print(f"  gaussian sigma={args.eps:<4}   {fmt(compute_metrics(model, x_noise, data.edge_index, data.y, data.test_mask))}")
+        print(f"  PGD evasion eps={args.eps:<4}  {fmt(compute_metrics(model, x_pgd, data.edge_index, data.y, data.test_mask))}")
+
+
+if __name__ == "__main__":
+    main()

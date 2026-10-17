@@ -1,1 +1,23 @@
-﻿venv/
+# virtual environments (never commit these)
+.venv/
+venv/
+env/
+
+# python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# generated
+checkpoints/
+*.pt
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# secrets
+.env

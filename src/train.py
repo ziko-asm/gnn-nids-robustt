@@ -1,67 +1,56 @@
+"""
+Train a single model on the synthetic IoT graph and save a checkpoint.
+
+    python -m src.train --model sage
+    python -m src.train --model gcn --nodes 1000 --seed 3
+
+The checkpoint (checkpoints/<model>.pt) is what src/api.py serves.
+"""
+
+from __future__ import annotations
+
 import argparse
+from pathlib import Path
+
 import torch
-import torch.nn.functional as F
+
 from src.dataset import generate_iot_graph_dataset
-from src.model import IoTGNN
+from src.model import MODEL_TYPES
+from src.utils import DEFAULT_HPARAMS, build_model, compute_metrics, fmt, set_seed, train_model
 
-def train():
-    parser = argparse.ArgumentParser(description="Train GNN Model for IoT Intrusion Detection")
-    parser.add_argument("--model", type=str, default="gcn", choices=["gcn", "gat", "sage"], help="Model architecture")
-    parser.add_argument("--epochs", type=int, default=200, help="Number of training epochs")
-    parser.add_argument("--lr", type=float, default=0.01, help="Learning rate")
-    args = parser.parse_args()
 
-    # Generate graph dataset
-    data = generate_iot_graph_dataset(num_nodes=300)
+def main():
+    p = argparse.ArgumentParser(description="Train a GNN for IoT intrusion detection")
+    p.add_argument("--model", default="sage", choices=MODEL_TYPES)
+    p.add_argument("--nodes", type=int, default=600)
+    p.add_argument("--epochs", type=int, default=DEFAULT_HPARAMS["epochs"])
+    p.add_argument("--lr", type=float, default=DEFAULT_HPARAMS["lr"])
+    p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--out", default="checkpoints")
+    args = p.parse_args()
 
-    # Ensure train/test masks exist
-    if not hasattr(data, 'train_mask'):
-        num_nodes = data.num_nodes
-        indices = torch.randperm(num_nodes)
-        train_size = int(num_nodes * 0.7)
-        
-        data.train_mask = torch.zeros(num_nodes, dtype=torch.bool)
-        data.train_mask[indices[:train_size]] = True
-        
-        data.test_mask = torch.zeros(num_nodes, dtype=torch.bool)
-        data.test_mask[indices[train_size:]] = True
+    set_seed(args.seed)
+    data = generate_iot_graph_dataset(num_nodes=args.nodes, seed=args.seed)
+    print(f"[*] Graph: {data.num_nodes} devices, {data.edge_index.size(1)//2} links, "
+          f"{int(data.y.sum())} compromised ({data.y.float().mean():.1%})")
+    print(f"[*] Training {args.model.upper()} (max {args.epochs} epochs, early stopping on val F1)")
 
-    # Initialize model
-    model = IoTGNN(
-        in_channels=data.num_features,
-        hidden_channels=64,
-        out_channels=2,
-        model_type=args.model
-    )
+    model = build_model(args.model, data.num_features)
+    model = train_model(model, data, lr=args.lr, epochs=args.epochs, verbose=True)
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    for split in ("train_mask", "val_mask", "test_mask"):
+        m = compute_metrics(model, data.x, data.edge_index, data.y, getattr(data, split))
+        print(f"    {split.replace('_mask', ''):5s}  {fmt(m)}")
 
-    print(f"[*] Selected Model Architecture: {args.model.upper()}")
-    print(f"[*] Starting model training ({args.epochs} epochs)...")
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+    path = out / f"{args.model}.pt"
+    torch.save({"state_dict": model.state_dict(),
+                "config": {"model": args.model, "nodes": args.nodes, "seed": args.seed,
+                           "in_channels": data.num_features,
+                           "hidden_channels": DEFAULT_HPARAMS["hidden_channels"]}}, path)
+    print(f"[*] Saved checkpoint -> {path}")
 
-    # Training loop
-    model.train()
-    for epoch in range(1, args.epochs + 1):
-        optimizer.zero_grad()
-        out = model(data.x, data.edge_index)
-        loss = F.nll_loss(out[data.train_mask], data.y[data.train_mask])
-        loss.backward()
-        optimizer.step()
-
-        if epoch % 20 == 0:
-            print(f"Epoch [{epoch}/{args.epochs}], Loss: {loss.item():.4f}")
-
-    # Evaluation
-    model.eval()
-    with torch.no_grad():
-        out = model(data.x, data.edge_index)
-        pred = out.argmax(dim=-1)
-        correct = (pred[data.test_mask] == data.y[data.test_mask]).sum()
-        acc = int(correct) / int(data.test_mask.sum())
-
-    print("-" * 50)
-    print(f"[*] Result [{args.model.upper()}]: Test Accuracy = {acc * 100:.2f}%")
-    print("-" * 50)
 
 if __name__ == "__main__":
-    train()
+    main()

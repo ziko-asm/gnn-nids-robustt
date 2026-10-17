@@ -1,12 +1,10 @@
-stripe
-fastapi
-uvicorn
-pydantic
-torch
-numpy
-scikit-learn
-networkx
-psutil
-torch-geometric
-reportlab
-pandas
+# Runtime for the API (src/api.py) and the experiment code.
+# CPU wheels of PyTorch are enough and much smaller than the CUDA build.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.2
+torch_geometric>=2.5
+numpy>=1.26
+scikit-learn>=1.4
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2.6

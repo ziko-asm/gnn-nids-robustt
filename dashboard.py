@@ -1,108 +1,140 @@
-﻿import streamlit as st
-import torch
+"""
+Interactive research dashboard. Every number on screen is computed, none is typed in.
+
+    streamlit run dashboard.py
+"""
+
+import json
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import pandas as pd
+import streamlit as st
+import torch
+
+from src.attack import apply_structure_attack
+from src.attack_feature import pgd_evasion
+from src.attack_smart import gradient_attack
 from src.dataset import generate_iot_graph_dataset
-from src.model import IoTGNN
-from torch_geometric.utils import dropout_edge
+from src.defend import train_defended
+from src.utils import compute_metrics
 
-# Streamlit Page Configuration
-st.set_page_config(
-    page_title="GNN-NIDS Advanced Robustness & XAI Lab",
-    page_icon="🛡️",
-    layout="wide"
-)
+st.set_page_config(page_title="GraphGuard IoT - GNN Robustness Lab", page_icon="🛡️", layout="wide")
+st.title("GraphGuard IoT: Adversarial Robustness of GNN Intrusion Detection")
+st.caption("Synthetic IoT network · evasion attacks · metrics on held-out test devices")
 
-st.title("🛡️ GNN-Based IoT NIDS: Advanced Robustness & XAI Research Lab")
-st.markdown("---")
+MODELS = {"GraphSAGE": "sage", "GCN": "gcn", "GAT": "gat", "MLP (no graph)": "mlp"}
+ATTACKS = {"Gradient (greedy adjacency)": "gradient", "DICE": "dice",
+           "Random link removal": "random_remove", "Random link injection": "random_add",
+           "Feature PGD evasion": "feature_pgd"}
+DEFENSES = {"None": "none", "Cosine pruning": "cosine_prune",
+            "DropEdge": "dropedge", "PGD adversarial training": "adv_train"}
 
-# Sidebar Controls
-st.sidebar.header("🔬 Research Controls")
-model_choice = st.sidebar.selectbox("Select GNN Architecture", ["GraphSAGE", "GCN", "GAT"])
-attack_type = st.sidebar.selectbox("Select Attack Type", ["Structural Edge Perturbation", "Feature-Level Noise"])
-perturbation_rate = st.sidebar.slider("Attack Intensity / Noise Rate (%)", 0, 50, 30)
 
-model_key = model_choice.lower()
-if model_key == 'graphsage':
-    model_key = 'sage'
+@st.cache_resource(show_spinner="Generating graph...")
+def get_data(nodes, seed):
+    return generate_iot_graph_dataset(num_nodes=nodes, seed=seed)
 
-# Main Layout
-col1, col2 = st.columns(2)
 
-with col1:
-    st.subheader("📊 Model Performance Analysis")
-    st.write(f"Evaluating **{model_choice}** under **{attack_type}** at **{perturbation_rate}%** intensity.")
+@st.cache_resource(show_spinner="Training model (cached after first run)...")
+def get_model(model, defense, nodes, seed):
+    return train_defended(defense, model, get_data(nodes, seed), seed=seed)
 
-    # Generate dataset and model
-    data = generate_iot_graph_dataset(num_nodes=300)
-    
-    if not hasattr(data, 'train_mask'):
-        indices = torch.randperm(data.num_nodes)
-        train_size = int(data.num_nodes * 0.7)
-        data.train_mask = torch.zeros(data.num_nodes, dtype=torch.bool)
-        data.train_mask[indices[:train_size]] = True
-        data.test_mask = torch.zeros(data.num_nodes, dtype=torch.bool)
-        data.test_mask[indices[train_size:]] = True
 
-    model = IoTGNN(data.num_features, 64, 2, model_key)
-    
-    # Quick train
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
-    criterion = torch.nn.CrossEntropyLoss()
-    model.train()
-    for _ in range(50):
-        optimizer.zero_grad()
-        out = model(data.x, data.edge_index)
-        loss = criterion(out[data.train_mask], data.y[data.train_mask])
-        loss.backward()
-        optimizer.step()
-        
-    model.eval()
-    
-    # Clean Eval
-    with torch.no_grad():
-        out_clean = model(data.x, data.edge_index)
-        pred_clean = out_clean.argmax(dim=-1)
-        acc_clean = int((pred_clean[data.test_mask] == data.y[data.test_mask]).sum()) / int(data.test_mask.sum())
+@st.cache_data(show_spinner="Running gradient attack...")
+def get_grad_attack(nodes, seed, rate):
+    return gradient_attack(get_data(nodes, seed), rate, seed=seed)
 
-    # Attacked Eval
-    p_rate = perturbation_rate / 100.0
-    if "Structural" in attack_type:
-        test_edge_index, _ = dropout_edge(data.edge_index, p=p_rate)
-        x_eval = data.x
+
+def attacked_inputs(attack, data, net, prep, budget, nodes, seed):
+    if attack == "feature_pgd":
+        x0, ei0 = prep(data.x, data.edge_index)
+        return pgd_evasion(net, x0, ei0, data.y == 1, budget), data.edge_index
+    if attack == "gradient":
+        return data.x, get_grad_attack(nodes, seed, budget)
+    return data.x, apply_structure_attack(attack, data, budget, seed=seed)
+
+
+# ------------------------------------------------------------------ sidebar
+with st.sidebar:
+    st.header("Experiment")
+    model_label = st.selectbox("Model", list(MODELS))
+    attack_label = st.selectbox("Attack", list(ATTACKS))
+    model, attack = MODELS[model_label], ATTACKS[attack_label]
+    allowed_def = ["None", "PGD adversarial training"] if model == "mlp" else list(DEFENSES)
+    defense = DEFENSES[st.selectbox("Defence", allowed_def)]
+    if attack == "feature_pgd":
+        budget = st.slider("PGD eps (feature std)", 0.0, 1.5, 0.5, 0.05)
     else:
-        test_edge_index = data.edge_index
-        x_eval = data.x + (torch.randn_like(data.x) * p_rate)
+        budget = st.slider("Links flipped (%)", 0, 30, 5) / 100
+    nodes = st.select_slider("Devices", [300, 600, 1000], 600)
+    seed = st.number_input("Seed", 0, 99, 0)
 
-    with torch.no_grad():
-        out_att = model(x_eval, test_edge_index)
-        pred_att = out_att.argmax(dim=-1)
-        acc_att = int((pred_att[data.test_mask] == data.y[data.test_mask]).sum()) / int(data.test_mask.sum())
+tab_live, tab_bench, tab_xai = st.tabs(["Live experiment", "Benchmark (all seeds)", "Explain a detection"])
 
-    st.metric(label="Clean Accuracy", value=f"{acc_clean * 100:.2f}%")
-    st.metric(label="Attacked Accuracy", value=f"{acc_att * 100:.2f}%", delta=f"{(acc_att - acc_clean) * 100:.2f}%")
+# ------------------------------------------------------------------ live
+with tab_live:
+    if model == "mlp" and attack != "feature_pgd":
+        st.warning("The MLP baseline ignores the graph, so structural attacks have no effect on it.")
+    data = get_data(nodes, seed)
+    net, prep = get_model(model, defense, nodes, seed)
+    xc, eic = prep(data.x, data.edge_index)
+    clean = compute_metrics(net, xc, eic, data.y, data.test_mask)
+    xa, eia = prep(*attacked_inputs(attack, data, net, prep, budget, nodes, seed))
+    att = compute_metrics(net, xa, eia, data.y, data.test_mask)
 
-with col2:
-    st.subheader("📈 Robustness Degradation Curve")
-    fig, ax = plt.subplots(figsize=(6, 4))
-    rates = [0, 10, 20, 30, 40, 50]
-    accuracies = [acc_clean * 100, max(40, (acc_clean - 0.02 * perturbation_rate) * 100), 
-                  max(35, (acc_clean - 0.04 * perturbation_rate) * 100),
-                  max(30, (acc_att * 100), 10), 25, 20]
-    
-    ax.plot(rates, accuracies[:len(rates)], marker='o', color='crimson', linewidth=2, label=f'{model_choice} Robustness')
-    ax.set_title(f"{model_choice} Resilience Curve")
-    ax.set_xlabel("Attack Perturbation Rate (%)")
-    ax.set_ylabel("Accuracy (%)")
-    ax.grid(True, linestyle='--', alpha=0.6)
-    ax.legend()
+    c = st.columns(4)
+    for col, k, name in zip(c, ["f1", "recall", "roc_auc", "accuracy"],
+                            ["Attack-class F1", "Detection rate (recall)", "ROC-AUC", "Accuracy"]):
+        col.metric(name, f"{att[k]:.3f}", f"{att[k] - clean[k]:+.3f} vs clean")
+    st.caption(f"Clean: F1 {clean['f1']:.3f} · recall {clean['recall']:.3f} · "
+               f"{int(data.test_mask.sum())} test devices, {int((data.y[data.test_mask]).sum())} compromised")
+
+    st.subheader("F1 vs attack budget (this seed)")
+    grid = [0, 0.25, 0.5, 0.75, 1.0] if attack == "feature_pgd" else [0, 0.02, 0.05, 0.1, 0.15, 0.2]
+    ys = []
+    for b in grid:
+        if b == 0:
+            ys.append(clean["f1"])
+            continue
+        xb, eib = prep(*attacked_inputs(attack, data, net, prep, b, nodes, seed))
+        ys.append(compute_metrics(net, xb, eib, data.y, data.test_mask)["f1"])
+    fig, ax = plt.subplots(figsize=(7, 3.4))
+    ax.plot([g * (1 if attack == "feature_pgd" else 100) for g in grid], ys, marker="o", lw=2)
+    ax.set_xlabel("eps" if attack == "feature_pgd" else "Links flipped (%)")
+    ax.set_ylabel("F1")
+    ax.set_ylim(0, 1)
+    ax.grid(alpha=0.3)
     st.pyplot(fig)
 
-st.markdown("---")
-st.subheader("🔍 GNNExplainer (XAI) Feature Attribution & Node Importance")
-st.info("💡 **XAI Insight:** GNNExplainer successfully isolates critical feature masks and vulnerable edge connections for targeted IoT nodes under adversarial pressure.")
+# ------------------------------------------------------------------ benchmark
+with tab_bench:
+    path = Path("results/results.json")
+    if not path.exists():
+        st.info("No benchmark yet. Run `python -m src.evaluate --quick` and reload.")
+    else:
+        res = json.loads(path.read_text(encoding="utf-8"))
+        st.caption(f"Generated {res['meta']['generated_at']} · seeds {res['meta']['seeds']} · "
+                   f"{res['meta']['setting']}")
+        df = pd.DataFrame(res["summary"])
+        st.dataframe(df, use_container_width=True, hide_index=True)
+        for png in sorted(Path("results").glob("*.png")):
+            st.image(str(png), caption=png.stem)
 
-# Display dummy/simulated attribution metrics for academic depth
-col_x1, col_x2, col_x3 = st.columns(3)
-col_x1.metric(label="Top Feature Importance Weight", value="0.6834")
-col_x2.metric(label="Important Edge Mask Shape", value="900 Edges")
-col_x3.metric(label="Explanation Fidelity Score", value="94.2%")
+# ------------------------------------------------------------------ XAI
+with tab_xai:
+    if model == "mlp":
+        st.info("GNNExplainer needs a graph model. Pick GCN, GAT or GraphSAGE.")
+    else:
+        from src.explain import explain_node
+        test_bots = torch.where(data.test_mask & (data.y == 1))[0].tolist()
+        node = st.selectbox("Compromised test device", test_bots)
+        if st.button("Explain"):
+            with st.spinner("Running GNNExplainer..."):
+                r = explain_node(net, data, int(node))
+            st.write(f"P(compromised) = **{r['p_compromised']:.3f}**")
+            st.bar_chart(pd.DataFrame(r["top_features"]).set_index("feature"))
+            st.dataframe(pd.DataFrame(r["top_links"]), hide_index=True)
+            a, b = st.columns(2)
+            a.metric("Fidelity+ (higher better)", f"{r['fidelity_plus']:.3f}")
+            b.metric("Fidelity- (lower better)", f"{r['fidelity_minus']:.3f}")

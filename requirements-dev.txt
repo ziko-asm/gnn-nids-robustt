@@ -1,0 +1,6 @@
+# Everything for local work: plots, dashboard, tests.
+-r requirements.txt
+matplotlib>=3.8
+pandas>=2.1
+streamlit>=1.33
+pytest>=8.0
