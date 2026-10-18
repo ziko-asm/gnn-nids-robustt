@@ -21,3 +21,6 @@ Thumbs.db
 
 # secrets
 .env
+
+.vscode/
+__pycache__/
