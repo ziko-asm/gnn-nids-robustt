@@ -4,7 +4,7 @@ How robust are Graph Neural Network intrusion detectors for IoT networks, and wh
 
 This repo trains GCN, GAT and GraphSAGE (plus a feature-only MLP control) to find compromised devices in an IoT communication graph. It then attacks them with structural and feature-space adversaries and measures how much each defence recovers. Every number on the [website](https://graphguard-iot.vercel.app/) comes from `results/results.json`, which this code produces.
 
-By [Ziya Azizov](https://www.linkedin.com/in/ziya-azizov-91bba638a). Live site: **https://graphguard-iot.vercel.app**
+By [Ziya Azizov (ayfar)](https://ayfar.vercel.app) · [LinkedIn](https://www.linkedin.com/in/ziya-azizov-91bba638a). Live site: **https://graphguard-iot.vercel.app**
 
 ## Results
 
