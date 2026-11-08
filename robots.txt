@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://graphguard-iot.vercel.app/sitemap.xml
